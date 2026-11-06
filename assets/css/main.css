@@ -1,0 +1,258 @@
+/* ==========================================================
+   OrionCinemas | Main Stylesheet & Design Tokens
+   ========================================================== */
+
+
+/* ==========================================================
+   Shared Theme & Landing Page Block
+   Defines design tokens used across the site and the landing
+   page's base layout, navigation, hero, movie, feature, and footer styles.
+   ========================================================== */
+.page-landing {
+    /* Color Palette */
+    --bg-primary: #0a0c10;
+    --bg-secondary: #121620;
+    --bg-surface: #1a202c;
+    --bg-card: rgba(26, 32, 44, 0.7);
+    
+    --accent-cyan: #00f2fe;
+    --accent-blue: #4facfe;
+    --accent-purple: #7f00ff;
+    --accent-magenta: #e100ff;
+    
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    
+    --border-glow: rgba(0, 242, 254, 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+
+    /* Typography */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    
+    /* Layout & Geometry */
+    --nav-height: 80px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    
+    /* Global Transitions */
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Reset & Layout */
+body.page-landing,
+body.page-landing *,
+body.page-landing *::before,
+body.page-landing *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.page-landing {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+/* Header & Navigation Bar */
+.page-landing .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: rgba(10, 12, 16, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-landing .nav-container {
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-landing .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+}
+
+.brand-highlight {
+    color: #00e5ff;
+}
+
+.page-landing .nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.page-landing .nav-item {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s var(--ease-smooth);
+    position: relative;
+}
+
+.page-landing .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+    transition: width 0.3s var(--ease-smooth);
+}
+
+.page-landing .nav-item:hover {
+    color: var(--accent-cyan);
+}
+
+.page-landing .nav-item:hover::after {
+    width: 100%;
+}
+
+.page-landing .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Hero Layout */
+.page-landing .hero-section {
+    position: relative;
+    min-height: 100vh;
+    padding-top: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.page-landing .animation-toggle {
+    position: absolute;
+    top: calc(var(--nav-height) + 1rem);
+    right: clamp(1rem, 3vw, 2.5rem);
+    z-index: 20;
+}
+
+.page-landing .hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    padding: 0 2rem;
+}
+
+.page-landing .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 1.5rem 0;
+    background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-landing .hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+/* Movie Showcase Section */
+.page-landing .movies-showcase {
+    max-width: 1280px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+}
+
+.page-landing .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.page-landing .section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.page-landing .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+/* Features Section */
+.page-landing .features-section {
+    background: var(--bg-secondary);
+    padding: 6rem 2rem;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-landing .features-section .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Footer Layout */
+.page-landing .footer {
+    background: var(--bg-primary);
+    padding: 3rem 2rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.page-landing .footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.page-landing .footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.page-landing .footer-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.page-landing .footer-links a:hover {
+    color: var(--text-main);
+}

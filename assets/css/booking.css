@@ -1,0 +1,788 @@
+/* Ticket booking page components and responsive layout. */
+
+/* ==========================================================
+   Booking Page Block
+   Styles the ticket-booking navigation, film/date/time choices,
+   seating layout, and order summary.
+   ========================================================== */
+
+.page-dashboard {
+    --dashboard-line: rgba(255, 255, 255, 0.12);
+    --dashboard-muted: #a7b1c2;
+}
+
+.page-dashboard .dashboard-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.page-dashboard .dashboard-nav a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.page-dashboard .dashboard-nav a:hover,
+.page-dashboard .dashboard-nav [aria-current="page"] {
+    color: var(--accent-cyan);
+}
+
+.page-dashboard .dashboard-main {
+    width: min(1280px, 100%);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 2.5rem) 2rem 5rem;
+}
+
+.page-dashboard .dashboard-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--dashboard-line);
+}
+
+.page-dashboard .dashboard-eyebrow {
+    color: var(--accent-cyan);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.page-dashboard .dashboard-heading h1 {
+    margin-top: 0.4rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+}
+
+.page-dashboard .dashboard-intro {
+    margin-top: 0.65rem;
+    color: var(--dashboard-muted);
+}
+
+.page-dashboard .booking-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--dashboard-line);
+    border-radius: var(--radius-sm);
+    background: rgba(18, 22, 32, 0.72);
+}
+
+.page-dashboard .booking-progress ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(4.5rem, 1fr));
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+    width: min(100%, 620px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.page-dashboard .booking-progress-step {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--dashboard-muted);
+    font-size: 0.78rem;
+}
+
+.page-dashboard .progress-number {
+    display: grid;
+    width: 1.8rem;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--dashboard-line);
+    border-radius: 50%;
+    color: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.page-dashboard .booking-progress-step[aria-current="step"] {
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.page-dashboard .booking-progress-step[aria-current="step"] .progress-number {
+    transform: scale(1.08);
+    border-color: var(--accent-cyan);
+    background: rgba(0, 242, 254, 0.1);
+}
+
+.page-dashboard .booking-progress-step.is-complete .progress-number {
+    border-color: rgba(114, 211, 167, 0.55);
+    color: #93dfbc;
+}
+
+.page-dashboard .booking-progress-status {
+    color: var(--dashboard-muted);
+    font-size: 0.76rem;
+    text-align: right;
+}
+
+.page-dashboard .text-link {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.page-dashboard .text-link:hover {
+    text-decoration: underline;
+}
+
+.page-dashboard .booking-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+    gap: 3rem;
+    padding-top: 1rem;
+}
+
+.page-dashboard .booking-section {
+    scroll-margin-top: calc(var(--nav-height) + 1.5rem);
+    padding: 1.5rem 0 1.75rem;
+    border-bottom: 1px solid var(--dashboard-line);
+}
+
+.page-dashboard .booking-back {
+    margin-bottom: 1.1rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--accent-cyan);
+    font: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+}
+
+.page-dashboard .booking-back:hover {
+    color: var(--text-main);
+}
+
+.page-dashboard .section-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.15rem;
+}
+
+.page-dashboard .step-number {
+    display: grid;
+    width: 2rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    border-radius: 50%;
+    color: var(--accent-cyan);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.page-dashboard .booking-section h2,
+.page-dashboard .booking-summary h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.page-dashboard .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dashboard-muted);
+    font-size: 0.82rem;
+}
+
+.page-dashboard .film-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem;
+}
+
+.page-dashboard .film-card {
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid var(--dashboard-line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-main);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-dashboard .film-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-glow);
+}
+
+.page-dashboard .film-card[aria-pressed="true"] {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 2px var(--border-glow);
+}
+
+.page-dashboard .film-card-poster {
+    min-height: 155px;
+    height: 155px;
+    padding: 0.8rem;
+}
+
+.page-dashboard .film-card-poster .poster-kicker,
+.page-dashboard .film-card-poster .poster-caption {
+    font-size: 0.55rem;
+}
+
+.page-dashboard .film-card-poster .poster-title {
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
+}
+
+.page-dashboard .film-card-info {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.8rem;
+}
+
+.page-dashboard .film-room {
+    width: fit-content;
+    padding: 0.16rem 0.45rem;
+    border: 1px solid rgba(0, 242, 254, 0.28);
+    border-radius: 999px;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.page-dashboard .film-card-info strong {
+    font-size: 0.92rem;
+}
+
+.page-dashboard .film-card-info > span {
+    color: var(--dashboard-muted);
+    font-size: 0.76rem;
+}
+
+.page-dashboard .film-card-info > .film-room {
+    color: var(--accent-cyan);
+}
+
+.page-dashboard .time-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.page-dashboard .screening-calendar {
+    width: min(100%, 390px);
+    padding: 1rem;
+    border: 1px solid var(--dashboard-line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+}
+
+.page-dashboard .calendar-heading {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 2.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    text-align: center;
+}
+
+.page-dashboard .calendar-heading h3 {
+    font-size: 0.95rem;
+}
+
+.page-dashboard .calendar-nav {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--dashboard-line);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-main);
+    font: inherit;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.page-dashboard .calendar-nav:hover:not(:disabled) {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.page-dashboard .calendar-nav:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.page-dashboard .calendar-weekdays,
+.page-dashboard .date-options {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.35rem;
+    text-align: center;
+}
+
+.page-dashboard .calendar-weekdays {
+    margin-bottom: 0.35rem;
+    color: var(--dashboard-muted);
+    font-size: 0.72rem;
+}
+
+.page-dashboard .calendar-weekdays span {
+    padding: 0.35rem 0;
+}
+
+.page-dashboard .calendar-day {
+    display: grid;
+    min-width: 0;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-main);
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.page-dashboard .calendar-day:hover:not(:disabled) {
+    border-color: var(--border-glow);
+    background: rgba(0, 242, 254, 0.08);
+}
+
+.page-dashboard .calendar-day.is-today {
+    border-color: var(--border-glow);
+}
+
+.page-dashboard .calendar-day[aria-pressed="true"] {
+    border-color: var(--accent-cyan);
+    background: var(--accent-cyan);
+    color: #071014;
+}
+
+.page-dashboard .calendar-day:disabled {
+    color: #596170;
+    cursor: not-allowed;
+}
+
+.page-dashboard .calendar-spacer {
+    aspect-ratio: 1;
+}
+
+.page-dashboard .choice-button {
+    min-width: 7rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--dashboard-line);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--dashboard-muted);
+    font: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.page-dashboard .choice-button:hover {
+    transform: translateY(-1px);
+    color: var(--text-main);
+}
+
+.page-dashboard .choice-button[aria-pressed="true"] {
+    border-color: var(--accent-cyan);
+    background: rgba(0, 242, 254, 0.1);
+    color: var(--accent-cyan);
+}
+
+.page-dashboard .section-hint {
+    margin-top: 0.25rem;
+    color: var(--dashboard-muted);
+    font-size: 0.82rem;
+}
+
+.page-dashboard .theater-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.page-dashboard .theater-layout {
+    width: max(100%, 820px);
+}
+
+.page-dashboard .screen {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    width: min(820px, 100%);
+    margin: 2rem auto 1.75rem;
+    padding: 0.7rem 0.45rem;
+    border-top: 5px solid var(--accent-cyan);
+    border-radius: 50% 50% 0 0 / 45% 45% 0 0;
+    box-shadow: 0 -8px 24px -16px var(--accent-cyan);
+    color: var(--dashboard-muted);
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+}
+
+.page-dashboard .screen img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.page-dashboard .screen strong {
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.page-dashboard .seat-map {
+    display: grid;
+    justify-items: center;
+    gap: 0.65rem;
+    width: max-content;
+    margin: 0 auto;
+    padding: 0.25rem 0.5rem;
+}
+
+.page-dashboard .seat-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(1.5rem, 1.9rem)) 1.25rem repeat(8, minmax(1.5rem, 1.9rem)) 1.25rem repeat(4, minmax(1.5rem, 1.9rem));
+    grid-template-areas: "left left left left aisle-left center center center center center center center center aisle-right right right right right";
+    align-items: center;
+    gap: 0.35rem;
+    width: max-content;
+}
+
+.page-dashboard .seat-block {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(1.5rem, 1.9rem));
+    gap: 0.35rem;
+}
+
+.page-dashboard .seat-block--center {
+    grid-template-columns: repeat(8, minmax(1.5rem, 1.9rem));
+    grid-area: center;
+}
+
+.page-dashboard .seat-block--left,
+.page-dashboard .seat-block-placeholder--left {
+    grid-area: left;
+}
+
+.page-dashboard .seat-block--right,
+.page-dashboard .seat-block-placeholder--right {
+    grid-area: right;
+}
+
+.page-dashboard .seat-aisle--left {
+    grid-area: aisle-left;
+}
+
+.page-dashboard .seat-aisle--right {
+    grid-area: aisle-right;
+}
+
+.page-dashboard .seat-block--left {
+    transform: perspective(24rem) rotateY(5deg);
+    transform-origin: left center;
+}
+
+.page-dashboard .seat-block--right {
+    transform: perspective(24rem) rotateY(-5deg);
+    transform-origin: right center;
+}
+
+.page-dashboard .seat-aisle {
+    min-width: 1.25rem;
+}
+
+.page-dashboard .seat-button {
+    width: 100%;
+    aspect-ratio: 1.1;
+    border: 1px solid rgba(0, 242, 254, 0.38);
+    border-radius: 6px 6px 3px 3px;
+    background: rgba(0, 242, 254, 0.06);
+    color: var(--dashboard-muted);
+    font-size: 0.68rem;
+    cursor: pointer;
+    transition: transform 0.18s ease, opacity 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.page-dashboard .seat-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    color: var(--text-main);
+}
+
+.page-dashboard .seat-button[aria-pressed="true"] {
+    border-color: var(--accent-cyan);
+    background: var(--accent-cyan);
+    color: #071014;
+}
+
+.page-dashboard .seat-button:disabled {
+    border-color: transparent;
+    background: rgba(255, 255, 255, 0.08);
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+.page-dashboard .seat-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+    color: var(--dashboard-muted);
+    font-size: 0.78rem;
+}
+
+@media (max-width: 760px) {
+    .page-dashboard .booking-progress {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .page-dashboard .booking-progress ol {
+        width: 100%;
+    }
+
+    .page-dashboard .booking-progress-status {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-dashboard .booking-progress {
+        padding: 0.85rem 0.65rem;
+    }
+
+    .page-dashboard .booking-progress ol {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.2rem;
+    }
+
+    .page-dashboard .booking-progress-step {
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.68rem;
+    }
+}
+
+.page-dashboard .seat-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.page-dashboard .seat-key {
+    width: 0.75rem;
+    aspect-ratio: 1;
+    border: 1px solid rgba(0, 242, 254, 0.5);
+    border-radius: 3px;
+}
+
+.page-dashboard .seat-key.selected {
+    border-color: var(--accent-cyan);
+    background: var(--accent-cyan);
+}
+
+.page-dashboard .seat-key.occupied {
+    border-color: transparent;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.page-dashboard .booking-summary {
+    position: sticky;
+    top: calc(var(--nav-height) + 1.5rem);
+    padding: 1.35rem;
+    border: 1px solid var(--dashboard-line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+}
+
+.page-dashboard .booking-summary h2 {
+    margin-top: 0.4rem;
+}
+
+.page-dashboard .summary-details {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.4rem;
+}
+
+.page-dashboard .summary-details div,
+.page-dashboard .price-breakdown p {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.page-dashboard .summary-details dt,
+.page-dashboard .price-breakdown span {
+    color: var(--dashboard-muted);
+    font-size: 0.84rem;
+}
+
+.page-dashboard .summary-details dd {
+    max-width: 65%;
+    color: var(--text-main);
+    text-align: right;
+    font-size: 0.88rem;
+}
+
+.page-dashboard .price-breakdown {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--dashboard-line);
+}
+
+.page-dashboard .price-breakdown strong {
+    font-size: 0.86rem;
+}
+
+.page-dashboard .price-breakdown .total-row {
+    align-items: baseline;
+    margin-top: 0.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--dashboard-line);
+}
+
+.page-dashboard .total-row span {
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.page-dashboard .total-row strong {
+    color: var(--accent-cyan);
+    font-size: 1.25rem;
+}
+
+.page-dashboard .checkout-button {
+    width: 100%;
+    margin-top: 1.2rem;
+    min-height: 2.9rem;
+}
+
+.page-dashboard .checkout-button:disabled {
+    opacity: 0.48;
+    cursor: not-allowed;
+}
+
+.page-dashboard .checkout-note {
+    margin-top: 0.8rem;
+    color: var(--dashboard-muted);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+.page-dashboard .checkout-note[data-state="error"] {
+    color: #ff9a8b;
+}
+
+.page-dashboard .checkout-note[data-state="ready"] {
+    color: var(--accent-cyan);
+}
+
+.page-dashboard :focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+    .page-dashboard .booking-layout {
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 1.75rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .page-dashboard .dashboard-main {
+        padding: calc(var(--nav-height) + 1.5rem) 1.25rem 3rem;
+    }
+
+    .page-dashboard .dashboard-nav {
+        display: none;
+    }
+
+    .page-dashboard .film-grid {
+        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    }
+
+    .page-dashboard .booking-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .page-dashboard .booking-summary {
+        position: static;
+        grid-row: 1;
+    }
+}
+
+@media (max-width: 420px) {
+    .page-dashboard .dashboard-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .page-dashboard .dashboard-heading h1 {
+        font-size: 2rem;
+    }
+
+    .page-dashboard .theater-layout {
+        width: max(100%, 820px);
+    }
+
+    .page-dashboard .seat-map {
+        justify-items: start;
+        gap: 0.55rem;
+        margin-inline: 0;
+        padding-inline: 0.25rem;
+    }
+
+    .page-dashboard .seat-row {
+        grid-template-columns: repeat(4, minmax(1.2rem, 1.5rem)) 0.75rem repeat(8, minmax(1.2rem, 1.5rem)) 0.75rem repeat(4, minmax(1.2rem, 1.5rem));
+        grid-template-areas: "left left left left aisle-left center center center center center center center center aisle-right right right right right";
+        gap: 0.2rem;
+    }
+
+    .page-dashboard .seat-block {
+        grid-template-columns: repeat(4, minmax(1.2rem, 1.5rem));
+        gap: 0.2rem;
+    }
+
+    .page-dashboard .seat-block--center {
+        grid-template-columns: repeat(8, minmax(1.2rem, 1.5rem));
+    }
+
+    .page-dashboard .seat-aisle {
+        min-width: 0.75rem;
+    }
+
+    .page-dashboard .choice-button {
+        min-width: 6.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-dashboard *,
+    .page-dashboard *::before,
+    .page-dashboard *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

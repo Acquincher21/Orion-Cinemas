@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — OrionCinemas</title>
+<link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<nav>
+  <a class="logo" href="index.html">
+    <img src="assets/images/vectors/orion-logo.svg" alt="" width="36" height="36">
+    <span class="logo-text"><span class="brand-highlight">Orion</span>Cinemas</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#movies">Now Showing</a></li>
+    <li><a href="index.html#experiences">Experiences</a></li>
+    <li><a href="index.html#experiences">VIP Club</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="login.html">Login</a>
+    <a class="btn-vip"   href="register.html">Join VIP</a>
+  </div>
+</nav>
+<button type="button" class="motion-toggle" id="motionToggle" hidden>Pause animations</button>
+
+<main>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🔐</div>
+      <h1 class="card-title">Welcome Back</h1>
+    </div>
+
+    <form method="post">
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email"
+                 placeholder="you@example.com"
+                 autocomplete="email" required>
+          <span class="icon">✉️</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap password-field">
+          <input class="password-input" type="password" id="password" name="password"
+                 placeholder="Enter your password" autocomplete="current-password" required>
+          <span class="icon">🔒</span>
+          <button type="button" class="toggle-pw" aria-label="Show password" aria-pressed="false">👁</button>
+        </div>
+      </div>
+
+      <div class="remember-row">
+        <label>
+          <input type="checkbox" name="remember" value="1">
+          Remember me
+        </label>
+        <a class="forgot-link" href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn" disabled>Sign In</button>
+
+    </form>
+
+    <p class="sign-up-link">Don't have an account? <a href="register.html">Join OrionCinemas →</a></p>
+  </div>
+</main>
+
+<footer>© 2025 OrionCinemas. All rights reserved.</footer>
+
+<script src="assets/js/validation.js"></script>
+<script src="assets/js/login.js"></script>
+</body>
+</html>

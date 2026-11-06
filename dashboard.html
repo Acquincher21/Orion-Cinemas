@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0c10">
+    <title>OrionCinemas | Booking Dashboard</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body class="page-landing page-account">
+    <a class="skip-link" href="#overview">Skip to dashboard content</a>
+    <aside class="account-sidebar">
+        <a href="index.html" class="brand-logo">
+            <img src="assets/images/vectors/orion-logo.svg" alt="" width="36" height="36">
+            <span class="brand-name"><span class="brand-highlight">Orion</span>Cinemas</span>
+        </a>
+        <p class="sidebar-label">YOUR CINEMA</p>
+        <nav class="account-nav" aria-label="Dashboard navigation">
+            <a href="#overview" aria-current="page">Overview</a>
+            <a href="#activity">Activity</a>
+            <a href="#bookings">Bookings</a>
+        </nav>
+        <a href="index.html#movies" class="sidebar-browse-link">Browse films</a>
+        <a href="index.html" class="sidebar-browse-link logout-link" id="logout-button">Log out</a>
+    </aside>
+
+    <main class="account-main">
+        <section class="account-welcome" id="overview" aria-labelledby="welcome-heading">
+            <div class="member-mark" aria-hidden="true">CP</div>
+            <div class="welcome-copy">
+                <p class="account-eyebrow">BOOKING DASHBOARD</p>
+                <h1 id="welcome-heading">Your OrionCinemas bookings</h1>
+                <p>Keep track of your screenings and booking history.</p>
+            </div>
+            <a class="btn btn-primary account-book-button" id="account-book-button" href="booking.html">Book tickets</a>
+        </section>
+
+        <section class="account-metrics" aria-label="Booking overview">
+            <div class="metric-item">
+                <span class="metric-label">Upcoming screenings</span>
+                <img class="metric-icon" src="assets/images/vectors/calendar-icon.svg" alt="" aria-hidden="true">
+                <strong id="upcoming-count">0</strong>
+                <span class="metric-hint">Ready for your next movie night</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Bookings saved</span>
+                <img class="metric-icon" src="assets/images/vectors/booking-history-icon.svg" alt="" aria-hidden="true">
+                <strong id="booking-count">0</strong>
+                <span class="metric-hint">Saved on this device</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Latest activity</span>
+                <img class="metric-icon" src="assets/images/vectors/activity-clock-icon.svg" alt="" aria-hidden="true">
+                <strong id="latest-activity">No bookings yet</strong>
+                <span class="metric-hint">Most recently saved booking</span>
+            </div>
+        </section>
+
+        <section class="dashboard-analytics" id="activity" aria-label="Booking analytics and activity">
+            <article class="dashboard-widget chart-widget">
+                <div class="widget-heading">
+                    <div>
+                        <p class="account-eyebrow">BOOKING ACTIVITY</p>
+                        <h2>Screenings over time</h2>
+                    </div>
+                    <span class="widget-period">Last 7 days</span>
+                </div>
+                <p class="widget-note" id="chart-description">Bookings saved locally during the past seven days.</p>
+                <canvas id="booking-chart" class="booking-chart" role="img" aria-label="Bar chart showing bookings by day for the last seven days" aria-describedby="chart-description">A chart of bookings saved during the past seven days.</canvas>
+            </article>
+            <article class="dashboard-widget activity-widget">
+                <div class="widget-heading">
+                    <div>
+                        <p class="account-eyebrow">RECENT UPDATES</p>
+                        <h2>Activity feed</h2>
+                    </div>
+                    <span class="live-indicator"><span aria-hidden="true"></span>Local</span>
+                </div>
+                <ul class="activity-feed" id="activity-feed" aria-live="polite"></ul>
+            </article>
+        </section>
+
+        <section class="booking-history" id="bookings" aria-labelledby="history-heading">
+            <div class="history-heading-row">
+                <div>
+                    <p class="account-eyebrow">YOUR SCREENINGS</p>
+                    <h2 id="history-heading">Bookings &amp; tracking</h2>
+                    <p class="history-description">Filter your saved screenings and expand a booking to view its reference and demo total.</p>
+                </div>
+                <div class="history-filters" role="group" aria-label="Filter bookings">
+                    <button type="button" class="history-filter" data-filter="upcoming" aria-pressed="true">Upcoming</button>
+                    <button type="button" class="history-filter" data-filter="all" aria-pressed="false">All history</button>
+                </div>
+            </div>
+            <p class="booking-feedback" id="booking-feedback" role="status" aria-live="polite"></p>
+            <div class="booking-list" id="booking-list" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/booking.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrionCinemas | Next-Gen Cinema Experience</title>
+
+    <!-- Modular Stylesheet Integration -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+</head>
+<body class="page-landing">
+
+    <!-- Header & Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="assets/images/vectors/orion-logo.svg" alt="" class="svg-badge logo-pulse" width="36" height="36">
+                <span class="brand-name"><span class="brand-highlight">Orion</span>Cinemas</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#movies" class="nav-item">Now Showing</a>
+                <a href="#experiences" class="nav-item">Experiences</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Log in</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- High-Impact Hero Section with Canvas Hook -->
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+            <button type="button" class="btn btn-secondary animation-toggle" id="animation-toggle" aria-pressed="false">
+                Stop Animation
+            </button>
+            <div class="hero-content">
+                <div class="badge-wrapper">
+                    <span class="badge badge-glow">
+                        <img src="assets/images/vectors/cinema-badge.svg" alt="OrionCinemas badge" class="badge-icon">
+                        IMAX 4K Laser Projection
+                    </span>
+                </div>
+                <h1 class="hero-title">Immerse Yourself in Cinema</h1>
+                <p class="hero-subtitle">Reserve ultra-luxury recliner seats, spatial audio, and dynamic screen selection.</p>
+                
+                <div class="hero-cta-group">
+                    <a href="login.html?next=dashboard.html" class="btn btn-hero btn-pulse">Book Tickets Now</a>
+                    <a href="#movies" class="btn btn-outline">Browse Movies</a>
+                </div>
+            </div>
+
+            <!-- Background HTML Canvas for Particle/Grid Keyframe Animations -->
+            <canvas id="hero-canvas" class="hero-canvas-bg"></canvas>
+        </section>
+
+        <!-- Movie Showcase (Targeted for 3D CSS Transformations) -->
+        <section id="movies" class="movies-showcase">
+            <div class="section-header">
+                <h2>Now Showing</h2>
+                <div class="filter-badges">
+                    <button class="badge-filter active" data-filter="all">All</button>
+                    <button class="badge-filter" data-filter="imax">IMAX</button>
+                    <button class="badge-filter" data-filter="4dx">4DX</button>
+                    <button class="badge-filter" data-filter="vip">VIP Suite</button>
+                </div>
+            </div>
+
+            <div class="movie-grid">
+                <!-- Movie Card 1 (3D Flip / Tilt Container) -->
+                <article class="movie-card card-3d">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="poster-art poster-art-horizon" role="img" aria-label="Cyberpunk Horizon film artwork">
+                                <span class="poster-kicker">AN ORION ORIGINAL</span>
+                                <span class="poster-title">CYBERPUNK<br>HORIZON</span>
+                                <span class="poster-caption">THE CITY NEVER SLEEPS</span>
+                            </div>
+                            <span class="badge badge-tag">IMAX 3D</span>
+                        </div>
+                        <div class="card-back">
+                            <h3>Cyberpunk Horizon</h3>
+                            <p class="genre">Sci-Fi / Action • 2h 25m</p>
+                            <p class="synopsis">A futuristic journey through high-contrast neon metropolis visuals.</p>
+                            <a href="login.html?next=booking.html%3Fmovie%3D1" class="btn btn-card-action">Select Seats</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Movie Card 2 -->
+                <article class="movie-card card-3d">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="poster-art poster-art-starlight" role="img" aria-label="Starlight Echoes film artwork">
+                                <span class="poster-kicker">A STORY ACROSS TIME</span>
+                                <span class="poster-title">STARLIGHT<br>ECHOES</span>
+                                <span class="poster-caption">SOME SIGNALS FIND THEIR WAY HOME</span>
+                            </div>
+                            <span class="badge badge-tag">DOLBY ATMOS</span>
+                        </div>
+                        <div class="card-back">
+                            <h3>Starlight Echoes</h3>
+                            <p class="genre">Drama / Sci-Fi • 1h 58m</p>
+                            <p class="synopsis">An emotional deep-space narrative featuring spatial acoustic design.</p>
+                            <a href="login.html?next=booking.html%3Fmovie%3D2" class="btn btn-card-action">Select Seats</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Movie Card 3 -->
+                <article class="movie-card card-3d">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="poster-art poster-art-velocity" role="img" aria-label="Velocity Unleashed film artwork">
+                                <span class="poster-kicker">NO SECOND LAP</span>
+                                <span class="poster-title">VELOCITY<br>UNLEASHED</span>
+                                <span class="poster-caption">EVERY TURN COUNTS</span>
+                            </div>
+                            <span class="badge badge-tag">4DX Motion</span>
+                        </div>
+                        <div class="card-back">
+                            <h3>Velocity Unleashed</h3>
+                            <p class="genre">Action / Thriller • 2h 10m</p>
+                            <p class="synopsis">High-octane racing experience with physical motion synchronizations.</p>
+                            <a href="login.html?next=booking.html%3Fmovie%3D3" class="btn btn-card-action">Select Seats</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Features & Vector Emblem Section -->
+        <section id="experiences" class="features-section">
+            <div class="container">
+                <div class="feature-card card-transform">
+                    <div class="feature-icon">
+                        <img src="assets/images/vectors/seat-icon.svg" alt="" class="svg-badge">
+                    </div>
+                    <h3>Zero-Gravity Recliners</h3>
+                    <p>Temperature-controlled leather seats with built-in headrest speakers.</p>
+                </div>
+
+                <div class="feature-card card-transform">
+                    <div class="feature-icon">
+                        <img src="assets/images/vectors/audio-icon.svg" alt="" class="svg-badge">
+                    </div>
+                    <h3>Dolby Atmos 360</h3>
+                    <p>64-channel spatial sound technology tailored for room resonance.</p>
+                </div>
+
+                <div class="feature-card card-transform">
+                    <div class="feature-icon">
+                        <img src="assets/images/vectors/qr-icon.svg" alt="" class="svg-badge">
+                    </div>
+                    <h3>Contactless Vector Passes</h3>
+                    <p>Dynamic vector-generated QR badges directly rendered for mobile wallets.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 OrionCinemas. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modular JavaScript Engine Hooks -->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/animation.js"></script>
+</body>
+</html>

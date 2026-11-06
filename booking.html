@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0c10">
+    <title>Book Tickets | OrionCinemas</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/booking.css">
+</head>
+<body class="page-landing page-dashboard">
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="assets/images/vectors/orion-logo.svg" alt="" width="36" height="36">
+                <span class="brand-name"><span class="brand-highlight">Orion</span>Cinemas</span>
+            </a>
+            <nav class="dashboard-nav" aria-label="Main navigation">
+                <a href="index.html#movies">Now Showing</a>
+                <a href="booking.html" aria-current="page">Book tickets</a>
+                <a href="dashboard.html">My dashboard</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="dashboard.html" class="btn btn-secondary">My account</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="dashboard-heading">
+            <div>
+                <p class="dashboard-eyebrow">ORIONCINEMAS TICKETS</p>
+                <h1>Plan your screening</h1>
+                <p class="dashboard-intro">Choose your film, screening, and seats. Your selection stays visible as you move through each step.</p>
+            </div>
+            <a class="text-link" href="index.html#movies">Browse all films</a>
+        </div>
+
+        <nav class="booking-progress" aria-label="Booking progress">
+            <ol>
+                <li class="booking-progress-step" data-booking-step="1" aria-current="step">
+                    <span class="progress-number">01</span>
+                    <span>Film</span>
+                </li>
+                <li class="booking-progress-step" data-booking-step="2">
+                    <span class="progress-number">02</span>
+                    <span>Date</span>
+                </li>
+                <li class="booking-progress-step" data-booking-step="3">
+                    <span class="progress-number">03</span>
+                    <span>Showtime</span>
+                </li>
+                <li class="booking-progress-step" data-booking-step="4">
+                    <span class="progress-number">04</span>
+                    <span>Seats</span>
+                </li>
+            </ol>
+            <p class="booking-progress-status" id="booking-progress-status" aria-live="polite">Step 1 of 4: Choose a film</p>
+        </nav>
+
+        <div class="booking-layout">
+            <div class="booking-options">
+                <section class="booking-section" id="film-section" aria-labelledby="film-heading">
+                    <div class="section-title-row">
+                        <span class="step-number" aria-hidden="true">01</span>
+                        <h2 id="film-heading">Choose a film</h2>
+                    </div>
+                    <div class="film-grid" id="film-options" role="group" aria-label="Now showing">
+                        <button type="button" class="film-card" data-movie-id="1" data-movie-name="Cyberpunk Horizon" data-cinema="Cinema 1" aria-pressed="false">
+                            <span class="film-card-poster poster-art poster-art-horizon" aria-hidden="true">
+                                <span class="poster-kicker">AN ORION ORIGINAL</span>
+                                <span class="poster-title">CYBERPUNK<br>HORIZON</span>
+                                <span class="poster-caption">THE CITY NEVER SLEEPS</span>
+                            </span>
+                            <span class="film-card-info">
+                                <strong>Cyberpunk Horizon</strong>
+                                <span class="film-room">Cinema 1</span>
+                                <span>Sci-Fi / Action · 2h 25m</span>
+                            </span>
+                        </button>
+                        <button type="button" class="film-card" data-movie-id="2" data-movie-name="Starlight Echoes" data-cinema="Cinema 2" aria-pressed="false">
+                            <span class="film-card-poster poster-art poster-art-starlight" aria-hidden="true">
+                                <span class="poster-kicker">A STORY ACROSS TIME</span>
+                                <span class="poster-title">STARLIGHT<br>ECHOES</span>
+                                <span class="poster-caption">SOME SIGNALS FIND THEIR WAY HOME</span>
+                            </span>
+                            <span class="film-card-info">
+                                <strong>Starlight Echoes</strong>
+                                <span class="film-room">Cinema 2</span>
+                                <span>Drama / Sci-Fi · 1h 58m</span>
+                            </span>
+                        </button>
+                        <button type="button" class="film-card" data-movie-id="3" data-movie-name="Velocity Unleashed" data-cinema="Cinema 3" aria-pressed="false">
+                            <span class="film-card-poster poster-art poster-art-velocity" aria-hidden="true">
+                                <span class="poster-kicker">NO SECOND LAP</span>
+                                <span class="poster-title">VELOCITY<br>UNLEASHED</span>
+                                <span class="poster-caption">EVERY TURN COUNTS</span>
+                            </span>
+                            <span class="film-card-info">
+                                <strong>Velocity Unleashed</strong>
+                                <span class="film-room">Cinema 3</span>
+                                <span>Action / Thriller · 2h 10m</span>
+                            </span>
+                        </button>
+                        <button type="button" class="film-card" data-movie-id="4" data-movie-name="The Last Signal" data-cinema="Cinema 4" aria-pressed="false">
+                            <span class="film-card-poster poster-art poster-art-signal" aria-hidden="true">
+                                <span class="poster-kicker">WHEN THE WORLD GOES QUIET</span>
+                                <span class="poster-title">THE LAST<br>SIGNAL</span>
+                                <span class="poster-caption">ONE VOICE CAN CHANGE EVERYTHING</span>
+                            </span>
+                            <span class="film-card-info">
+                                <strong>The Last Signal</strong>
+                                <span class="film-room">Cinema 4</span>
+                                <span>Mystery / Sci-Fi · 2h 04m</span>
+                            </span>
+                        </button>
+                        <button type="button" class="film-card" data-movie-id="5" data-movie-name="Midnight in Marseille" data-cinema="Cinema 1" aria-pressed="false">
+                            <span class="film-card-poster poster-art poster-art-midnight" aria-hidden="true">
+                                <span class="poster-kicker">ONE NIGHT. NO ALIBIS.</span>
+                                <span class="poster-title">MIDNIGHT<br>IN MARSEILLE</span>
+                                <span class="poster-caption">THE CITY KEEPS ITS SECRETS</span>
+                            </span>
+                            <span class="film-card-info">
+                                <strong>Midnight in Marseille</strong>
+                                <span class="film-room">Cinema 1</span>
+                                <span>Crime / Drama · 1h 52m</span>
+                            </span>
+                        </button>
+                        <button type="button" class="film-card" data-movie-id="6" data-movie-name="Wildwood" data-cinema="Cinema 2" aria-pressed="false">
+                            <span class="film-card-poster poster-art poster-art-wildwood" aria-hidden="true">
+                                <span class="poster-kicker">FOLLOW THE OLD TRAIL</span>
+                                <span class="poster-title">WILDWOOD</span>
+                                <span class="poster-caption">SOME PLACES REMEMBER</span>
+                            </span>
+                            <span class="film-card-info">
+                                <strong>Wildwood</strong>
+                                <span class="film-room">Cinema 2</span>
+                                <span>Adventure / Fantasy · 2h 01m</span>
+                            </span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="booking-section" id="date-section" aria-labelledby="date-heading" hidden>
+                    <button type="button" class="booking-back" id="change-film">← Choose a different film</button>
+                    <div class="section-title-row">
+                        <span class="step-number" aria-hidden="true">02</span>
+                        <h2 id="date-heading">Choose a date</h2>
+                    </div>
+                    <div class="screening-calendar">
+                        <div class="calendar-heading">
+                            <button type="button" class="calendar-nav" id="calendar-previous" aria-label="Previous month">‹</button>
+                            <h3 id="calendar-month" aria-live="polite"></h3>
+                            <button type="button" class="calendar-nav" id="calendar-next" aria-label="Next month">›</button>
+                        </div>
+                        <div class="calendar-weekdays" aria-hidden="true">
+                            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                        </div>
+                        <div class="date-options" id="date-options" role="group" aria-label="Screening date"></div>
+                    </div>
+                </section>
+
+                <section class="booking-section" id="time-section" aria-labelledby="time-heading" hidden>
+                    <div class="section-title-row">
+                        <span class="step-number" aria-hidden="true">03</span>
+                        <h2 id="time-heading">Choose a showtime</h2>
+                    </div>
+                    <div class="time-options" role="group" aria-label="Screening time"></div>
+                </section>
+
+                <section class="booking-section seat-section" id="seat-section" aria-labelledby="seat-heading" hidden>
+                    <div class="section-title-row">
+                        <span class="step-number" aria-hidden="true">04</span>
+                        <div>
+                            <h2 id="seat-heading">Select your seats</h2>
+                            <p class="section-hint">Choose up to 8 seats. The center block has three extra rows, with angled side blocks set farther back.</p>
+                        </div>
+                    </div>
+                    <div class="theater-scroll">
+                        <div class="theater-layout">
+                            <div class="screen" aria-label="Cinema screen">
+                                <img src="assets/images/vectors/theater-screen.svg" alt="" aria-hidden="true">
+                                <span>SCREEN · <strong id="screen-cinema">Choose a film</strong></span>
+                            </div>
+                            <div class="seat-map" id="seat-map" role="group" aria-label="Cinema seating"></div>
+                        </div>
+                    </div>
+                    <div class="seat-legend" aria-label="Seat availability legend">
+                        <span><i class="seat-key available" aria-hidden="true"></i>Available</span>
+                        <span><i class="seat-key selected" aria-hidden="true"></i>Selected</span>
+                        <span><i class="seat-key occupied" aria-hidden="true"></i>Occupied</span>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="booking-summary" id="booking-summary" aria-labelledby="summary-heading" hidden>
+                <p class="dashboard-eyebrow">YOUR BOOKING</p>
+                <h2 id="summary-heading">Order summary</h2>
+                <dl class="summary-details">
+                    <div><dt>Film</dt><dd id="summary-film">Cyberpunk Horizon</dd></div>
+                    <div><dt>Cinema</dt><dd id="summary-cinema">Cinema 1</dd></div>
+                    <div><dt>Screening</dt><dd><span id="summary-date">Today</span><br><span id="summary-time">3:45 PM</span></dd></div>
+                    <div><dt>Seats</dt><dd id="summary-seats">None selected</dd></div>
+                </dl>
+                <div class="price-breakdown">
+                    <p><span>Tickets <span id="ticket-count">0</span> × $14.50</span><strong id="ticket-total">$0.00</strong></p>
+                    <p><span>Service fee</span><strong id="service-fee">$0.00</strong></p>
+                    <p class="total-row"><span>Total</span><strong id="booking-total">$0.00</strong></p>
+                </div>
+                <button type="button" class="btn btn-primary checkout-button" id="checkout-button" disabled>Save demo booking</button>
+                <p class="checkout-note" id="checkout-status" role="status" aria-live="polite">Select at least one seat to continue.</p>
+            </aside>
+        </div>
+    </main>
+
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/booking.js"></script>
+</body>
+</html>

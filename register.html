@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — OrionCinemas</title>
+<link rel="stylesheet" href="assets/css/register.css">
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<button type="button" class="motion-toggle" id="motionToggle" hidden>Pause animations</button>
+
+<nav>
+  <a class="logo" href="index.html">
+    <img src="assets/images/vectors/orion-logo.svg" alt="" width="36" height="36">
+    <span class="logo-text"><span class="brand-highlight">Orion</span>Cinemas</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#movies">Now Showing</a></li>
+    <li><a href="index.html#experiences">Experiences</a></li>
+    <li><a href="index.html#experiences">VIP Club</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="login.html">Login</a>
+    <a class="btn-vip"   href="register.html">Join VIP</a>
+  </div>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🎬</div>
+      <h1 class="card-title">Create Account</h1>
+    </div>
+
+    <form method="post">
+
+      <div class="row">
+        <div class="field">
+          <label for="full_name">Full Name</label>
+          <div class="input-wrap">
+            <input type="text" id="full_name" name="full_name"
+                   placeholder="Juan dela Cruz"
+                   autocomplete="name" required>
+            <span class="icon">👤</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="phone">Phone (optional)</label>
+          <div class="input-wrap">
+            <input type="tel" id="phone" name="phone"
+                   placeholder="+63 9XX XXX XXXX" autocomplete="tel">
+            <span class="icon">📱</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email"
+                 placeholder="you@example.com"
+                 autocomplete="email" required>
+          <span class="icon">✉️</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap password-field">
+          <input class="password-input" type="password" id="password" name="password"
+                 placeholder="Min. 8 characters" minlength="8" autocomplete="new-password" required>
+          <span class="icon">🔒</span>
+          <button type="button" class="toggle-pw" data-password-target="password" aria-label="Show password" aria-pressed="false">👁</button>
+        </div>
+        <div id="strength-bar"><div id="strength-fill"></div></div>
+        <div id="strength-label"></div>
+      </div>
+
+      <div class="field">
+        <label for="confirm_password">Confirm Password</label>
+        <div class="input-wrap password-field">
+          <input class="password-input" type="password" id="confirm_password" name="confirm_password"
+                 placeholder="Repeat your password" minlength="8" autocomplete="new-password" required>
+          <span class="icon">🔑</span>
+          <button type="button" class="toggle-pw" data-password-target="confirm_password" aria-label="Show password" aria-pressed="false">👁</button>
+        </div>
+      </div>
+
+      <div class="check-row">
+        <input type="checkbox" id="terms" name="terms">
+        <label for="terms" class="terms-label">
+          I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn" disabled>Create My Account</button>
+
+      <p class="sign-in-link sign-in-link-form">
+        Already have an account? <a href="login.html">Sign in</a>
+      </p>
+    </form>
+  </div>
+</main>
+
+<footer>© 2025 OrionCinemas. All rights reserved.</footer>
+
+<script src="assets/js/validation.js"></script>
+<script src="assets/js/register.js"></script>
+</body>
+</html>
