@@ -32,17 +32,19 @@
     transition: none !important;
   }
   .motion-toggle {
-    position: fixed; right: 1rem; bottom: 1rem; z-index: 101;
-    padding: .65rem .9rem; border: 1px solid var(--border); border-radius: 10px;
-    background: rgba(6,6,18,.9); color: var(--text); font: inherit; font-size: .85rem;
+    position: fixed; top: 76px; right: 2rem; z-index: 101;
+    padding: .35rem .65rem; border: 1px solid var(--border); border-radius: 8px;
+    background: rgba(6,6,18,.9); color: var(--text); font: inherit; font-size: .75rem;
     cursor: pointer;
   }
+  .motion-toggle[hidden] { display: none; }
   .motion-toggle:hover, .motion-toggle:focus-visible { border-color: var(--cyan); color: var(--cyan); }
 
   /* ── Nav ── */
   nav {
     position: sticky; top: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
+    position: sticky;
     padding: 0 2rem;
     height: 64px;
     background: rgba(6,6,18,0.85);
@@ -53,7 +55,10 @@
   .logo img { width: 36px; height: 36px; }
   .logo-text { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -.5px; }
   .brand-highlight { color: #00e5ff; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
   .nav-links a {
     color: var(--muted); text-decoration: none; font-size: .9rem;
     transition: color .2s;
@@ -219,7 +224,7 @@
 
   .sign-in-link { text-align: center; font-size: .95rem; color: var(--text); margin-top: 1rem; }
   .sign-in-link-form { margin-top: 1rem; }
-  .sign-in-link a { color: var(--cyan); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+  .sign-in-link a { color: var(--cyan); font-weight: 700; text-decoration: none; }
   .sign-in-link a:hover { text-decoration: underline; }
 
   /* Footer */
@@ -234,4 +239,5 @@
     .row { grid-template-columns: 1fr; }
     .card { padding: 1.75rem 1.25rem; }
     .nav-links { display: none; }
+    .motion-toggle { right: 1rem; }
   }

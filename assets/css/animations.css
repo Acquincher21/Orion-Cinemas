@@ -10,6 +10,22 @@
    ========================================================== */
 
 /* Keyframe Animations */
+@keyframes cinepulseLandingAnchorArrival {
+    from {
+        opacity: 0.7;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-landing #movies:target,
+.page-landing #experiences:target {
+    animation: cinepulseLandingAnchorArrival 0.24s ease-out both;
+}
+
 @keyframes cinepulseLandingLogoPulse {
     0%, 100% {
         transform: scale(1) rotate(0deg);
@@ -82,12 +98,6 @@
     transition: opacity 0.24s ease, transform 0.24s ease;
 }
 
-.page-landing .movie-card.is-filtered-out {
-    opacity: 0;
-    transform: scale(0.96);
-    pointer-events: none;
-}
-
 .page-landing .card-3d {
     perspective: 1200px;
     background: transparent;
@@ -144,6 +154,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .page-landing #movies:target,
+    .page-landing #experiences:target {
+        animation: none;
+    }
+
+    .page-landing .btn-movie-page {
+        transition: none;
+    }
+
     .page-landing .card-3d {
         perspective: none;
     }

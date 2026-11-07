@@ -1,6 +1,26 @@
 /* Dashboard booking history, activity feed, and chart rendering. */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const accountNav = document.querySelector('.account-nav');
+    if (accountNav) {
+        const navLinks = [...accountNav.querySelectorAll('a[href^="#"]')];
+
+        function updateActiveLink(hash = window.location.hash) {
+            const activeHash = navLinks.some(link => link.hash === hash) ? hash : '#overview';
+            navLinks.forEach(link => {
+                if (link.hash === activeHash) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        navLinks.forEach(link => link.addEventListener('click', () => updateActiveLink(link.hash)));
+        window.addEventListener('hashchange', () => updateActiveLink());
+        updateActiveLink();
+    }
+
     const bookingList = document.getElementById('booking-list');
     const historyFilters = document.querySelectorAll('.history-filter');
     if (!bookingList || !historyFilters.length) return;

@@ -4,7 +4,7 @@
 
 /* ==========================================================
    Landing Page Block
-   Styles landing-page buttons, movie filters and cards, feature
+   Styles landing-page buttons, movie pagination and cards, feature
    cards, and the decorative hero canvas.
    ========================================================== */
 
@@ -43,6 +43,41 @@
     background: rgba(255, 255, 255, 0.15);
 }
 
+.page-landing .nav-actions .btn-ghost,
+.page-landing .nav-actions .btn-vip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.page-landing .nav-actions .btn-ghost {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    background: transparent;
+}
+
+.page-landing .nav-actions .btn-ghost:hover {
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+
+.page-landing .nav-actions .btn-vip {
+    border: none;
+    background: #00e5ff;
+    color: #000;
+    font-weight: 700;
+}
+
+.page-landing .nav-actions .btn-vip:hover {
+    opacity: 0.85;
+}
+
 .page-landing .btn-hero {
     padding: 1rem 2.25rem;
     font-size: 1.1rem;
@@ -76,9 +111,15 @@
     border-radius: var(--radius-sm);
     text-decoration: none;
     font-weight: 700;
+    transform-origin: center;
 }
 
-/* Badges & Vector Filters */
+.page-landing .btn-card-action:hover,
+.page-landing .btn-card-action:focus-visible {
+    transform: scale(1.02);
+}
+
+/* Badges & Vector Features */
 .page-landing .badge-wrapper {
     display: inline-block;
 }
@@ -109,27 +150,38 @@
     backdrop-filter: blur(8px);
 }
 
-.page-landing .filter-badges {
+.page-landing .movie-pagination {
     display: flex;
-    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
-.page-landing .badge-filter {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
+.page-landing .btn-movie-page {
+    min-width: 7rem;
+    border: 1px solid var(--border-glow);
+    background: rgba(0, 229, 255, 0.08);
+    color: var(--text-main);
+    transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth), background-color 0.25s var(--ease-smooth);
+}
+
+.page-landing .btn-movie-page:not(:disabled):hover,
+.page-landing .btn-movie-page:not(:disabled):focus-visible {
+    transform: translateY(-3px) scale(1.04);
+    background: rgba(0, 229, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 229, 255, 0.22);
+}
+
+.page-landing .btn-movie-page:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.page-landing .movie-page-status {
+    min-width: 8rem;
     color: var(--text-muted);
-    padding: 0.5rem 1.2rem;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-weight: 600;
-    transition: transform 0.3s var(--ease-smooth), opacity 0.3s var(--ease-smooth), background-color 0.3s var(--ease-smooth), border-color 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
-}
-
-.page-landing .badge-filter.active, .page-landing .badge-filter:hover {
-    background: var(--accent-cyan);
-    color: #000;
-    border-color: var(--accent-cyan);
-    transform: translateY(-1px);
+    text-align: center;
 }
 
 /* Movie Card Poster Details */

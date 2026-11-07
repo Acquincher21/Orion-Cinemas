@@ -1,6 +1,5 @@
 /* Demo-only form validation and authentication for login.html, register.html, dashboard.html, and booking.html. */
-/* Demo account: juanderful@gmail.com / Juan123* */
-/* Client-side credentials and sessions are for coursework demonstrations, not real security. */
+
 (function () {
     const demoAccount = {
         name: 'OrionCinemas Demo',

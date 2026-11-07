@@ -50,7 +50,10 @@
   .logo img { width: 36px; height: 36px; }
   .logo-text { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -.5px; }
   .brand-highlight { color: #00e5ff; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
   .nav-links a:hover { color: var(--cyan); }
   .nav-actions { display: flex; gap: .75rem; align-items: center; }

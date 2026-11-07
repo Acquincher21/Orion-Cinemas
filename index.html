@@ -20,14 +20,14 @@
                 <span class="brand-name"><span class="brand-highlight">Orion</span>Cinemas</span>
             </a>
 
-            <nav class="nav-links">
-                <a href="#movies" class="nav-item">Now Showing</a>
-                <a href="#experiences" class="nav-item">Experiences</a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#movies">Now Showing</a>
+                <a href="#experiences">Experiences</a>
             </nav>
 
             <div class="nav-actions">
-                <a href="login.html" class="btn btn-secondary">Log in</a>
-                <a href="register.html" class="btn btn-primary">Register</a>
+                <a href="login.html" class="btn-ghost">Login</a>
+                <a href="register.html" class="btn-vip">Sign Up</a>
             </div>
         </div>
     </header>
@@ -64,17 +64,11 @@
         <section id="movies" class="movies-showcase">
             <div class="section-header">
                 <h2>Now Showing</h2>
-                <div class="filter-badges">
-                    <button class="badge-filter active" data-filter="all">All</button>
-                    <button class="badge-filter" data-filter="imax">IMAX</button>
-                    <button class="badge-filter" data-filter="4dx">4DX</button>
-                    <button class="badge-filter" data-filter="vip">VIP Suite</button>
-                </div>
             </div>
 
-            <div class="movie-grid">
+            <div class="movie-grid" id="movie-grid">
                 <!-- Movie Card 1 (3D Flip / Tilt Container) -->
-                <article class="movie-card card-3d">
+                <article class="movie-card card-3d" data-movie-page="1">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-horizon" role="img" aria-label="Cyberpunk Horizon film artwork">
@@ -82,7 +76,7 @@
                                 <span class="poster-title">CYBERPUNK<br>HORIZON</span>
                                 <span class="poster-caption">THE CITY NEVER SLEEPS</span>
                             </div>
-                            <span class="badge badge-tag">IMAX 3D</span>
+                            <span class="badge badge-tag">R-16</span>
                         </div>
                         <div class="card-back">
                             <h3>Cyberpunk Horizon</h3>
@@ -94,7 +88,7 @@
                 </article>
 
                 <!-- Movie Card 2 -->
-                <article class="movie-card card-3d">
+                <article class="movie-card card-3d" data-movie-page="1">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-starlight" role="img" aria-label="Starlight Echoes film artwork">
@@ -102,7 +96,7 @@
                                 <span class="poster-title">STARLIGHT<br>ECHOES</span>
                                 <span class="poster-caption">SOME SIGNALS FIND THEIR WAY HOME</span>
                             </div>
-                            <span class="badge badge-tag">DOLBY ATMOS</span>
+                            <span class="badge badge-tag">PG</span>
                         </div>
                         <div class="card-back">
                             <h3>Starlight Echoes</h3>
@@ -114,7 +108,7 @@
                 </article>
 
                 <!-- Movie Card 3 -->
-                <article class="movie-card card-3d">
+                <article class="movie-card card-3d" data-movie-page="1">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-velocity" role="img" aria-label="Velocity Unleashed film artwork">
@@ -122,7 +116,7 @@
                                 <span class="poster-title">VELOCITY<br>UNLEASHED</span>
                                 <span class="poster-caption">EVERY TURN COUNTS</span>
                             </div>
-                            <span class="badge badge-tag">4DX Motion</span>
+                            <span class="badge badge-tag">PG</span>
                         </div>
                         <div class="card-back">
                             <h3>Velocity Unleashed</h3>
@@ -132,7 +126,66 @@
                         </div>
                     </div>
                 </article>
+                <article class="movie-card card-3d" data-movie-page="2" hidden>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="poster-art poster-art-signal" role="img" aria-label="The Last Signal film artwork">
+                                <span class="poster-kicker">WHEN THE WORLD GOES QUIET</span>
+                                <span class="poster-title">THE LAST<br>SIGNAL</span>
+                                <span class="poster-caption">ONE VOICE CAN CHANGE EVERYTHING</span>
+                            </div>
+                            <span class="badge badge-tag">PG</span>
+                        </div>
+                        <div class="card-back">
+                            <h3>The Last Signal</h3>
+                            <p class="genre">Mystery / Sci-Fi • 2h 04m</p>
+                            <p class="synopsis">A mysterious transmission offers hope in a world gone quiet.</p>
+                            <a href="login.html?next=booking.html%3Fmovie%3D4" class="btn btn-card-action">Select Seats</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="movie-card card-3d" data-movie-page="2" hidden>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="poster-art poster-art-midnight" role="img" aria-label="Midnight in Marseille film artwork">
+                                <span class="poster-kicker">ONE NIGHT. NO ALIBIS.</span>
+                                <span class="poster-title">MIDNIGHT<br>IN MARSEILLE</span>
+                                <span class="poster-caption">THE CITY KEEPS ITS SECRETS</span>
+                            </div>
+                            <span class="badge badge-tag">R-16</span>
+                        </div>
+                        <div class="card-back">
+                            <h3>Midnight in Marseille</h3>
+                            <p class="genre">Crime / Drama • 1h 52m</p>
+                            <p class="synopsis">One night in Marseille draws a determined detective into a web of secrets.</p>
+                            <a href="login.html?next=booking.html%3Fmovie%3D5" class="btn btn-card-action">Select Seats</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="movie-card card-3d" data-movie-page="2" hidden>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="poster-art poster-art-wildwood" role="img" aria-label="Wildwood film artwork">
+                                <span class="poster-kicker">FOLLOW THE OLD TRAIL</span>
+                                <span class="poster-title">WILDWOOD</span>
+                                <span class="poster-caption">SOME PLACES REMEMBER</span>
+                            </div>
+                            <span class="badge badge-tag">PG</span>
+                        </div>
+                        <div class="card-back">
+                            <h3>Wildwood</h3>
+                            <p class="genre">Adventure / Fantasy • 2h 01m</p>
+                            <p class="synopsis">A journey through an ancient forest reveals a world that refuses to be forgotten.</p>
+                            <a href="login.html?next=booking.html%3Fmovie%3D6" class="btn btn-card-action">Select Seats</a>
+                        </div>
+                    </div>
+                </article>
             </div>
+            <nav class="movie-pagination" aria-label="Movie pages">
+                <button class="btn btn-movie-page" id="previous-movies" type="button" aria-controls="movie-grid" disabled>Previous</button>
+                <span class="movie-page-status" id="movie-page-status" aria-live="polite">Movies 1–3 of 6</span>
+                <button class="btn btn-movie-page" id="next-movies" type="button" aria-controls="movie-grid">Next</button>
+            </nav>
         </section>
 
         <!-- Features & Vector Emblem Section -->
