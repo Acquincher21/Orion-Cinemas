@@ -9,6 +9,16 @@
 <body>
 
 <canvas id="particles"></canvas>
+<dialog class="login-loading" id="loginLoading" aria-labelledby="loginLoadingTitle" aria-describedby="loginLoadingMessage">
+  <div class="login-loading-content" role="status" aria-live="polite">
+    <h1 id="loginLoadingTitle">Signing you in</h1>
+    <p id="loginLoadingMessage">Preparing your cinema experience…</p>
+    <div class="login-loading-progress" role="progressbar" aria-label="Sign-in progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span class="login-loading-progress-fill"></span>
+    </div>
+    <span class="login-loading-percentage" id="loginLoadingPercentage">0%</span>
+  </div>
+</dialog>
 
 <nav>
   <a class="logo" href="index.html">

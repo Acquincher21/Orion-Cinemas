@@ -153,18 +153,41 @@
 }
 
 .page-dashboard .booking-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     margin-bottom: 1.1rem;
-    padding: 0;
-    border: 0;
-    background: transparent;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid rgba(0, 242, 254, 0.32);
+    border-radius: 999px;
+    background: rgba(0, 242, 254, 0.06);
     color: var(--accent-cyan);
     font: inherit;
     font-size: 0.84rem;
     cursor: pointer;
+    transition: transform 0.22s ease, border-color 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
 }
 
 .page-dashboard .booking-back:hover {
+    transform: translateX(-3px);
+    border-color: var(--accent-cyan);
+    background: rgba(0, 242, 254, 0.14);
+    box-shadow: 0 0 16px rgba(0, 242, 254, 0.16);
     color: var(--text-main);
+}
+
+.page-dashboard .booking-back-arrow {
+    display: inline-block;
+    transition: transform 0.22s ease;
+}
+
+.page-dashboard .booking-back:hover .booking-back-arrow {
+    transform: translateX(-3px);
+}
+
+.page-dashboard .booking-back:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 3px;
 }
 
 .page-dashboard .section-title-row {
@@ -206,6 +229,7 @@
 }
 
 .page-dashboard .film-card {
+    position: relative;
     min-width: 0;
     overflow: hidden;
     padding: 0;
@@ -224,17 +248,44 @@
     border-color: var(--border-glow);
 }
 
-.page-dashboard .film-card[aria-pressed="true"] {
-    border-color: var(--accent-cyan);
-    box-shadow: 0 0 0 2px var(--border-glow);
+.page-dashboard .film-card-poster-clip {
+    display: block;
+    height: 155px;
+    overflow: hidden;
 }
 
 .page-dashboard .film-card-poster {
+    position: relative;
+    display: block;
     min-height: 155px;
     height: 155px;
     padding: 0.8rem;
     background-size: 100% 100%, contain;
     background-color: #060612;
+    transform: scale(1);
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.25, 1);
+}
+
+.page-dashboard .film-card:hover .film-card-poster,
+.page-dashboard .film-card:focus-visible .film-card-poster {
+    transform: scale(1.06);
+}
+
+.page-dashboard .film-card-rating {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    z-index: 1;
+    padding: 0.32rem 0.75rem;
+    font-size: 0.75rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-dashboard .film-card:hover .film-card-rating {
+    border-color: var(--accent-cyan);
+    background: var(--accent-cyan);
+    color: #061018;
+    box-shadow: 0 0 14px rgba(0, 242, 254, 0.45);
 }
 
 .page-dashboard .film-card-poster .poster-kicker,
@@ -250,6 +301,25 @@
     display: grid;
     gap: 0.3rem;
     padding: 0.8rem;
+}
+
+.page-dashboard .film-card-info > * {
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.25, 1);
+}
+
+.page-dashboard .film-card:hover .film-card-info > strong {
+    transform: translateY(-2px);
+}
+
+.page-dashboard .film-card:hover .film-card-info > .film-room {
+    transform: translateY(-3px);
+    transition-delay: 0.04s;
+}
+
+.page-dashboard .film-card:hover .film-card-info > span:last-child {
+    transform: translateY(-4px);
+    transition-delay: 0.08s;
 }
 
 .page-dashboard .film-room {

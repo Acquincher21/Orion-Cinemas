@@ -129,6 +129,8 @@
 
   /* ── Form ── */
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .name-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; }
+  .name-row .field:last-child { grid-column: 1 / -1; }
   .field { margin-bottom: 1.1rem; }
   label {
     display: block; font-size: .8rem; font-weight: 600;
@@ -153,6 +155,7 @@
     outline: none;
     transition: border-color .25s, box-shadow .25s, background .25s;
   }
+  .input-wrap:not(.password-field) input { padding-right: 2.2rem; }
   .password-field input { padding-right: 2.8rem; }
   input:focus {
     border-color: var(--cyan);
@@ -174,6 +177,27 @@
     transition: width .3s, background .3s;
   }
   #strength-label { font-size: .75rem; color: var(--muted); margin-top: .25rem; }
+  .field[data-state="valid"] input { border-color: rgba(34,197,94,.7); }
+  .field[data-state="invalid"] input { border-color: #ef4444; }
+  .field-status {
+    position: absolute; right: .75rem; top: 50%;
+    color: #22c55e; font-size: 1rem; font-weight: 800;
+    transform: translateY(-50%) scale(.5); opacity: 0;
+  }
+  .password-field .field-status { right: 3rem; }
+  .field[data-state="valid"] .field-status {
+    animation: successCheck .24s ease-out forwards;
+  }
+  .field-feedback { display: block; min-height: 0; color: #fca5a5; font-size: .75rem; }
+  .field-feedback:empty { display: none; }
+  .field-shake { animation: fieldShake .34s ease; }
+  @keyframes successCheck {
+    to { opacity: 1; transform: translateY(-50%) scale(1); }
+  }
+  @keyframes fieldShake {
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
 
   /* Toggle password */
   .toggle-pw {
@@ -188,16 +212,59 @@
 
   /* Checkbox */
   .check-row {
-    display: flex; align-items: flex-start; gap: .6rem;
-    font-size: .85rem; color: var(--muted); margin-bottom: 1.4rem;
+    display: flex; align-items: center; flex-wrap: wrap; gap: .4rem .55rem;
+    font-size: .85rem; color: var(--muted); margin-bottom: .9rem;
   }
   .check-row input[type="checkbox"] {
     width: 16px; height: 16px; flex-shrink: 0; margin-top: .1rem;
     accent-color: var(--cyan); cursor: pointer;
   }
-  .check-row a { color: var(--cyan); text-decoration: none; }
-  .check-row a:hover { text-decoration: underline; }
-  .terms-label { text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .check-row.field-invalid label { color: #fca5a5; }
+  .check-row.field-invalid input { outline: 1px solid #ef4444; }
+  .terms-feedback { margin: 0 0 1rem 1.6rem; color: #fca5a5; font-size: .75rem; }
+  .terms-feedback:empty { display: none; }
+  .terms-label {
+    display: inline; margin: 0; color: inherit;
+    text-transform: none; letter-spacing: 0; font-weight: 400;
+  }
+  .terms-link {
+    padding: 0; border: 0; background: none; color: var(--cyan);
+    font: inherit; text-decoration: underline; cursor: pointer;
+  }
+  .terms-link:hover, .terms-link:focus-visible { color: #fff; }
+  .terms-link:focus-visible, .legal-dialog-close:focus-visible {
+    outline: 2px solid var(--cyan); outline-offset: 3px;
+  }
+
+  /* Terms and privacy dialog */
+  .legal-dialog {
+    width: min(100% - 2rem, 520px); max-height: min(80vh, 640px);
+    margin: auto; padding: 1.5rem;
+    border: 1px solid var(--border); border-radius: 16px;
+    background: #101020; color: var(--text);
+    box-shadow: 0 20px 70px rgba(0,0,0,.55);
+  }
+  .legal-dialog::backdrop { background: rgba(3,3,12,.78); backdrop-filter: blur(5px); }
+  .legal-dialog[open] { animation: legalDialogEnter .2s ease-out; }
+  @keyframes legalDialogEnter {
+    from { opacity: 0; transform: translateY(10px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .legal-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .legal-dialog-header h2 { color: #fff; font-size: 1.2rem; }
+  .legal-dialog-close {
+    width: 2rem; height: 2rem; border: 1px solid var(--border); border-radius: 50%;
+    background: transparent; color: var(--text); font-size: 1.35rem; cursor: pointer;
+  }
+  .legal-dialog-content { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  .legal-dialog-content h3 { margin-bottom: .35rem; color: var(--cyan); font-size: .9rem; }
+  .legal-dialog-content p { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .field-shake, .legal-dialog[open] { animation: none; }
+    .field[data-state="valid"] .field-status { animation: none; opacity: 1; transform: translateY(-50%) scale(1); }
+    #strength-fill { transition: none; }
+  }
 
   /* Submit */
   .btn-submit {
@@ -237,6 +304,7 @@
 
   @media (max-width: 520px) {
     .row { grid-template-columns: 1fr; }
+    .name-row { grid-template-columns: 1fr; }
     .card { padding: 1.75rem 1.25rem; }
     .nav-links { display: none; }
     .motion-toggle { right: 1rem; }

@@ -58,7 +58,7 @@
 }
 
 .page-account .account-nav a,
-.page-account .sidebar-browse-link {
+.page-account .sidebar-logout-link {
     display: flex;
     min-height: 2.65rem;
     align-items: center;
@@ -67,20 +67,36 @@
     color: var(--account-muted);
     font-size: 0.88rem;
     text-decoration: none;
-    transition: background-color 0.24s ease, color 0.24s ease;
+    transition: transform 0.22s ease, background-color 0.24s ease, color 0.24s ease, box-shadow 0.22s ease;
 }
 
 .page-account .account-nav a::before {
+    flex: 0 0 0.4rem;
     width: 0.4rem;
     height: 0.4rem;
     margin-right: 0.7rem;
     border-radius: 50%;
     background: currentColor;
     content: "";
-    transition: transform 0.24s ease;
+    transition: transform 0.24s ease, box-shadow 0.24s ease;
 }
 
-.page-account .account-nav a:hover,
+.page-account .account-nav a:hover {
+    transform: translateX(4px);
+    box-shadow: inset 2px 0 var(--account-accent);
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--account-accent);
+}
+
+.page-account .account-nav a:active {
+    transform: translateX(2px) scale(0.98);
+}
+
+.page-account .account-nav a:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 2px;
+}
+
 .page-account .account-nav a[aria-current="page"] {
     background: rgba(0, 242, 254, 0.12);
     color: var(--account-accent);
@@ -88,20 +104,27 @@
 
 .page-account .account-nav a[aria-current="page"]::before {
     transform: scale(1.3);
+    box-shadow: 0 0 8px var(--account-accent);
 }
 
-.page-account .sidebar-browse-link {
+.page-account .sidebar-logout-link {
     margin-top: auto;
-    border: 1px solid var(--account-line);
-}
-
-.page-account .sidebar-browse-link:hover {
-    border-color: var(--account-accent);
+    border: 1px solid rgba(0, 242, 254, 0.24);
+    background: rgba(0, 242, 254, 0.05);
     color: var(--account-accent);
 }
 
-.page-account .logout-link {
-    margin-top: 0.75rem;
+.page-account .sidebar-logout-link:hover {
+    transform: translateX(2px);
+    border-color: var(--account-accent);
+    background: rgba(0, 242, 254, 0.12);
+    box-shadow: 0 0 16px rgba(0, 242, 254, 0.12);
+    color: #fff;
+}
+
+.page-account .sidebar-logout-link:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 3px;
 }
 
 .page-account .account-main {
@@ -258,6 +281,7 @@
     padding: 0.25rem;
     border: 1px solid var(--account-line);
     border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.025);
 }
 
 .page-account .history-filter {
@@ -270,12 +294,28 @@
     font: inherit;
     font-size: 0.82rem;
     cursor: pointer;
-    transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.18s ease, box-shadow 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.page-account .history-filter:hover {
+    transform: translateY(-1px);
+    background: rgba(0, 242, 254, 0.07);
+    color: var(--account-accent);
+}
+
+.page-account .history-filter:active {
+    transform: scale(0.96);
+}
+
+.page-account .history-filter:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 2px;
 }
 
 .page-account .history-filter[aria-pressed="true"] {
     background: rgba(0, 242, 254, 0.12);
     color: var(--account-accent);
+    box-shadow: inset 0 0 0 1px rgba(0, 242, 254, 0.22), 0 0 10px rgba(0, 242, 254, 0.08);
 }
 
 .page-account .booking-feedback {
@@ -341,17 +381,50 @@
 }
 
 .page-account .booking-track summary {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     width: fit-content;
     padding-top: 0.75rem;
     color: var(--account-accent);
     cursor: pointer;
 }
 
+.page-account .booking-track summary::after {
+    content: "+";
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.page-account .booking-track.is-expanded summary::after {
+    transform: rotate(45deg);
+}
+
 .page-account .tracking-details {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    opacity: 0;
+    transition: max-height 0.28s ease, padding-top 0.28s ease, opacity 0.2s ease;
+}
+
+.page-account .booking-track:not([open]) .tracking-details {
+    display: none;
+}
+
+.page-account .tracking-details.is-expanded {
+    max-height: 50rem;
+    padding-top: 0.75rem;
+    opacity: 1;
+}
+
+.page-account .tracking-details-inner {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
-    padding-top: 0.75rem;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .page-account .tracking-details p {
@@ -392,9 +465,13 @@
         border-bottom: 1px solid var(--account-line);
     }
 
-    .page-account .sidebar-label,
-    .page-account .sidebar-browse-link {
+    .page-account .sidebar-label {
         display: none;
+    }
+
+    .page-account .sidebar-logout-link {
+        align-self: flex-start;
+        margin-top: 0.6rem;
     }
 
     .page-account .account-nav {
@@ -474,6 +551,7 @@
 }
 
 .page-account .dashboard-widget {
+    position: relative;
     min-width: 0;
     padding: 1.25rem;
     border: 1px solid var(--account-line);
@@ -511,6 +589,64 @@
     width: 100%;
     height: 210px;
     margin-top: 0.8rem;
+    cursor: crosshair;
+}
+
+.page-account .booking-chart:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 3px;
+}
+
+.page-account .chart-tooltip {
+    position: absolute;
+    z-index: 2;
+    max-width: calc(100% - 1rem);
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--account-line);
+    border-radius: 0.5rem;
+    background: rgba(8, 12, 24, 0.96);
+    color: var(--text-main);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.page-account .chart-tooltip.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-account .chart-tooltip[hidden] {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-account .history-filter {
+        transition: none;
+    }
+
+    .page-account .history-filter:hover,
+    .page-account .history-filter:active {
+        transform: none;
+    }
+
+    .page-account .account-nav a {
+        transition: none;
+    }
+
+    .page-account .account-nav a:hover,
+    .page-account .account-nav a:active {
+        transform: none;
+    }
+
+    .page-account .booking-track summary::after,
+    .page-account .tracking-details,
+    .page-account .chart-tooltip {
+        transition: none;
+    }
 }
 
 .page-account .live-indicator {

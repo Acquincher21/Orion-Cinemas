@@ -34,16 +34,34 @@
 
     <form method="post">
 
-      <div class="row">
+      <div class="row name-row">
         <div class="field">
-          <label for="full_name">Full Name</label>
+          <label for="first_name">First Name</label>
           <div class="input-wrap">
-            <input type="text" id="full_name" name="full_name"
-                   placeholder="Juan dela Cruz"
-                   autocomplete="name" required>
+            <input type="text" id="first_name" name="first_name"
+                   placeholder="Juan" autocomplete="given-name" required>
             <span class="icon">👤</span>
           </div>
         </div>
+        <div class="field">
+          <label for="middle_name">Middle Name (optional)</label>
+          <div class="input-wrap">
+            <input type="text" id="middle_name" name="middle_name"
+                   placeholder="Santos" autocomplete="additional-name">
+            <span class="icon">👤</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="last_name">Last Name</label>
+          <div class="input-wrap">
+            <input type="text" id="last_name" name="last_name"
+                   placeholder="dela Cruz" autocomplete="family-name" required>
+            <span class="icon">👤</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="field">
           <label for="phone">Phone (optional)</label>
           <div class="input-wrap">
@@ -68,12 +86,14 @@
         <label for="password">Password</label>
         <div class="input-wrap password-field">
           <input class="password-input" type="password" id="password" name="password"
-                 placeholder="Min. 8 characters" minlength="8" autocomplete="new-password" required>
+                 placeholder="Min. 8 characters" minlength="8" autocomplete="new-password" aria-describedby="strength-label" required>
           <span class="icon">🔒</span>
           <button type="button" class="toggle-pw" data-password-target="password" aria-label="Show password" aria-pressed="false">👁</button>
         </div>
-        <div id="strength-bar"><div id="strength-fill"></div></div>
-        <div id="strength-label"></div>
+        <div id="strength-bar" role="meter" aria-label="Password strength" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
+          <div id="strength-fill"></div>
+        </div>
+        <div id="strength-label" aria-live="polite"></div>
       </div>
 
       <div class="field">
@@ -87,11 +107,13 @@
       </div>
 
       <div class="check-row">
-        <input type="checkbox" id="terms" name="terms">
-        <label for="terms" class="terms-label">
-          I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a>
-        </label>
+        <input type="checkbox" id="terms" name="terms" aria-label="I agree to the Terms and Conditions and Privacy Policy" aria-describedby="terms-feedback" required>
+        <label for="terms" class="terms-label">I agree to the</label>
+        <button type="button" class="terms-link" data-legal-document="terms">Terms &amp; Conditions</button>
+        <span>and</span>
+        <button type="button" class="terms-link" data-legal-document="privacy">Privacy Policy</button>
       </div>
+      <p class="terms-feedback" id="terms-feedback" aria-live="polite"></p>
 
       <button type="submit" class="btn-submit" id="submitBtn" disabled>Create My Account</button>
 
@@ -101,6 +123,14 @@
     </form>
   </div>
 </main>
+
+<dialog class="legal-dialog" id="legalDialog" aria-labelledby="legalDialogTitle" aria-describedby="legalDialogContent">
+  <div class="legal-dialog-header">
+    <h2 id="legalDialogTitle"></h2>
+    <button type="button" class="legal-dialog-close" aria-label="Close dialog">×</button>
+  </div>
+  <div class="legal-dialog-content" id="legalDialogContent"></div>
+</dialog>
 
 <footer>© 2025 OrionCinemas. All rights reserved.</footer>
 

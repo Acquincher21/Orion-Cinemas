@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const accountNav = document.querySelector('.account-nav');
     if (accountNav) {
         const navLinks = [...accountNav.querySelectorAll('a[href^="#"]')];
+        const reduceNavMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         function updateActiveLink(hash = window.location.hash) {
             const activeHash = navLinks.some(link => link.hash === hash) ? hash : '#overview';
@@ -16,8 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        navLinks.forEach(link => link.addEventListener('click', () => updateActiveLink(link.hash)));
+        navLinks.forEach(link => link.addEventListener('click', event => {
+            const target = document.querySelector(link.hash);
+            if (!target) return;
+
+            event.preventDefault();
+            if (window.location.hash !== link.hash) {
+                window.history.pushState(null, '', link.hash);
+            }
+            updateActiveLink(link.hash);
+            target.scrollIntoView({ behavior: reduceNavMotion ? 'auto' : 'smooth', block: 'start' });
+        }));
         window.addEventListener('hashchange', () => updateActiveLink());
+        window.addEventListener('popstate', () => updateActiveLink());
         updateActiveLink();
     }
 
@@ -102,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
         trackingSummary.textContent = 'Booking tracking';
         const details = document.createElement('div');
         details.className = 'tracking-details';
+        const detailsContent = document.createElement('div');
+        detailsContent.className = 'tracking-details-inner';
 
         [
             ['Reference', booking.id],
@@ -115,10 +129,57 @@ document.addEventListener('DOMContentLoaded', () => {
             itemLabel.textContent = label;
             itemValue.textContent = value;
             item.append(itemLabel, itemValue);
-            details.append(item);
+            detailsContent.append(item);
         });
 
+        details.append(detailsContent);
         tracking.append(trackingSummary, details);
+        let isExpanded = false;
+        let transitionId = 0;
+        const reduceTrackingMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        details.addEventListener('transitionend', transitionEvent => {
+            if (transitionEvent.propertyName !== 'max-height') return;
+            if (isExpanded) {
+                details.style.maxHeight = 'none';
+            } else {
+                tracking.open = false;
+                details.style.removeProperty('max-height');
+                details.style.removeProperty('opacity');
+                details.style.removeProperty('padding-top');
+            }
+        });
+        trackingSummary.addEventListener('click', event => {
+            event.preventDefault();
+            isExpanded = !isExpanded;
+            const currentTransition = ++transitionId;
+
+            if (reduceTrackingMotion) {
+                tracking.open = isExpanded;
+                details.classList.toggle('is-expanded', isExpanded);
+                return;
+            }
+
+            if (isExpanded) {
+                tracking.open = true;
+                details.classList.add('is-expanded');
+                details.style.maxHeight = '0px';
+                details.style.opacity = '0';
+                details.style.paddingTop = '0';
+                window.requestAnimationFrame(() => {
+                    if (currentTransition !== transitionId) return;
+                    details.style.maxHeight = `${details.scrollHeight}px`;
+                    details.style.opacity = '1';
+                    details.style.paddingTop = '0.75rem';
+                    });
+            } else {
+                    details.style.maxHeight = `${details.scrollHeight}px`;
+                    void details.offsetHeight;
+                    details.classList.remove('is-expanded');
+                    details.style.maxHeight = '0px';
+                    details.style.opacity = '0';
+                    details.style.paddingTop = '0';
+            }
+        });
         card.append(row, tracking);
         return card;
     }
@@ -184,23 +245,14 @@ document.addEventListener('DOMContentLoaded', () => {
             emptyState.className = 'history-empty';
             const heading = document.createElement('h3');
             const message = document.createElement('p');
-            const browseLink = document.createElement('a');
-            browseLink.className = 'text-link';
-            browseLink.href = 'index.html#movies';
             if (activeFilter === 'all') {
                 heading.textContent = 'No bookings saved';
                 message.textContent = 'Choose a film to start your booking history.';
-                browseLink.textContent = 'Browse films';
             } else {
                 heading.textContent = 'No upcoming screenings';
                 message.textContent = bookings.length ? 'Your previous bookings are available in all history.' : 'Your saved screenings will appear here.';
-                browseLink.textContent = bookings.length ? 'View all history' : 'Choose a film';
-                if (bookings.length) browseLink.addEventListener('click', event => {
-                    event.preventDefault();
-                    setHistoryFilter('all');
-                });
             }
-            emptyState.append(heading, message, browseLink);
+            emptyState.append(heading, message);
             bookingList.append(emptyState);
             return;
         }
@@ -232,8 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const context = canvas.getContext('2d');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tooltip = document.getElementById('chart-tooltip');
+    let tooltipHideTimer;
+    let focusedMonthIndex;
 
-    function getDailyBookings() {
+    function getMonthlyBookings(currentDate) {
         let bookings = [];
         try {
             const stored = JSON.parse(localStorage.getItem('cinepulse-bookings') || '[]');
@@ -242,22 +297,22 @@ document.addEventListener('DOMContentLoaded', () => {
             bookings = [];
         }
 
-        const days = [];
-        for (let offset = 6; offset >= 0; offset--) {
-            const date = new Date();
-            date.setHours(0, 0, 0, 0);
-            date.setDate(date.getDate() - offset);
-            const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+        const months = [];
+        for (let monthIndex = 0; monthIndex < 12; monthIndex++) {
             const count = bookings.filter(booking => {
                 const savedAt = new Date(booking.savedAt || booking.screeningAt);
-                return `${savedAt.getFullYear()}-${savedAt.getMonth()}-${savedAt.getDate()}` === key;
+                return savedAt.getFullYear() === currentDate.getFullYear() && savedAt.getMonth() === monthIndex;
             }).length;
-            days.push({ label: new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date), count });
+            months.push({
+                label: new Intl.DateTimeFormat('en-US', { month: 'short' }).format(new Date(currentDate.getFullYear(), monthIndex, 1)),
+                count,
+                isCurrent: monthIndex === currentDate.getMonth()
+            });
         }
-        return days;
+        return months;
     }
 
-    function drawChart(days, progress = 1) {
+    function drawChart(months, elapsed = Infinity) {
         const bounds = canvas.getBoundingClientRect();
         if (!bounds.width || !bounds.height) return;
         const ratio = window.devicePixelRatio || 1;
@@ -274,13 +329,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const padding = { top: 16, right: 12, bottom: 30, left: 28 };
         const chartWidth = width - padding.left - padding.right;
         const chartHeight = height - padding.top - padding.bottom;
-        const peak = Math.max(3, ...days.map(day => day.count));
+        const peak = Math.max(3, ...months.map(month => month.count));
         context.clearRect(0, 0, width, height);
         context.font = '11px system-ui, sans-serif';
         context.textBaseline = 'middle';
         const gradient = context.createLinearGradient(0, padding.top, 0, padding.top + chartHeight);
         gradient.addColorStop(0, '#ff9a62');
         gradient.addColorStop(1, '#f15c3b');
+        const currentGradient = context.createLinearGradient(0, padding.top, 0, padding.top + chartHeight);
+        currentGradient.addColorStop(0, '#65f5ff');
+        currentGradient.addColorStop(1, '#1688c7');
 
         for (let line = 0; line <= 3; line++) {
             const y = padding.top + chartHeight - (chartHeight * line) / 3;
@@ -295,44 +353,110 @@ document.addEventListener('DOMContentLoaded', () => {
             context.fillText(String(Math.round((peak * line) / 3)), padding.left - 7, y);
         }
 
-        const slotWidth = chartWidth / days.length;
+        const slotWidth = chartWidth / months.length;
         const barWidth = Math.min(34, slotWidth * 0.52);
-        days.forEach((day, index) => {
+        months.forEach((month, index) => {
             const x = padding.left + slotWidth * index + (slotWidth - barWidth) / 2;
-            const fullHeight = day.count ? Math.max(4, (day.count / peak) * chartHeight) : 2;
-            const delay = index * 0.07;
-            const localProgress = reduceMotion ? 1 : Math.max(0, Math.min(1, (progress - delay) / 0.55));
+            const fullHeight = month.count ? Math.max(4, (month.count / peak) * chartHeight) : 2;
+            const delay = index * 70;
+            const localProgress = reduceMotion ? 1 : Math.max(0, Math.min(1, (elapsed - delay) / 520));
             const easedProgress = 1 - (1 - localProgress) ** 3;
-            const barHeight = fullHeight;
+            const barHeight = fullHeight * easedProgress;
             context.globalAlpha = easedProgress;
-            context.fillStyle = gradient;
+            context.fillStyle = month.isCurrent ? currentGradient : gradient;
+            context.shadowColor = month.isCurrent ? 'rgba(0, 229, 255, 0.55)' : 'transparent';
+            context.shadowBlur = month.isCurrent ? 12 : 0;
             context.beginPath();
             context.roundRect(x, padding.top + chartHeight - barHeight, barWidth, barHeight, [4, 4, 0, 0]);
             context.fill();
+            context.shadowBlur = 0;
             context.globalAlpha = 1;
-            context.fillStyle = '#9aa5b5';
+            context.fillStyle = month.isCurrent ? '#65f5ff' : '#9aa5b5';
+            context.font = `${month.isCurrent ? '700' : '400'} 11px system-ui, sans-serif`;
             context.textAlign = 'center';
-            context.fillText(day.label, x + barWidth / 2, height - 12);
+            context.fillText(month.label, x + barWidth / 2, height - 12);
         });
     }
 
-    function animateChart(days) {
+    function animateChart(months) {
         if (reduceMotion) {
-            drawChart(days);
+            drawChart(months);
             return;
         }
 
         const start = performance.now();
+        const duration = (months.length - 1) * 70 + 520;
         function frame(now) {
-            const progress = Math.min(1, (now - start) / 850);
-            drawChart(days, progress);
-            if (progress < 1) requestAnimationFrame(frame);
+            const elapsed = now - start;
+            drawChart(months, elapsed);
+            if (elapsed < duration) requestAnimationFrame(frame);
         }
         requestAnimationFrame(frame);
     }
 
-    const days = getDailyBookings();
-    window.setTimeout(() => animateChart(days), reduceMotion ? 0 : 620);
-    window.addEventListener('resize', () => drawChart(days));
+    const currentDate = new Date();
+    const months = getMonthlyBookings(currentDate);
+    const currentMonthLabel = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
+    document.getElementById('chart-period').textContent = `January–December ${currentDate.getFullYear()}`;
+    document.getElementById('chart-description').textContent = `Bookings saved each month this year, with ${currentMonthLabel} highlighted.`;
+    function showMonthTooltip(index, clientX, clientY) {
+        const month = months[index];
+        if (!month) return;
+
+        const widgetBounds = canvas.closest('.chart-widget').getBoundingClientRect();
+        tooltip.textContent = `${month.label} ${currentDate.getFullYear()} · ${month.count} ${month.count === 1 ? 'booking' : 'bookings'}${month.isCurrent ? ' · Current month' : ''}`;
+        tooltip.hidden = false;
+        tooltip.setAttribute('aria-hidden', 'false');
+        tooltip.style.left = `${Math.max(8, Math.min(clientX - widgetBounds.left + 10, widgetBounds.width - tooltip.offsetWidth - 8))}px`;
+        tooltip.style.top = `${Math.max(8, clientY - widgetBounds.top - tooltip.offsetHeight - 12)}px`;
+        window.clearTimeout(tooltipHideTimer);
+        window.requestAnimationFrame(() => tooltip.classList.add('is-visible'));
+    }
+
+    function hideMonthTooltip() {
+        tooltip.classList.remove('is-visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+        window.clearTimeout(tooltipHideTimer);
+        tooltipHideTimer = window.setTimeout(() => {
+            tooltip.hidden = true;
+        }, reduceMotion ? 0 : 180);
+    }
+
+    canvas.addEventListener('pointermove', event => {
+        const bounds = canvas.getBoundingClientRect();
+        const padding = { left: 28, right: 12 };
+        const chartWidth = bounds.width - padding.left - padding.right;
+        const slotWidth = chartWidth / months.length;
+        const localX = event.clientX - bounds.left;
+        const index = Math.floor((localX - padding.left) / slotWidth);
+
+        if (event.clientY < bounds.top || event.clientY > bounds.bottom || index < 0 || index >= months.length) {
+            hideMonthTooltip();
+            return;
+        }
+        showMonthTooltip(index, event.clientX, event.clientY);
+    });
+    canvas.addEventListener('pointerleave', hideMonthTooltip);
+    canvas.addEventListener('focus', () => {
+        focusedMonthIndex = months.findIndex(month => month.isCurrent);
+        const bounds = canvas.getBoundingClientRect();
+        showMonthTooltip(focusedMonthIndex, bounds.left + bounds.width / 2, bounds.top + 16);
+    });
+    canvas.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        focusedMonthIndex = (focusedMonthIndex + direction + months.length) % months.length;
+        const bounds = canvas.getBoundingClientRect();
+        const slotWidth = (bounds.width - 40) / months.length;
+        const centerX = bounds.left + 28 + slotWidth * (focusedMonthIndex + 0.5);
+        showMonthTooltip(focusedMonthIndex, centerX, bounds.top + bounds.height / 2);
+    });
+    canvas.addEventListener('blur', () => {
+        focusedMonthIndex = undefined;
+        hideMonthTooltip();
+    });
+    window.setTimeout(() => animateChart(months), reduceMotion ? 0 : 620);
+    window.addEventListener('resize', () => drawChart(months));
 });
 /* Landing Page Block */

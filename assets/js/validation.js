@@ -57,6 +57,7 @@
 
     function setupLogin(form) {
         const submitButton = form.querySelector('#submitBtn');
+        const loadingScreen = document.getElementById('loginLoading');
         submitButton.disabled = false;
         form.addEventListener('submit', event => {
             event.preventDefault();
@@ -84,7 +85,36 @@
                 showFeedback(form, 'Your browser could not save the demo sign-in. Check its storage settings and try again.', false);
                 return;
             }
-            window.location.href = getNextPage();
+            submitButton.disabled = true;
+            form.setAttribute('aria-busy', 'true');
+            loadingScreen.showModal();
+            const progressBar = loadingScreen.querySelector('[role="progressbar"]');
+            const progressFill = loadingScreen.querySelector('.login-loading-progress-fill');
+            const percentage = loadingScreen.querySelector('#loginLoadingPercentage');
+            const message = loadingScreen.querySelector('#loginLoadingMessage');
+            const loadingMessages = [
+                'Verifying your sign-in…',
+                'Preparing your cinema experience…',
+                'Getting your account ready…',
+                'Almost there—opening your account…'
+            ];
+            const loadingStartedAt = Date.now();
+            const loadingInterval = window.setInterval(() => {
+                const elapsed = Date.now() - loadingStartedAt;
+                const progressRatio = Math.min(1, elapsed / 4000);
+                const progress = Math.floor(progressRatio ** 2 * 100);
+                const messageIndex = Math.min(loadingMessages.length - 1, Math.floor(progress / 25));
+
+                progressBar.setAttribute('aria-valuenow', String(progress));
+                progressFill.style.width = `${progress}%`;
+                percentage.textContent = `${progress}%`;
+                message.textContent = loadingMessages[messageIndex];
+
+                if (elapsed >= 4000) {
+                    window.clearInterval(loadingInterval);
+                    window.location.href = getNextPage();
+                }
+            }, 40);
         });
 
         if (new URLSearchParams(window.location.search).get('registered') === '1') {
@@ -114,8 +144,11 @@
                 return;
             }
 
+            const firstName = form.querySelector('#first_name').value.trim();
+            const middleName = form.querySelector('#middle_name').value.trim();
+            const lastName = form.querySelector('#last_name').value.trim();
             const account = {
-                name: form.querySelector('#full_name').value.trim(),
+                name: [firstName, middleName, lastName].filter(Boolean).join(' '),
                 email,
                 password
             };

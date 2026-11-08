@@ -23,8 +23,7 @@
             <a href="#activity">Activity</a>
             <a href="#bookings">Bookings</a>
         </nav>
-        <a href="index.html#movies" class="sidebar-browse-link">Browse films</a>
-        <a href="index.html" class="sidebar-browse-link logout-link" id="logout-button">Log out</a>
+        <a href="index.html" class="sidebar-logout-link" id="logout-button">Log out</a>
     </aside>
 
     <main class="account-main">
@@ -66,10 +65,11 @@
                         <p class="account-eyebrow">BOOKING ACTIVITY</p>
                         <h2>Screenings over time</h2>
                     </div>
-                    <span class="widget-period">Last 7 days</span>
+                    <span class="widget-period" id="chart-period">January–December</span>
                 </div>
-                <p class="widget-note" id="chart-description">Bookings saved locally during the past seven days.</p>
-                <canvas id="booking-chart" class="booking-chart" role="img" aria-label="Bar chart showing bookings by day for the last seven days" aria-describedby="chart-description">A chart of bookings saved during the past seven days.</canvas>
+                <p class="widget-note" id="chart-description">Bookings saved each month this year, with the current month highlighted.</p>
+                <canvas id="booking-chart" class="booking-chart" role="img" tabindex="0" aria-keyshortcuts="ArrowLeft ArrowRight" aria-label="Bar chart showing monthly booking totals from January through December, with the current month highlighted" aria-describedby="chart-description chart-tooltip">A chart of monthly booking totals from January through December, with the current month highlighted.</canvas>
+                <div class="chart-tooltip" id="chart-tooltip" role="tooltip" aria-hidden="true" hidden></div>
             </article>
             <article class="dashboard-widget activity-widget">
                 <div class="widget-heading">

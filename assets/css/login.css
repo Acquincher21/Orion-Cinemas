@@ -24,6 +24,33 @@
   }
 
   #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .login-loading:not([open]) { display: none; }
+  .login-loading[open] {
+    position: fixed; inset: 0; z-index: 200;
+    display: grid; width: 100%; max-width: none; height: 100%; max-height: none;
+    margin: 0; padding: 2rem; place-items: center;
+    border: 0; background: rgba(6,6,18,.96); color: var(--text);
+    text-align: center;
+  }
+  .login-loading::backdrop { background: rgba(6,6,18,.96); }
+  .login-loading-content { display: grid; width: min(100%, 380px); justify-items: center; gap: .85rem; }
+  .login-loading h1 { color: #fff; font-size: 1.4rem; }
+  .login-loading p { min-height: 1.4em; color: var(--muted); font-size: .95rem; }
+  .login-loading-progress {
+    width: 100%; height: .65rem; overflow: hidden;
+    border: 1px solid rgba(0,229,255,.3); border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.35);
+  }
+  .login-loading-progress-fill {
+    display: block; width: 0; height: 100%; border-radius: inherit;
+    background: var(--grad); box-shadow: 0 0 14px rgba(0,229,255,.45);
+    transition: width .12s linear;
+  }
+  .login-loading-percentage { color: var(--cyan); font-size: .85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) {
+    .login-loading-progress-fill { transition: none; }
+  }
   body.animations-paused *, body.animations-paused *::before, body.animations-paused *::after {
     animation-play-state: paused !important;
     transition: none !important;
@@ -105,6 +132,14 @@
     display: inline-flex; align-items: center; justify-content: center;
     font-size: 1.5rem; margin-bottom: 1rem;
     box-shadow: 0 0 20px rgba(0,229,255,0.2);
+    animation: securityBadgePulse 3s ease-in-out infinite;
+  }
+  @keyframes securityBadgePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,229,255,0.2); }
+    50% { transform: scale(1.06); box-shadow: 0 0 30px rgba(0,229,255,0.42); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-icon { animation: none; }
   }
   .card-title { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: .35rem; }
   /* Alert */
