@@ -154,6 +154,10 @@ body.page-landing {
     .page-landing .nav-links {
         display: none;
     }
+
+    .page-landing .movie-grid {
+        grid-template-columns: minmax(0, 320px);
+    }
 }
 
 .page-landing .hero-content {
@@ -201,7 +205,8 @@ body.page-landing {
 
 .page-landing .movie-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+    justify-content: center;
     gap: 2.5rem;
 }
 

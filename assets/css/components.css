@@ -262,23 +262,12 @@
     background-size: 100% 100%, auto 90%;
 }
 
-.page-landing .poster-kicker,
-.page-landing .poster-caption {
+.page-landing .poster-kicker {
     max-width: 17rem;
     color: rgba(255, 255, 255, 0.78);
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-}
-
-.page-landing .poster-caption {
-    align-self: center;
-    margin-top: auto;
-    padding: 0.4rem 0.6rem;
-    border-radius: 0.35rem;
-    background: rgba(6, 6, 18, 0.72);
-    text-align: center;
-    overflow-wrap: anywhere;
 }
 
 .page-landing .poster-title {
