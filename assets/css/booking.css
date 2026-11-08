@@ -233,6 +233,8 @@
     min-height: 155px;
     height: 155px;
     padding: 0.8rem;
+    background-size: 100% 100%, contain;
+    background-color: #060612;
 }
 
 .page-dashboard .film-card-poster .poster-kicker,
