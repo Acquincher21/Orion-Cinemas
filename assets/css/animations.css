@@ -159,6 +159,20 @@
         animation: none;
     }
 
+    .page-landing .nav-actions .btn-ghost,
+    .page-landing .nav-actions .btn-vip {
+        transition: none;
+    }
+
+    .page-landing .nav-actions .btn-ghost:hover,
+    .page-landing .nav-actions .btn-ghost:focus-visible,
+    .page-landing .nav-actions .btn-ghost:active,
+    .page-landing .nav-actions .btn-vip:hover,
+    .page-landing .nav-actions .btn-vip:focus-visible,
+    .page-landing .nav-actions .btn-vip:active {
+        transform: none;
+    }
+
     .page-landing .btn-movie-page {
         transition: none;
     }

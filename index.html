@@ -22,6 +22,7 @@
 
             <nav class="nav-links" aria-label="Main navigation">
                 <a href="#movies">Now Showing</a>
+                <a href="#upcoming">Coming Soon</a>
                 <a href="#experiences">Experiences</a>
             </nav>
 
@@ -42,7 +43,7 @@
             </button>
             <div class="hero-content">
                 <div class="badge-wrapper">
-                    <span class="badge badge-glow">
+                    <span class="badge">
                         <img src="assets/images/vectors/cinema-badge.svg" alt="OrionCinemas badge" class="badge-icon">
                         IMAX 4K Laser Projection
                     </span>
@@ -74,8 +75,7 @@
                             <div class="poster-art poster-art-horizon" role="img" aria-label="The Odyssey movie poster">
                             </div>
                             <div class="movie-card-tags">
-                                <span class="badge badge-tag">NOW SHOWING</span>
-                                <span class="badge badge-tag">Rated R-13</span>
+                                <span class="badge badge-tag badge-tag-restricted">R-13</span>
                             </div>
                         </div>
                         <div class="card-back">
@@ -94,8 +94,7 @@
                             <div class="poster-art poster-art-starlight" role="img" aria-label="Pacific Rim movie poster">
                             </div>
                             <div class="movie-card-tags">
-                                <span class="badge badge-tag">NOW SHOWING</span>
-                                <span class="badge badge-tag">Rated PG</span>
+                                <span class="badge badge-tag badge-tag-blue">PG</span>
                             </div>
                         </div>
                         <div class="card-back">
@@ -114,8 +113,7 @@
                             <div class="poster-art poster-art-velocity" role="img" aria-label="Avengers: Doomsday movie poster">
                             </div>
                             <div class="movie-card-tags">
-                                <span class="badge badge-tag">NOW SHOWING</span>
-                                <span class="badge badge-tag">Rated PG-13</span>
+                                <span class="badge badge-tag badge-tag-blue">PG-13</span>
                             </div>
                         </div>
                         <div class="card-back">
@@ -132,8 +130,7 @@
                             <div class="poster-art poster-art-signal" role="img" aria-label="Toy Story 5 movie poster">
                             </div>
                             <div class="movie-card-tags">
-                                <span class="badge badge-tag">NOW SHOWING</span>
-                                <span class="badge badge-tag">Rated G</span>
+                                <span class="badge badge-tag badge-tag-blue">G</span>
                             </div>
                         </div>
                         <div class="card-back">
@@ -150,8 +147,7 @@
                             <div class="poster-art poster-art-midnight" role="img" aria-label="New Resident Evil movie poster">
                             </div>
                             <div class="movie-card-tags">
-                                <span class="badge badge-tag">NOW SHOWING</span>
-                                <span class="badge badge-tag">Rated R-16</span>
+                                <span class="badge badge-tag badge-tag-restricted">R-16</span>
                             </div>
                         </div>
                         <div class="card-back">
@@ -168,8 +164,7 @@
                             <div class="poster-art poster-art-hailmary" role="img" aria-label="Project Hail Mary movie poster">
                             </div>
                             <div class="movie-card-tags">
-                                <span class="badge badge-tag">NOW SHOWING</span>
-                                <span class="badge badge-tag">R-18</span>
+                                <span class="badge badge-tag badge-tag-blue">PG-13</span>
                             </div>
                         </div>
                         <div class="card-back">
@@ -186,6 +181,62 @@
                 <span class="movie-page-status" id="movie-page-status" aria-live="polite">Movies 1–3 of 6</span>
                 <button class="btn btn-movie-page" id="next-movies" type="button" aria-controls="movie-grid">Next</button>
             </nav>
+        </section>
+
+        <section id="upcoming" class="upcoming-showcase" aria-labelledby="upcoming-title">
+            <div class="upcoming-heading">
+                <p class="upcoming-eyebrow">Mark your calendar</p>
+                <h2 id="upcoming-title">Coming Soon</h2>
+                <p>Big-screen adventures arriving in 2027.</p>
+            </div>
+
+            <div class="upcoming-grid">
+                <article class="upcoming-card">
+                    <div class="upcoming-art upcoming-art-orbit" aria-hidden="true">
+                        <span class="upcoming-art-number">01</span>
+                    </div>
+                    <div class="upcoming-card-info">
+                        <div class="upcoming-copy">
+                            <span class="upcoming-status">Coming in 2027</span>
+                            <h3>Sonic the Hedgehog 4</h3>
+                            <p><time datetime="2027-03-19">March 19, 2027</time></p>
+                        </div>
+                        <div class="upcoming-poster-slot">
+                            <img src="assets/images/graphics/sonic4.jpg" alt="Sonic the Hedgehog 4 poster">
+                        </div>
+                    </div>
+                </article>
+                <article class="upcoming-card">
+                    <div class="upcoming-art upcoming-art-frontier" aria-hidden="true">
+                        <span class="upcoming-art-number">02</span>
+                    </div>
+                    <div class="upcoming-card-info">
+                        <div class="upcoming-copy">
+                            <span class="upcoming-status">Coming in 2027</span>
+                            <h3>Star Wars: Starfighter</h3>
+                            <p><time datetime="2027-05-28">May 28, 2027</time></p>
+                        </div>
+                        <div class="upcoming-poster-slot">
+                            <img src="assets/images/graphics/starwars.jpg" alt="Star Wars: Starfighter poster">
+                        </div>
+                    </div>
+                </article>
+                <article class="upcoming-card">
+                    <div class="upcoming-art upcoming-art-echoes" aria-hidden="true">
+                        <span class="upcoming-art-number">03</span>
+                    </div>
+                    <div class="upcoming-card-info">
+                        <div class="upcoming-copy">
+                            <span class="upcoming-status">Coming in 2027</span>
+                            <h3>Spider-Man: Beyond the Spider-Verse</h3>
+                            <p><time datetime="2027-06-18">June 18, 2027</time></p>
+                        </div>
+                        <div class="upcoming-poster-slot">
+                            <img src="assets/images/graphics/spiderman.jpg" alt="Spider-Man: Beyond the Spider-Verse poster">
+                        </div>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <!-- Features & Vector Emblem Section -->
