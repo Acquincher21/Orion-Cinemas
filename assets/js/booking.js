@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookingProgressStatus = document.getElementById('booking-progress-status');
     const selectedSeats = new Set();
     const occupiedSeats = new Set(['A4', 'B4', 'B5', 'D11', 'E6']);
-    const ticketPrice = 14.5;
-    const serviceFee = 2.5;
+    const ticketPrice = 280;
     let selectedDate = null;
     let selectedTime = '';
     const today = new Date();
@@ -213,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const seatList = getSeatNumbers([...selectedSeats]);
             const count = seatList.length;
             const ticketTotal = count * ticketPrice;
-            const feeTotal = count * serviceFee;
             document.getElementById('summary-film').textContent = selectedMovie.name;
             document.getElementById('summary-cinema').textContent = selectedMovie.cinema;
             document.getElementById('screen-cinema').textContent = selectedMovie.cinema;
@@ -223,9 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('summary-time').textContent = selectedTime;
             document.getElementById('summary-seats').textContent = seatList.length ? seatList.join(', ') : 'None selected';
             document.getElementById('ticket-count').textContent = count;
-            document.getElementById('ticket-total').textContent = `$${ticketTotal.toFixed(2)}`;
-            document.getElementById('service-fee').textContent = `$${feeTotal.toFixed(2)}`;
-            document.getElementById('booking-total').textContent = `$${(ticketTotal + feeTotal).toFixed(2)}`;
+            document.getElementById('ticket-total').textContent = `₱${ticketTotal.toFixed(2)}`;
+            const serviceFeeElement = document.getElementById('service-fee');
+            if (serviceFeeElement) {
+                serviceFeeElement.textContent = `₱0.00`;
+            }
+            document.getElementById('booking-total').textContent = `₱${ticketTotal.toFixed(2)}`;
             checkoutButton.disabled = count === 0;
             checkoutStatus.textContent = count ? 'Your selection is ready to review.' : 'Select at least one seat to continue.';
             checkoutStatus.dataset.state = count ? 'ready' : '';
@@ -342,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 date: document.getElementById('summary-date').textContent,
                 time: document.getElementById('summary-time').textContent,
                 seats: getSeatNumbers([...selectedSeats]),
-                total: Number(document.getElementById('booking-total').textContent.replace('$', '')),
+                total: Number(document.getElementById('booking-total').textContent.replace(/[^\d.]/g, '')),
                 savedAt: new Date().toISOString()
             };
             try {

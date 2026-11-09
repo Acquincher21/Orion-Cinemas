@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ['Reference', booking.id],
             ['Cinema', booking.cinema || 'Not listed'],
             ['Saved', booking.savedAt ? formatDate(new Date(booking.savedAt), { dateStyle: 'medium', timeStyle: 'short' }) : 'On this device'],
-            ['Demo total', `$${Number(booking.total || 0).toFixed(2)}`]
+            ['Demo total', `₱${Number(booking.total || 0).toFixed(2)}`]
         ].forEach(([label, value]) => {
             const item = document.createElement('p');
             const itemLabel = document.createElement('span');
