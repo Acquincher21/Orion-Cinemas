@@ -206,6 +206,89 @@
     .page-landing .card-back {
         transform: none;
     }
+
+    .page-landing .scroll-reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* ==========================================================
+   Landing Page Scroll-Triggered Content Reveal Block
+   Smooth, GPU-accelerated entrance animations on scroll
+   from Hero ("Immerse Yourself in Cinema") to Now Showing,
+   Coming Soon, and Experiences sections.
+   Strictly uses transform and opacity for locked 60fps.
+   ========================================================== */
+.page-landing .scroll-reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.page-landing .scroll-reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Movie card with scale */
+.page-landing .movie-card.scroll-reveal {
+    opacity: 0;
+    transform: translateY(32px) scale(0.98);
+}
+
+.page-landing .movie-card.scroll-reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Hero Section Staggers ("Immerse Yourself in Cinema") */
+.page-landing .hero-content .badge-wrapper.scroll-reveal { transition-delay: 0.05s; }
+.page-landing .hero-content .hero-title.scroll-reveal { transition-delay: 0.15s; }
+.page-landing .hero-content .hero-subtitle.scroll-reveal { transition-delay: 0.25s; }
+.page-landing .hero-content .hero-cta-group.scroll-reveal { transition-delay: 0.35s; }
+
+/* Now Showing Section Staggers */
+.page-landing .movies-showcase .section-header.scroll-reveal { transition-delay: 0.05s; }
+.page-landing .movies-showcase .movie-card:nth-child(1).scroll-reveal { transition-delay: 0.1s; }
+.page-landing .movies-showcase .movie-card:nth-child(2).scroll-reveal { transition-delay: 0.22s; }
+.page-landing .movies-showcase .movie-card:nth-child(3).scroll-reveal { transition-delay: 0.34s; }
+.page-landing .movies-showcase .movie-pagination.scroll-reveal { transition-delay: 0.15s; }
+
+/* Coming Soon Section Staggers */
+.page-landing .upcoming-showcase .upcoming-heading.scroll-reveal { transition-delay: 0.05s; }
+.page-landing .upcoming-grid .upcoming-card:nth-child(1).scroll-reveal { transition-delay: 0.1s; }
+.page-landing .upcoming-grid .upcoming-card:nth-child(2).scroll-reveal { transition-delay: 0.22s; }
+.page-landing .upcoming-grid .upcoming-card:nth-child(3).scroll-reveal { transition-delay: 0.34s; }
+
+/* Experiences Section Staggers */
+.page-landing .features-section .feature-card:nth-child(1).scroll-reveal { transition-delay: 0.1s; }
+.page-landing .features-section .feature-card:nth-child(2).scroll-reveal { transition-delay: 0.22s; }
+.page-landing .features-section .feature-card:nth-child(3).scroll-reveal { transition-delay: 0.34s; }
+
+/* Ensure Experiences cards retain their 2D Matrix hover effect */
+.page-landing .card-transform.is-revealed {
+    transition: transform 0.4s var(--ease-out-back), opacity 0.4s var(--ease-smooth), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-landing .card-transform:hover,
+.page-landing .card-transform.is-revealed:hover,
+.page-landing .feature-card:hover {
+    transform: matrix(1.03, 0.015, -0.015, 1.03, 0, -8);
+    opacity: 0.96;
+    border-color: rgba(0, 242, 254, 0.65);
+    box-shadow: 0 0 32px rgba(0, 242, 254, 0.28);
+}
+
+/* Ensure Upcoming cards retain their lift hover effect */
+.page-landing .upcoming-card:hover,
+.page-landing .upcoming-card.is-revealed:hover {
+    transform: translateY(-6px);
+    border-color: rgba(196, 181, 253, 0.65);
+    box-shadow: 0 16px 36px rgba(38, 20, 72, 0.32);
 }
 
 /* ==========================================================
@@ -274,7 +357,10 @@
 
 /* ==========================================================
    Booking Page Animation Block
-   Gives the booking heading and film choices a brief entrance.
+   Fluid, eased transitions between booking steps:
+   Film -> Calendar (Date) -> Showtimes -> Seats & Summary.
+   Uses cubic-bezier(0.4, 0, 0.2, 1) ease-in-out easing.
+   Duration: 0.35s (snappy & accessible, preventing user frustration).
    ========================================================== */
 @keyframes cinepulseBookingEntrance {
     from {
@@ -287,6 +373,61 @@
     }
 }
 
+@keyframes cinepulseSectionEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cinepulseSummaryEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(18px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes cinepulseItemFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cinepulseChoiceEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes cinepulseCalendarMonthFade {
+    0% {
+        opacity: 0.4;
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .page-dashboard .dashboard-heading {
     animation: cinepulseBookingEntrance 0.45s ease-out both;
 }
@@ -295,9 +436,105 @@
     animation: cinepulseBookingEntrance 0.45s ease-out 0.08s both;
 }
 
+/* Dynamic Step Entrances (Ease-in-out, tuned to ~0.5s for a smoother, gentle arrival) */
+.page-dashboard .booking-section:not([hidden]),
+.page-dashboard .booking-section.booking-section-animate {
+    animation: cinepulseSectionEntrance 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.page-dashboard .booking-summary:not([hidden]),
+.page-dashboard .booking-summary.booking-section-animate {
+    animation: cinepulseSummaryEntrance 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+/* Calendar arrival */
+.page-dashboard #date-section:not([hidden]) .screening-calendar,
+.page-dashboard #date-section.booking-section-animate .screening-calendar {
+    animation: cinepulseItemFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.05s backwards;
+}
+
+.page-dashboard .calendar-flip-animate {
+    animation: cinepulseCalendarMonthFade 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Showtime choices micro-stagger */
+.page-dashboard #time-section:not([hidden]) .choice-button,
+.page-dashboard #time-section.booking-section-animate .choice-button {
+    animation: cinepulseChoiceEntrance 0.38s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.page-dashboard #time-section:not([hidden]) .choice-button:nth-child(1),
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(1) { animation-delay: 0.05s; }
+
+.page-dashboard #time-section:not([hidden]) .choice-button:nth-child(2),
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(2) { animation-delay: 0.10s; }
+
+.page-dashboard #time-section:not([hidden]) .choice-button:nth-child(3),
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(3) { animation-delay: 0.15s; }
+
+.page-dashboard #time-section:not([hidden]) .choice-button:nth-child(4),
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(4) { animation-delay: 0.20s; }
+
+/* Seats & Theater Screen fluid wave */
+.page-dashboard #seat-section:not([hidden]) .screen,
+.page-dashboard #seat-section.booking-section-animate .screen {
+    animation: cinepulseItemFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.page-dashboard #seat-section:not([hidden]) .seat-row,
+.page-dashboard #seat-section.booking-section-animate .seat-row {
+    animation: cinepulseItemFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(1),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(1) { animation-delay: 0.03s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(2),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(2) { animation-delay: 0.06s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(3),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(3) { animation-delay: 0.09s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(4),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(4) { animation-delay: 0.12s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(5),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(5) { animation-delay: 0.15s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(6),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(6) { animation-delay: 0.18s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(7),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(7) { animation-delay: 0.21s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(8),
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(8) { animation-delay: 0.24s; }
+
+.page-dashboard #seat-section:not([hidden]) .seat-legend,
+.page-dashboard #seat-section.booking-section-animate .seat-legend {
+    animation: cinepulseItemFadeIn 0.38s cubic-bezier(0.4, 0, 0.2, 1) 0.22s backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .page-dashboard .dashboard-heading,
-    .page-dashboard #film-options {
-        animation: none;
+    .page-dashboard #film-options,
+    .page-dashboard .booking-section:not([hidden]),
+    .page-dashboard .booking-section.booking-section-animate,
+    .page-dashboard .booking-summary:not([hidden]),
+    .page-dashboard .booking-summary.booking-section-animate,
+    .page-dashboard #date-section:not([hidden]) .screening-calendar,
+    .page-dashboard #date-section.booking-section-animate .screening-calendar,
+    .page-dashboard .calendar-flip-animate,
+    .page-dashboard #time-section:not([hidden]) .choice-button,
+    .page-dashboard #time-section.booking-section-animate .choice-button,
+    .page-dashboard #seat-section:not([hidden]) .screen,
+    .page-dashboard #seat-section.booking-section-animate .screen,
+    .page-dashboard #seat-section:not([hidden]) .seat-row,
+    .page-dashboard #seat-section.booking-section-animate .seat-row,
+    .page-dashboard #seat-section:not([hidden]) .seat-legend,
+    .page-dashboard #seat-section.booking-section-animate .seat-legend {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
     }
 }

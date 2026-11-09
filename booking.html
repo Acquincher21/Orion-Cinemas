@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/booking.css">
 </head>
+
 <body class="page-landing page-dashboard">
     <header class="navbar">
         <div class="nav-container">
@@ -28,7 +30,8 @@
             <div>
                 <p class="dashboard-eyebrow">ORIONCINEMAS TICKETS</p>
                 <h1>Plan your screening</h1>
-                <p class="dashboard-intro">Choose your film, screening, and seats. Your selection stays visible as you move through each step.</p>
+                <p class="dashboard-intro">Choose your film, screening, and seats. Your selection stays visible as you
+                    move through each step.</p>
             </div>
         </div>
 
@@ -51,7 +54,8 @@
                     <span>Seats</span>
                 </li>
             </ol>
-            <p class="booking-progress-status" id="booking-progress-status" aria-live="polite">Step 1 of 4: Choose a film</p>
+            <p class="booking-progress-status" id="booking-progress-status" aria-live="polite">Step 1 of 4: Choose a
+                film</p>
         </nav>
 
         <div class="booking-layout">
@@ -62,58 +66,70 @@
                         <h2 id="film-heading">Choose a film</h2>
                     </div>
                     <div class="film-grid" id="film-options" role="group" aria-label="Now showing">
-                        <button type="button" class="film-card" data-movie-id="1" data-movie-name="The Odyssey" data-cinema="Cinema 1" aria-pressed="false">
-                            <span class="film-card-poster-clip" aria-hidden="true"><span class="film-card-poster poster-art poster-art-horizon"></span></span>
+                        <button type="button" class="film-card" data-movie-id="1" data-movie-name="The Odyssey"
+                            data-cinema="Cinema 1" data-movie-price="270" aria-pressed="false">
+                            <span class="film-card-poster-clip" aria-hidden="true"><span
+                                    class="film-card-poster poster-art poster-art-horizon"></span></span>
                             <span class="badge badge-tag film-card-rating film-card-rating-restricted">R-13</span>
                             <span class="film-card-info">
                                 <strong>The Odyssey</strong>
                                 <span class="film-room">Cinema 1</span>
-                                <span>Now showing</span>
+                                <span class="film-card-price-tag">₱270 / ticket</span>
                             </span>
                         </button>
-                        <button type="button" class="film-card" data-movie-id="2" data-movie-name="Pacific Rim" data-cinema="Cinema 2" aria-pressed="false">
-                            <span class="film-card-poster-clip" aria-hidden="true"><span class="film-card-poster poster-art poster-art-starlight"></span></span>
+                        <button type="button" class="film-card" data-movie-id="2" data-movie-name="Pacific Rim"
+                            data-cinema="Cinema 2" data-movie-price="260" aria-pressed="false">
+                            <span class="film-card-poster-clip" aria-hidden="true"><span
+                                    class="film-card-poster poster-art poster-art-starlight"></span></span>
                             <span class="badge badge-tag film-card-rating film-card-rating-blue">PG</span>
                             <span class="film-card-info">
                                 <strong>Pacific Rim</strong>
                                 <span class="film-room">Cinema 2</span>
-                                <span>Now showing</span>
+                                <span class="film-card-price-tag">₱260 / ticket</span>
                             </span>
                         </button>
-                        <button type="button" class="film-card" data-movie-id="3" data-movie-name="Avengers: Doomsday" data-cinema="Cinema 3" aria-pressed="false">
-                            <span class="film-card-poster-clip" aria-hidden="true"><span class="film-card-poster poster-art poster-art-velocity"></span></span>
+                        <button type="button" class="film-card" data-movie-id="3" data-movie-name="Avengers: Doomsday"
+                            data-cinema="Cinema 3" data-movie-price="280" aria-pressed="false">
+                            <span class="film-card-poster-clip" aria-hidden="true"><span
+                                    class="film-card-poster poster-art poster-art-velocity"></span></span>
                             <span class="badge badge-tag film-card-rating film-card-rating-restricted">R-13</span>
                             <span class="film-card-info">
                                 <strong>Avengers: Doomsday</strong>
                                 <span class="film-room">Cinema 3</span>
-                                <span>Now showing</span>
+                                <span class="film-card-price-tag">₱280 / ticket</span>
                             </span>
                         </button>
-                        <button type="button" class="film-card" data-movie-id="4" data-movie-name="Toy Story 5" data-cinema="Cinema 4" aria-pressed="false">
-                            <span class="film-card-poster-clip" aria-hidden="true"><span class="film-card-poster poster-art poster-art-signal"></span></span>
+                        <button type="button" class="film-card" data-movie-id="4" data-movie-name="Toy Story 5"
+                            data-cinema="Cinema 4" data-movie-price="280" aria-pressed="false">
+                            <span class="film-card-poster-clip" aria-hidden="true"><span
+                                    class="film-card-poster poster-art poster-art-signal"></span></span>
                             <span class="badge badge-tag film-card-rating film-card-rating-blue">G</span>
                             <span class="film-card-info">
                                 <strong>Toy Story 5</strong>
                                 <span class="film-room">Cinema 4</span>
-                                <span>Now showing</span>
+                                <span class="film-card-price-tag">₱280 / ticket</span>
                             </span>
                         </button>
-                        <button type="button" class="film-card" data-movie-id="5" data-movie-name="New Resident Evil" data-cinema="Cinema 1" aria-pressed="false">
-                            <span class="film-card-poster-clip" aria-hidden="true"><span class="film-card-poster poster-art poster-art-midnight"></span></span>
+                        <button type="button" class="film-card" data-movie-id="5" data-movie-name="New Resident Evil"
+                            data-cinema="Cinema 1" data-movie-price="260" aria-pressed="false">
+                            <span class="film-card-poster-clip" aria-hidden="true"><span
+                                    class="film-card-poster poster-art poster-art-midnight"></span></span>
                             <span class="badge badge-tag film-card-rating film-card-rating-restricted">R-16</span>
                             <span class="film-card-info">
                                 <strong>Resident Evil</strong>
                                 <span class="film-room">Cinema 1</span>
-                                <span>Now showing</span>
+                                <span class="film-card-price-tag">₱260 / ticket</span>
                             </span>
                         </button>
-                        <button type="button" class="film-card" data-movie-id="6" data-movie-name="Project Hail Mary" data-cinema="Cinema 2" aria-pressed="false">
-                            <span class="film-card-poster-clip" aria-hidden="true"><span class="film-card-poster poster-art poster-art-hailmary"></span></span>
+                        <button type="button" class="film-card" data-movie-id="6" data-movie-name="Project Hail Mary"
+                            data-cinema="Cinema 2" data-movie-price="260" aria-pressed="false">
+                            <span class="film-card-poster-clip" aria-hidden="true"><span
+                                    class="film-card-poster poster-art poster-art-hailmary"></span></span>
                             <span class="badge badge-tag film-card-rating film-card-rating-blue">PG-13</span>
                             <span class="film-card-info">
                                 <strong>Project Hail Mary</strong>
                                 <span class="film-room">Cinema 2</span>
-                                <span>Now showing</span>
+                                <span class="film-card-price-tag">₱260 / ticket</span>
                             </span>
                         </button>
                     </div>
@@ -122,7 +138,10 @@
                 <section class="booking-section" id="date-section" aria-labelledby="date-heading" hidden>
                     <button type="button" class="booking-back" id="change-film">
                         <span class="booking-back-arrow" aria-hidden="true">←</span>
-                        <span>Choose a different film</span>
+                        <span class="booking-back-badge">
+                            <span class="booking-back-fill" aria-hidden="true"></span>
+                            <span class="booking-back-text">Choose a different film</span>
+                        </span>
                     </button>
                     <div class="section-title-row">
                         <span class="step-number" aria-hidden="true">02</span>
@@ -130,9 +149,11 @@
                     </div>
                     <div class="screening-calendar">
                         <div class="calendar-heading">
-                            <button type="button" class="calendar-nav" id="calendar-previous" aria-label="Previous month">‹</button>
+                            <button type="button" class="calendar-nav" id="calendar-previous"
+                                aria-label="Previous month">‹</button>
                             <h3 id="calendar-month" aria-live="polite"></h3>
-                            <button type="button" class="calendar-nav" id="calendar-next" aria-label="Next month">›</button>
+                            <button type="button" class="calendar-nav" id="calendar-next"
+                                aria-label="Next month">›</button>
                         </div>
                         <div class="calendar-weekdays" aria-hidden="true">
                             <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
@@ -154,7 +175,8 @@
                         <span class="step-number" aria-hidden="true">04</span>
                         <div>
                             <h2 id="seat-heading">Select your seats</h2>
-                            <p class="section-hint">Choose up to 8 seats. The center block has three extra rows, with angled side blocks set farther back.</p>
+                            <p class="section-hint">Choose up to 8 seats. The center block has three extra rows, with
+                                angled side blocks set farther back.</p>
                         </div>
                     </div>
                     <div class="theater-scroll">
@@ -178,17 +200,32 @@
                 <p class="dashboard-eyebrow">YOUR BOOKING</p>
                 <h2 id="summary-heading">Order summary</h2>
                 <dl class="summary-details">
-                    <div><dt>Film</dt><dd id="summary-film">The Odyssey</dd></div>
-                    <div><dt>Cinema</dt><dd id="summary-cinema">Cinema 1</dd></div>
-                    <div><dt>Screening</dt><dd><span id="summary-date">Today</span><br><span id="summary-time">3:45 PM</span></dd></div>
-                    <div><dt>Seats</dt><dd id="summary-seats">None selected</dd></div>
+                    <div>
+                        <dt>Film</dt>
+                        <dd id="summary-film">The Odyssey</dd>
+                    </div>
+                    <div>
+                        <dt>Cinema</dt>
+                        <dd id="summary-cinema">Cinema 1</dd>
+                    </div>
+                    <div>
+                        <dt>Screening</dt>
+                        <dd><span id="summary-date">Today</span><br><span id="summary-time">3:45 PM</span></dd>
+                    </div>
+                    <div>
+                        <dt>Seats</dt>
+                        <dd id="summary-seats">None selected</dd>
+                    </div>
                 </dl>
                 <div class="price-breakdown">
-                    <p><span>Tickets <span id="ticket-count">0</span> × ₱280.00</span><strong id="ticket-total">₱0.00</strong></p>
+                    <p><span>Tickets <span id="ticket-count">0</span> × <span id="ticket-unit-price">₱280.00</span></span><strong
+                            id="ticket-total">₱0.00</strong></p>
                     <p class="total-row"><span>Total</span><strong id="booking-total">₱0.00</strong></p>
                 </div>
-                <button type="button" class="btn btn-primary checkout-button" id="checkout-button" disabled>Save demo booking</button>
-                <p class="checkout-note" id="checkout-status" role="status" aria-live="polite">Select at least one seat to continue.</p>
+                <button type="button" class="btn btn-primary checkout-button" id="checkout-button" disabled>Confirm
+                    booking</button>
+                <p class="checkout-note" id="checkout-status" role="status" aria-live="polite">Select at least one seat
+                    to continue.</p>
             </aside>
         </div>
     </main>
@@ -196,4 +233,5 @@
     <script src="assets/js/validation.js"></script>
     <script src="assets/js/booking.js"></script>
 </body>
+
 </html>

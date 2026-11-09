@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const seatMap = document.getElementById('seat-map');
     const checkoutButton = document.getElementById('checkout-button');
     const checkoutStatus = document.getElementById('checkout-status');
-    const selectedMovie = { id: '', name: '', cinema: '' };
+    const selectedMovie = { id: '', name: '', cinema: '', price: 280 };
     const showtimesByMovie = {
         '1': ['12:30 PM', '3:45 PM', '7:15 PM', '9:40 PM'],
         '2': ['11:00 AM', '2:15 PM', '6:00 PM', '8:30 PM'],
@@ -53,6 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function scrollToBookingStep(section) {
         const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
         section.scrollIntoView({ behavior, block: 'start' });
+    }
+
+    function animateSectionEntrance(element) {
+        if (!element) return;
+        element.classList.remove('booking-section-animate');
+        void element.offsetWidth;
+        element.classList.add('booking-section-animate');
     }
 
     /* Booking helpers for date formatting and seat labels. */
@@ -211,7 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateSummary() {
             const seatList = getSeatNumbers([...selectedSeats]);
             const count = seatList.length;
-            const ticketTotal = count * ticketPrice;
+            const currentPrice = selectedMovie.price || ticketPrice;
+            const ticketTotal = count * currentPrice;
             document.getElementById('summary-film').textContent = selectedMovie.name;
             document.getElementById('summary-cinema').textContent = selectedMovie.cinema;
             document.getElementById('screen-cinema').textContent = selectedMovie.cinema;
@@ -221,6 +229,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('summary-time').textContent = selectedTime;
             document.getElementById('summary-seats').textContent = seatList.length ? seatList.join(', ') : 'None selected';
             document.getElementById('ticket-count').textContent = count;
+            const unitPriceElement = document.getElementById('ticket-unit-price');
+            if (unitPriceElement) {
+                unitPriceElement.textContent = `₱${currentPrice.toFixed(2)}`;
+            }
             document.getElementById('ticket-total').textContent = `₱${ticketTotal.toFixed(2)}`;
             const serviceFeeElement = document.getElementById('service-fee');
             if (serviceFeeElement) {
@@ -243,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearSelectedSeats();
             timeOptions.querySelectorAll('button[data-time]').forEach(option => option.setAttribute('aria-pressed', 'false'));
             timeSection.hidden = false;
+            animateSectionEntrance(timeSection);
             seatSection.hidden = true;
             bookingSummary.hidden = true;
             updateSummary();
@@ -252,11 +265,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('calendar-previous').addEventListener('click', () => {
             displayedMonth = new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() - 1, 1);
             renderCalendar();
+            dateOptions.classList.remove('calendar-flip-animate');
+            void dateOptions.offsetWidth;
+            dateOptions.classList.add('calendar-flip-animate');
         });
 
         document.getElementById('calendar-next').addEventListener('click', () => {
             displayedMonth = new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() + 1, 1);
             renderCalendar();
+            dateOptions.classList.remove('calendar-flip-animate');
+            void dateOptions.offsetWidth;
+            dateOptions.classList.add('calendar-flip-animate');
         });
 
         timeOptions.addEventListener('click', event => {
@@ -267,7 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTime = button.dataset.time;
             setBookingProgress(4, 'Select your seats');
             seatSection.hidden = false;
+            animateSectionEntrance(seatSection);
             bookingSummary.hidden = false;
+            animateSectionEntrance(bookingSummary);
             updateSummary();
             scrollToBookingStep(seatSection);
         });
@@ -295,11 +316,13 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedMovie.id = button.dataset.movieId;
             selectedMovie.name = button.dataset.movieName;
             selectedMovie.cinema = button.dataset.cinema;
+            selectedMovie.price = Number(button.dataset.moviePrice) || 280;
             filmOptions.querySelectorAll('.film-card').forEach(card => {
                 card.setAttribute('aria-pressed', String(card === button));
             });
             filmSection.hidden = true;
             dateSection.hidden = false;
+            animateSectionEntrance(dateSection);
             timeSection.hidden = true;
             seatSection.hidden = true;
             bookingSummary.hidden = true;
@@ -317,10 +340,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('change-film').addEventListener('click', () => {
             setBookingProgress(1, 'Choose a film');
             filmSection.hidden = false;
+            animateSectionEntrance(filmSection);
             dateSection.hidden = true;
             timeSection.hidden = true;
             seatSection.hidden = true;
             bookingSummary.hidden = true;
+            scrollToBookingStep(filmSection);
         });
 
         filmOptions.addEventListener('click', event => {

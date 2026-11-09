@@ -100,4 +100,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    /* 4. Scroll-Triggered Content Reveal Animations */
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+        revealElements.forEach(el => el.classList.add('is-revealed'));
+    } else if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    observer.unobserve(entry.target);
+
+                    // Once the scroll reveal finishes, clean up the helper class so hover animations run unhindered
+                    const cleanUpScrollReveal = (e) => {
+                        if (e.target === entry.target && e.propertyName === 'transform') {
+                            entry.target.classList.remove('scroll-reveal');
+                            entry.target.removeEventListener('transitionend', cleanUpScrollReveal);
+                        }
+                    };
+                    entry.target.addEventListener('transitionend', cleanUpScrollReveal);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        revealElements.forEach(el => el.classList.add('is-revealed'));
+    }
 });
