@@ -50,7 +50,9 @@
           <input type="email" id="email" name="email"
                  placeholder="you@example.com"
                  autocomplete="email" required>
-          <span class="icon">✉️</span>
+          <span class="icon" aria-hidden="true">
+            <img src="assets/images/vectors/email-icon.svg" alt="">
+          </span>
         </div>
       </div>
 
@@ -59,8 +61,13 @@
         <div class="input-wrap password-field">
           <input class="password-input" type="password" id="password" name="password"
                  placeholder="Enter your password" autocomplete="current-password" required>
-          <span class="icon">🔒</span>
-          <button type="button" class="toggle-pw" aria-label="Show password" aria-pressed="false">👁</button>
+          <span class="icon" aria-hidden="true">
+            <img src="assets/images/vectors/lock-icon.svg" alt="">
+          </span>
+          <button type="button" class="toggle-pw" aria-label="Show password" aria-pressed="false">
+            <img class="icon-eye" src="assets/images/vectors/eye-icon.svg" alt="" aria-hidden="true">
+            <img class="icon-eye-off" src="assets/images/vectors/eye-off-icon.svg" alt="" aria-hidden="true">
+          </button>
         </div>
       </div>
 
@@ -72,7 +79,7 @@
         <a class="forgot-link" href="#">Forgot password?</a>
       </div>
 
-      <button type="submit" class="btn-submit" id="submitBtn" disabled>Sign In</button>
+      <button type="submit" class="btn-submit" id="submitBtn" disabled>Log In</button>
 
     </form>
 

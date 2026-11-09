@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prefersReducedMotion) {
         revealElements.forEach(el => el.classList.add('is-revealed'));
     } else if ('IntersectionObserver' in window) {
-        const revealObserver = new IntersectionObserver((entries, observer) => {
+        const revealOnIntersection = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-revealed');
@@ -124,13 +124,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     entry.target.addEventListener('transitionend', cleanUpScrollReveal);
                 }
             });
-        }, {
+        };
+        const revealObserver = new IntersectionObserver(revealOnIntersection, {
             root: null,
             threshold: 0.1,
             rootMargin: '0px 0px -40px 0px'
         });
 
-        revealElements.forEach(el => revealObserver.observe(el));
+        const upcomingRevealElements = [...revealElements].filter(el => el.closest('.upcoming-showcase'));
+        const standardRevealElements = [...revealElements].filter(el => !el.closest('.upcoming-showcase'));
+        standardRevealElements.forEach(el => revealObserver.observe(el));
+
+        if (upcomingRevealElements.length) {
+            const upcomingRevealObserver = new IntersectionObserver(revealOnIntersection, {
+                root: null,
+                threshold: 0.1,
+                rootMargin: '0px 0px 180px 0px'
+            });
+
+            upcomingRevealElements.forEach(el => upcomingRevealObserver.observe(el));
+        }
     } else {
         revealElements.forEach(el => el.classList.add('is-revealed'));
     }

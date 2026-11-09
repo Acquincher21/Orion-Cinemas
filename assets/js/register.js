@@ -50,7 +50,6 @@
 function togglePw(id, btn){
   const inp = document.getElementById(id);
   inp.type = inp.type === 'password' ? 'text' : 'password';
-  btn.textContent = inp.type === 'password' ? '👁' : '🙈';
   btn.setAttribute('aria-label', inp.type === 'password' ? 'Show password' : 'Hide password');
   btn.setAttribute('aria-pressed', String(inp.type === 'text'));
 }

@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let particles = [];
     const particleCount = 60;
     let mouse = { x: null, y: null, radius: 150 };
-    let isPaused = false;
+    let isManuallyPaused = false;
+    let isPausedForUpcoming = false;
     let animationFrameId = null;
 
     // Matches the canvas dimensions to the hero section when it loads or resizes.
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Draws one animation frame and schedules the next while motion is active.
     function animate() {
-        if (isPaused) return;
+        if (isManuallyPaused || isPausedForUpcoming) return;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
@@ -128,19 +129,41 @@ document.addEventListener('DOMContentLoaded', () => {
         animationFrameId = requestAnimationFrame(animate);
     }
 
-    // Stops or restarts the canvas and ticket-button pulse from the hero control.
-    animationToggle?.addEventListener('click', () => {
-        isPaused = !isPaused;
-        canvas.parentElement.classList.toggle('motion-paused', isPaused);
-        animationToggle.setAttribute('aria-pressed', String(isPaused));
-        animationToggle.textContent = isPaused ? 'Start Animation' : 'Stop Animation';
+    function syncAnimationState() {
+        const shouldPause = isManuallyPaused || isPausedForUpcoming;
+        canvas.parentElement.classList.toggle('motion-paused', shouldPause);
+        animationToggle?.setAttribute('aria-pressed', String(shouldPause));
+        if (animationToggle) {
+            animationToggle.textContent = shouldPause ? 'Start Animation' : 'Stop Animation';
+        }
 
-        if (isPaused) {
-            cancelAnimationFrame(animationFrameId);
+        if (shouldPause) {
+            if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
             animationFrameId = null;
         } else if (animationFrameId === null) {
             animationFrameId = requestAnimationFrame(animate);
         }
+    }
+
+    const upcomingSection = document.getElementById('upcoming');
+    if (upcomingSection && 'IntersectionObserver' in window) {
+        const upcomingObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    isPausedForUpcoming = true;
+                } else if (entry.boundingClientRect.top >= 0) {
+                    isPausedForUpcoming = false;
+                }
+            });
+            syncAnimationState();
+        }, { threshold: 0.1 });
+        upcomingObserver.observe(upcomingSection);
+    }
+
+    // Stops or restarts the canvas and ticket-button pulse from the hero control.
+    animationToggle?.addEventListener('click', () => {
+        isManuallyPaused = !isManuallyPaused;
+        syncAnimationState();
     });
 
     // Starts the hero particle animation when the page first loads.

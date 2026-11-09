@@ -22,7 +22,7 @@
         <p class="sidebar-label">YOUR CINEMA</p>
         <nav class="account-nav" aria-label="Dashboard navigation">
             <a href="#overview" aria-current="page">Overview</a>
-            <a href="#activity">Activity</a>
+            <a href="#now-showing">Now showing</a>
             <a href="#bookings">Bookings</a>
         </nav>
         <a href="index.html" class="sidebar-logout-link" id="logout-button">Log out</a>
@@ -60,7 +60,7 @@
             </div>
         </section>
 
-        <section class="dashboard-analytics" id="activity" aria-label="Booking analytics and activity">
+        <section class="dashboard-analytics" id="activity" aria-label="Booking analytics and now showing">
             <article class="dashboard-widget chart-widget">
                 <div class="widget-heading">
                     <div>
@@ -78,15 +78,90 @@
                     through December, with the current month highlighted.</canvas>
                 <div class="chart-tooltip" id="chart-tooltip" role="tooltip" aria-hidden="true" hidden></div>
             </article>
-            <article class="dashboard-widget activity-widget">
+            <article class="dashboard-widget showing-widget" id="now-showing" aria-labelledby="showing-heading">
                 <div class="widget-heading">
                     <div>
-                        <p class="account-eyebrow">RECENT UPDATES</p>
-                        <h2>Activity feed</h2>
+                        <p class="account-eyebrow">ON THE BIG SCREEN</p>
+                        <h2 id="showing-heading">Now showing</h2>
                     </div>
-                    <span class="live-indicator"><span aria-hidden="true"></span>Local</span>
+                    <span class="live-indicator"><span aria-hidden="true"></span>In cinemas</span>
                 </div>
-                <ul class="activity-feed" id="activity-feed" aria-live="polite"></ul>
+                <div class="film-carousel" id="film-carousel" role="region" aria-roledescription="carousel"
+                    aria-label="Now showing films">
+                    <div class="showing-film-stage">
+                        <article class="showing-film is-current is-entering" role="group" aria-roledescription="slide"
+                            aria-label="1 of 6: The Odyssey">
+                            <img class="showing-poster" src="assets/images/graphics/oddysey.jpg" alt="The Odyssey poster">
+                            <div class="showing-film-copy">
+                                <span class="showing-rating">R-13</span>
+                                <h3>The Odyssey</h3>
+                                <p>Cinema 1 <span aria-hidden="true">·</span> ₱270 / ticket</p>
+                                <a class="btn btn-primary showing-book-button" href="booking.html?movie=1">Book now</a>
+                            </div>
+                        </article>
+                        <article class="showing-film" role="group" aria-roledescription="slide"
+                            aria-label="2 of 6: Pacific Rim" aria-hidden="true" inert hidden>
+                            <img class="showing-poster" src="assets/images/graphics/pacificrim.jpg" alt="Pacific Rim poster">
+                            <div class="showing-film-copy">
+                                <span class="showing-rating">PG</span>
+                                <h3>Pacific Rim</h3>
+                                <p>Cinema 2 <span aria-hidden="true">·</span> ₱260 / ticket</p>
+                                <a class="btn btn-primary showing-book-button" href="booking.html?movie=2" tabindex="-1">Book now</a>
+                            </div>
+                        </article>
+                        <article class="showing-film" role="group" aria-roledescription="slide"
+                            aria-label="3 of 6: Avengers: Doomsday" aria-hidden="true" inert hidden>
+                            <img class="showing-poster" src="assets/images/graphics/avengers.jpg" alt="Avengers: Doomsday poster">
+                            <div class="showing-film-copy">
+                                <span class="showing-rating">R-13</span>
+                                <h3>Avengers: Doomsday</h3>
+                                <p>Cinema 3 <span aria-hidden="true">·</span> ₱280 / ticket</p>
+                                <a class="btn btn-primary showing-book-button" href="booking.html?movie=3" tabindex="-1">Book now</a>
+                            </div>
+                        </article>
+                        <article class="showing-film" role="group" aria-roledescription="slide"
+                            aria-label="4 of 6: Toy Story 5" aria-hidden="true" inert hidden>
+                            <img class="showing-poster" src="assets/images/graphics/toystory.jpg" alt="Toy Story 5 poster">
+                            <div class="showing-film-copy">
+                                <span class="showing-rating">G</span>
+                                <h3>Toy Story 5</h3>
+                                <p>Cinema 4 <span aria-hidden="true">·</span> ₱280 / ticket</p>
+                                <a class="btn btn-primary showing-book-button" href="booking.html?movie=4" tabindex="-1">Book now</a>
+                            </div>
+                        </article>
+                        <article class="showing-film" role="group" aria-roledescription="slide"
+                            aria-label="5 of 6: New Resident Evil" aria-hidden="true" inert hidden>
+                            <img class="showing-poster" src="assets/images/graphics/residentevil.jpg" alt="New Resident Evil poster">
+                            <div class="showing-film-copy">
+                                <span class="showing-rating">R-16</span>
+                                <h3>New Resident Evil</h3>
+                                <p>Cinema 1 <span aria-hidden="true">·</span> ₱260 / ticket</p>
+                                <a class="btn btn-primary showing-book-button" href="booking.html?movie=5" tabindex="-1">Book now</a>
+                            </div>
+                        </article>
+                        <article class="showing-film" role="group" aria-roledescription="slide"
+                            aria-label="6 of 6: Project Hail Mary" aria-hidden="true" inert hidden>
+                            <img class="showing-poster" src="assets/images/graphics/projecthailmary.jpg" alt="Project Hail Mary poster">
+                            <div class="showing-film-copy">
+                                <span class="showing-rating">PG-13</span>
+                                <h3>Project Hail Mary</h3>
+                                <p>Cinema 2 <span aria-hidden="true">·</span> ₱260 / ticket</p>
+                                <a class="btn btn-primary showing-book-button" href="booking.html?movie=6" tabindex="-1">Book now</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="film-carousel-controls">
+                        <div class="film-carousel-progress">
+                            <span class="film-carousel-position" id="film-carousel-position" aria-live="polite"
+                                aria-atomic="true">1 / 6</span>
+                            <div class="film-carousel-progress-track" role="progressbar"
+                                aria-label="Now showing film progress" aria-valuemin="0" aria-valuemax="100"
+                                aria-valuenow="0">
+                                <span class="film-carousel-progress-fill" id="film-carousel-progress-fill"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </article>
         </section>
 

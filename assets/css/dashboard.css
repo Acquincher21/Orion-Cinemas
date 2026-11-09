@@ -3,7 +3,7 @@
 /* ==========================================================
    Dashboard Page Block
    Styles the account dashboard, including its sidebar, booking
-   metrics, history, analytics, and activity feed.
+   metrics, history, analytics, and film showcase.
    ========================================================== */
 
 .page-account {
@@ -542,7 +542,7 @@
     }
 }
 
-/* Dashboard analytics and recent-activity widgets */
+/* Dashboard analytics and now-showing widgets */
 .page-account .dashboard-analytics {
     display: grid;
     grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
@@ -662,44 +662,230 @@
     background: #75d4a9;
 }
 
-.page-account .activity-feed {
-    display: grid;
-    gap: 0.85rem;
+.page-account .showing-widget {
+    overflow: hidden;
+    animation: cinepulseDashboardEntrance 0.45s ease-out 0.68s both;
+}
+
+.page-account .film-carousel {
     margin-top: 1rem;
-    list-style: none;
 }
 
-.page-account .activity-feed li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: start;
-    gap: 0.65rem;
-    color: var(--account-muted);
-    font-size: 0.82rem;
+.page-account .showing-film-stage {
+    position: relative;
+    min-height: 220px;
 }
 
-.page-account .activity-glyph {
+.page-account .showing-film {
+    position: absolute;
+    inset: 0;
     display: grid;
-    width: 1.65rem;
-    aspect-ratio: 1;
-    place-items: center;
+    grid-template-columns: minmax(88px, 0.8fr) minmax(0, 1.2fr);
+    align-items: stretch;
+    gap: 0.9rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(18px);
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+}
+
+.page-account .showing-film[hidden] {
+    display: none;
+}
+
+.page-account .showing-film.is-current,
+.page-account .showing-film.is-leaving {
+    visibility: visible;
+}
+
+.page-account .showing-film.is-current {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.page-account .showing-film.is-leaving {
+    opacity: 0;
+    transform: translateX(-18px);
+}
+
+.page-account .showing-poster {
+    display: block;
+    width: 100%;
+    height: 220px;
     border: 1px solid var(--account-line);
-    border-radius: 50%;
+    border-radius: 7px;
+    background: var(--bg-secondary);
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+.page-account .showing-film-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.page-account .showing-rating {
+    padding: 0.2rem 0.45rem;
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 999px;
+    background: rgba(0, 242, 254, 0.08);
     color: var(--account-accent);
+    font-size: 0.67rem;
+    font-weight: 800;
+}
+
+.page-account .showing-film-copy h3 {
+    margin-top: 0.55rem;
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    line-height: 1.25;
+}
+
+.page-account .showing-film-copy p {
+    margin-top: 0.4rem;
+    color: var(--account-muted);
     font-size: 0.75rem;
+    line-height: 1.4;
 }
 
-.page-account .activity-feed strong {
-    display: block;
-    color: var(--text-main);
-    font-size: 0.82rem;
-    font-weight: 600;
+.page-account .showing-book-button {
+    min-height: 2rem;
+    margin-top: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+    text-decoration: none;
 }
 
-.page-account .activity-feed time {
+.page-account .showing-book-button:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 3px;
+}
+
+.page-account .film-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-top: 0.7rem;
+}
+
+.page-account .film-carousel-progress {
+    display: grid;
+    width: 100%;
+    gap: 0.35rem;
+}
+
+.page-account .film-carousel-position {
+    color: var(--account-muted);
+    font-size: 0.75rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.page-account .film-carousel-progress-track {
+    position: relative;
+    isolation: isolate;
+    height: 0.4rem;
+    overflow: hidden;
+    border: 1px solid rgba(0, 242, 254, 0.18);
+    border-radius: 999px;
+    background: rgba(0, 242, 254, 0.08);
+    animation: cinepulseProgressBreathe 3s ease-in-out infinite;
+}
+
+.page-account .film-carousel-progress-track::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 25%;
+    background: linear-gradient(90deg, transparent, rgba(101, 245, 255, 0.25), transparent);
+    content: "";
+    animation: cinepulseProgressTrackLight 4s ease-in-out infinite;
+}
+
+.page-account .film-carousel-progress-fill {
+    position: relative;
     display: block;
-    margin-top: 0.15rem;
-    font-size: 0.74rem;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-account .film-carousel-progress-fill::after {
+    position: absolute;
+    inset: 0 auto 0 -35%;
+    width: 35%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    content: "";
+    animation: cinepulseProgressFillLight 2.8s ease-in-out infinite;
+}
+
+@keyframes cinepulseProgressBreathe {
+    0%, 100% {
+        box-shadow: 0 0 3px rgba(0, 242, 254, 0.12);
+    }
+
+    50% {
+        box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+    }
+}
+
+@keyframes cinepulseProgressTrackLight {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(400%);
+    }
+}
+
+@keyframes cinepulseProgressFillLight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(385%);
+    }
+}
+
+.page-account .showing-film.is-entering .showing-poster {
+    animation: cinepulseFilmPosterEntrance 0.45s ease-out both;
+}
+
+.page-account .showing-film.is-entering .showing-film-copy > * {
+    animation: cinepulseDashboardEntrance 0.4s ease-out both;
+}
+
+.page-account .showing-film.is-entering .showing-film-copy > :nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.page-account .showing-film.is-entering .showing-film-copy > :nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.page-account .showing-film.is-entering .showing-film-copy > :nth-child(3),
+.page-account .showing-film.is-entering .showing-film-copy > :nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+@keyframes cinepulseFilmPosterEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @media (max-width: 760px) {
@@ -709,7 +895,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .page-account .activity-glyph {
+    .page-account .showing-widget,
+    .page-account .showing-film.is-entering .showing-poster,
+    .page-account .showing-film.is-entering .showing-film-copy > *,
+    .page-account .film-carousel-progress-track,
+    .page-account .film-carousel-progress-track::before,
+    .page-account .film-carousel-progress-fill::after {
+        animation: none;
+    }
+
+    .page-account .showing-film,
+    .page-account .film-carousel-progress-fill {
         transition: none;
     }
 }

@@ -310,6 +310,10 @@
 }
 
 /* Coming Soon Section Staggers */
+.page-landing .upcoming-showcase .scroll-reveal {
+    transition-duration: 1.1s;
+}
+
 .page-landing .upcoming-showcase .upcoming-heading.scroll-reveal {
     transition-delay: 0.05s;
 }

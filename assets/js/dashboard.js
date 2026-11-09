@@ -1,4 +1,4 @@
-/* Dashboard booking history, activity feed, and chart rendering. */
+/* Dashboard booking history, now-showing carousel, and chart rendering. */
 
 document.addEventListener('DOMContentLoaded', () => {
     const accountNav = document.querySelector('.account-nav');
@@ -31,6 +31,94 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('hashchange', () => updateActiveLink());
         window.addEventListener('popstate', () => updateActiveLink());
         updateActiveLink();
+    }
+
+    const filmCarousel = document.getElementById('film-carousel');
+    if (filmCarousel) {
+        const films = [...filmCarousel.querySelectorAll('.showing-film')];
+        const position = document.getElementById('film-carousel-position');
+        const progressTrack = filmCarousel.querySelector('.film-carousel-progress-track');
+        const progressFill = document.getElementById('film-carousel-progress-fill');
+        const reduceFilmMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const transitionTimeouts = new WeakMap();
+        let currentFilmIndex = films.findIndex(film => film.classList.contains('is-current'));
+        let isHovered = false;
+        let hasFocus = false;
+        let autoAdvanceTimer;
+
+        function stopAutoAdvance() {
+            window.clearInterval(autoAdvanceTimer);
+            autoAdvanceTimer = undefined;
+        }
+
+        function startAutoAdvance() {
+            stopAutoAdvance();
+            if (reduceFilmMotion || isHovered || hasFocus || document.hidden || films.length < 2) return;
+            autoAdvanceTimer = window.setInterval(() => showFilm(currentFilmIndex + 1), 4500);
+        }
+
+        function showFilm(requestedIndex) {
+            const nextIndex = (requestedIndex + films.length) % films.length;
+            if (nextIndex === currentFilmIndex) return;
+
+            const previousFilm = films[currentFilmIndex];
+            const nextFilm = films[nextIndex];
+            const previousTimeout = transitionTimeouts.get(nextFilm);
+            if (previousTimeout) {
+                window.clearTimeout(previousTimeout);
+                transitionTimeouts.delete(nextFilm);
+            }
+
+            const nextBookLink = nextFilm.querySelector('.showing-book-button');
+            nextFilm.hidden = false;
+            nextFilm.inert = false;
+            nextFilm.removeAttribute('aria-hidden');
+            nextBookLink.removeAttribute('tabindex');
+            nextFilm.classList.remove('is-leaving');
+            nextFilm.classList.add('is-current', 'is-entering');
+
+            const previousBookLink = previousFilm.querySelector('.showing-book-button');
+            previousFilm.classList.remove('is-current', 'is-entering');
+            previousFilm.classList.add('is-leaving');
+            previousFilm.setAttribute('aria-hidden', 'true');
+            previousFilm.inert = true;
+            previousBookLink.setAttribute('tabindex', '-1');
+
+            currentFilmIndex = nextIndex;
+            position.textContent = `${nextIndex + 1} / ${films.length}`;
+            const progress = films.length > 1 ? (nextIndex / (films.length - 1)) * 100 : 0;
+            progressFill.style.width = `${progress}%`;
+            progressTrack.setAttribute('aria-valuenow', String(Math.round(progress)));
+
+            window.setTimeout(() => nextFilm.classList.remove('is-entering'), 750);
+            const hideTimeout = window.setTimeout(() => {
+                previousFilm.hidden = true;
+                previousFilm.classList.remove('is-leaving');
+                transitionTimeouts.delete(previousFilm);
+            }, reduceFilmMotion ? 0 : 380);
+            transitionTimeouts.set(previousFilm, hideTimeout);
+            startAutoAdvance();
+        }
+
+        filmCarousel.addEventListener('pointerenter', () => {
+            isHovered = true;
+            stopAutoAdvance();
+        });
+        filmCarousel.addEventListener('pointerleave', () => {
+            isHovered = false;
+            startAutoAdvance();
+        });
+        filmCarousel.addEventListener('focusin', () => {
+            hasFocus = true;
+            stopAutoAdvance();
+        });
+        filmCarousel.addEventListener('focusout', event => {
+            if (event.relatedTarget && filmCarousel.contains(event.relatedTarget)) return;
+            hasFocus = false;
+            startAutoAdvance();
+        });
+        document.addEventListener('visibilitychange', startAutoAdvance);
+        startAutoAdvance();
     }
 
     const bookingList = document.getElementById('booking-list');
@@ -184,46 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    function renderActivity(bookings) {
-        const activityFeed = document.getElementById('activity-feed');
-        if (!activityFeed) return;
-        activityFeed.replaceChildren();
-        const latest = [...bookings].sort((first, second) => new Date(second.savedAt || 0) - new Date(first.savedAt || 0)).slice(0, 4);
-
-        if (!latest.length) {
-            const item = document.createElement('li');
-            const glyph = document.createElement('span');
-            const copy = document.createElement('span');
-            const heading = document.createElement('strong');
-            const detail = document.createElement('time');
-            glyph.className = 'activity-glyph';
-            glyph.textContent = 'i';
-            copy.className = 'activity-copy';
-            heading.textContent = 'Your dashboard is ready';
-            detail.textContent = 'Your saved booking updates will appear here.';
-            copy.append(heading, detail);
-            item.append(glyph, copy);
-            activityFeed.append(item);
-            return;
-        }
-
-        latest.forEach(booking => {
-            const item = document.createElement('li');
-            const glyph = document.createElement('span');
-            const copy = document.createElement('span');
-            const heading = document.createElement('strong');
-            const detail = document.createElement('time');
-            glyph.className = 'activity-glyph';
-            glyph.textContent = isUpcoming(booking) ? '✓' : '•';
-            copy.className = 'activity-copy';
-            heading.textContent = `${booking.movie || 'Screening'} booking saved`;
-            detail.textContent = booking.savedAt ? formatDate(new Date(booking.savedAt), { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Saved on this device';
-            copy.append(heading, detail);
-            item.append(glyph, copy);
-            activityFeed.append(item);
-        });
-    }
-
     function renderBookings() {
         const bookings = readBookings().sort((first, second) => new Date(second.screeningAt) - new Date(first.screeningAt));
         const upcomingBookings = bookings.filter(isUpcoming);
@@ -235,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('latest-activity').textContent = latestBooking
             ? formatDate(new Date(latestBooking.savedAt || latestBooking.screeningAt), { month: 'short', day: 'numeric' })
             : 'No bookings yet';
-        renderActivity(bookings);
         bookingList.replaceChildren();
         const animateBookingCards = !hasRenderedBookings;
         hasRenderedBookings = true;

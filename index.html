@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OrionCinemas | Next-Gen Cinema Experience</title>
+    <script>
+        const navigationEntry = performance.getEntriesByType('navigation')[0];
+        if (navigationEntry?.type === 'reload') {
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+            window.addEventListener('pageshow', () => window.scrollTo(0, 0), { once: true });
+        }
+    </script>
 
     <!-- Modular Stylesheet Integration -->
     <link rel="stylesheet" href="assets/css/main.css">
