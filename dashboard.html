@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,12 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
+
 <body class="page-landing page-account">
     <a class="skip-link" href="#overview">Skip to dashboard content</a>
     <aside class="account-sidebar">
         <a href="index.html" class="brand-logo">
-            <img src="assets/images/vectors/orion-logo.svg" alt="" width="36" height="36">
+            <img src="assets/images/vectors/orion-logo.svg" alt="" width="36" height="36" class="logo-pulse logo-glow">
             <span class="brand-name"><span class="brand-highlight">Orion</span>Cinemas</span>
         </a>
         <p class="sidebar-label">YOUR CINEMA</p>
@@ -67,8 +69,13 @@
                     </div>
                     <span class="widget-period" id="chart-period">January–December</span>
                 </div>
-                <p class="widget-note" id="chart-description">Bookings saved each month this year, with the current month highlighted.</p>
-                <canvas id="booking-chart" class="booking-chart" role="img" tabindex="0" aria-keyshortcuts="ArrowLeft ArrowRight" aria-label="Bar chart showing monthly booking totals from January through December, with the current month highlighted" aria-describedby="chart-description chart-tooltip">A chart of monthly booking totals from January through December, with the current month highlighted.</canvas>
+                <p class="widget-note" id="chart-description">Bookings saved each month this year, with the current
+                    month highlighted.</p>
+                <canvas id="booking-chart" class="booking-chart" role="img" tabindex="0"
+                    aria-keyshortcuts="ArrowLeft ArrowRight"
+                    aria-label="Bar chart showing monthly booking totals from January through December, with the current month highlighted"
+                    aria-describedby="chart-description chart-tooltip">A chart of monthly booking totals from January
+                    through December, with the current month highlighted.</canvas>
                 <div class="chart-tooltip" id="chart-tooltip" role="tooltip" aria-hidden="true" hidden></div>
             </article>
             <article class="dashboard-widget activity-widget">
@@ -88,11 +95,14 @@
                 <div>
                     <p class="account-eyebrow">YOUR SCREENINGS</p>
                     <h2 id="history-heading">Bookings &amp; tracking</h2>
-                    <p class="history-description">Filter your saved screenings and expand a booking to view its reference and demo total.</p>
+                    <p class="history-description">Filter your saved screenings and expand a booking to view its
+                        reference and demo total.</p>
                 </div>
                 <div class="history-filters" role="group" aria-label="Filter bookings">
-                    <button type="button" class="history-filter" data-filter="upcoming" aria-pressed="true">Upcoming</button>
-                    <button type="button" class="history-filter" data-filter="all" aria-pressed="false">All history</button>
+                    <button type="button" class="history-filter" data-filter="upcoming"
+                        aria-pressed="true">Upcoming</button>
+                    <button type="button" class="history-filter" data-filter="all" aria-pressed="false">All
+                        history</button>
                 </div>
             </div>
             <p class="booking-feedback" id="booking-feedback" role="status" aria-live="polite"></p>
@@ -104,4 +114,5 @@
     <script src="assets/js/booking.js"></script>
     <script src="assets/js/dashboard.js"></script>
 </body>
+
 </html>

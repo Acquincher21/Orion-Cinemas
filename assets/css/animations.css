@@ -15,6 +15,7 @@
         opacity: 0.7;
         transform: translateY(8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -27,10 +28,13 @@
 }
 
 @keyframes cinepulseLandingLogoPulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1) rotate(0deg);
         opacity: 0.92;
     }
+
     50% {
         transform: scale(1.08) rotate(5deg);
         opacity: 1;
@@ -38,10 +42,13 @@
 }
 
 @keyframes cinepulseLandingBadgeGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.88;
     }
+
     50% {
         transform: scale(1.02);
         opacity: 1;
@@ -52,19 +59,24 @@
     0% {
         transform: translateY(0px) scale(1);
     }
+
     50% {
         transform: translateY(-10px) scale(1.01);
     }
+
     100% {
         transform: translateY(0px) scale(1);
     }
 }
 
 @keyframes cinepulseLandingPulseButton {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.04);
         opacity: 0.92;
@@ -72,8 +84,20 @@
 }
 
 /* SVG Animated Badges & Emblems */
-.page-landing .logo-pulse {
-    animation: cinepulseLandingLogoPulse 4s infinite var(--ease-smooth);
+.logo-pulse {
+    animation: cinepulseLandingLogoPulse 4s infinite var(--ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+/* Glow effect for logos (Index, Dashboard, Booking, Login, Register) */
+.logo-glow {
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.8));
+    transition: filter 0.4s ease;
+}
+
+.brand-logo:hover .logo-glow,
+.logo:hover .logo-glow,
+.logo-glow:hover {
+    filter: drop-shadow(0 0 12px rgba(0, 242, 254, 1));
 }
 
 .page-landing .badge-glow {
@@ -116,7 +140,8 @@
     transform: rotateY(180deg);
 }
 
-.page-landing .card-front, .page-landing .card-back {
+.page-landing .card-front,
+.page-landing .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -154,6 +179,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .page-landing #movies:target,
     .page-landing #experiences:target {
         animation: none;
@@ -225,7 +251,7 @@
     opacity: 0;
     transform: translateY(32px);
     transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
 }
 
@@ -246,28 +272,72 @@
 }
 
 /* Hero Section Staggers ("Immerse Yourself in Cinema") */
-.page-landing .hero-content .badge-wrapper.scroll-reveal { transition-delay: 0.05s; }
-.page-landing .hero-content .hero-title.scroll-reveal { transition-delay: 0.15s; }
-.page-landing .hero-content .hero-subtitle.scroll-reveal { transition-delay: 0.25s; }
-.page-landing .hero-content .hero-cta-group.scroll-reveal { transition-delay: 0.35s; }
+.page-landing .hero-content .badge-wrapper.scroll-reveal {
+    transition-delay: 0.05s;
+}
+
+.page-landing .hero-content .hero-title.scroll-reveal {
+    transition-delay: 0.15s;
+}
+
+.page-landing .hero-content .hero-subtitle.scroll-reveal {
+    transition-delay: 0.25s;
+}
+
+.page-landing .hero-content .hero-cta-group.scroll-reveal {
+    transition-delay: 0.35s;
+}
 
 /* Now Showing Section Staggers */
-.page-landing .movies-showcase .section-header.scroll-reveal { transition-delay: 0.05s; }
-.page-landing .movies-showcase .movie-card:nth-child(1).scroll-reveal { transition-delay: 0.1s; }
-.page-landing .movies-showcase .movie-card:nth-child(2).scroll-reveal { transition-delay: 0.22s; }
-.page-landing .movies-showcase .movie-card:nth-child(3).scroll-reveal { transition-delay: 0.34s; }
-.page-landing .movies-showcase .movie-pagination.scroll-reveal { transition-delay: 0.15s; }
+.page-landing .movies-showcase .section-header.scroll-reveal {
+    transition-delay: 0.05s;
+}
+
+.page-landing .movies-showcase .movie-card:nth-child(1).scroll-reveal {
+    transition-delay: 0.1s;
+}
+
+.page-landing .movies-showcase .movie-card:nth-child(2).scroll-reveal {
+    transition-delay: 0.22s;
+}
+
+.page-landing .movies-showcase .movie-card:nth-child(3).scroll-reveal {
+    transition-delay: 0.34s;
+}
+
+.page-landing .movies-showcase .movie-pagination.scroll-reveal {
+    transition-delay: 0.15s;
+}
 
 /* Coming Soon Section Staggers */
-.page-landing .upcoming-showcase .upcoming-heading.scroll-reveal { transition-delay: 0.05s; }
-.page-landing .upcoming-grid .upcoming-card:nth-child(1).scroll-reveal { transition-delay: 0.1s; }
-.page-landing .upcoming-grid .upcoming-card:nth-child(2).scroll-reveal { transition-delay: 0.22s; }
-.page-landing .upcoming-grid .upcoming-card:nth-child(3).scroll-reveal { transition-delay: 0.34s; }
+.page-landing .upcoming-showcase .upcoming-heading.scroll-reveal {
+    transition-delay: 0.05s;
+}
+
+.page-landing .upcoming-grid .upcoming-card:nth-child(1).scroll-reveal {
+    transition-delay: 0.1s;
+}
+
+.page-landing .upcoming-grid .upcoming-card:nth-child(2).scroll-reveal {
+    transition-delay: 0.22s;
+}
+
+.page-landing .upcoming-grid .upcoming-card:nth-child(3).scroll-reveal {
+    transition-delay: 0.34s;
+}
 
 /* Experiences Section Staggers */
-.page-landing .features-section .feature-card:nth-child(1).scroll-reveal { transition-delay: 0.1s; }
-.page-landing .features-section .feature-card:nth-child(2).scroll-reveal { transition-delay: 0.22s; }
-.page-landing .features-section .feature-card:nth-child(3).scroll-reveal { transition-delay: 0.34s; }
+.page-landing .features-section .feature-card:nth-child(1).scroll-reveal {
+    transition-delay: 0.1s;
+}
+
+.page-landing .features-section .feature-card:nth-child(2).scroll-reveal {
+    transition-delay: 0.22s;
+}
+
+.page-landing .features-section .feature-card:nth-child(3).scroll-reveal {
+    transition-delay: 0.34s;
+}
 
 /* Ensure Experiences cards retain their 2D Matrix hover effect */
 .page-landing .card-transform.is-revealed {
@@ -300,6 +370,7 @@
         opacity: 0;
         transform: translateY(12px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -347,6 +418,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .page-account .account-welcome,
     .page-account .metric-item,
     .page-account .booking-chart,
@@ -367,6 +439,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -378,6 +451,7 @@
         opacity: 0;
         transform: translateY(14px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -389,6 +463,7 @@
         opacity: 0;
         transform: translateX(18px);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
@@ -400,6 +475,7 @@
         opacity: 0;
         transform: translateY(8px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -411,6 +487,7 @@
         opacity: 0;
         transform: translateY(10px) scale(0.96);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -422,6 +499,7 @@
         opacity: 0.4;
         transform: scale(0.98);
     }
+
     100% {
         opacity: 1;
         transform: scale(1);
@@ -464,16 +542,24 @@
 }
 
 .page-dashboard #time-section:not([hidden]) .choice-button:nth-child(1),
-.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(1) { animation-delay: 0.05s; }
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(1) {
+    animation-delay: 0.05s;
+}
 
 .page-dashboard #time-section:not([hidden]) .choice-button:nth-child(2),
-.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(2) { animation-delay: 0.10s; }
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(2) {
+    animation-delay: 0.10s;
+}
 
 .page-dashboard #time-section:not([hidden]) .choice-button:nth-child(3),
-.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(3) { animation-delay: 0.15s; }
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(3) {
+    animation-delay: 0.15s;
+}
 
 .page-dashboard #time-section:not([hidden]) .choice-button:nth-child(4),
-.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(4) { animation-delay: 0.20s; }
+.page-dashboard #time-section.booking-section-animate .choice-button:nth-child(4) {
+    animation-delay: 0.20s;
+}
 
 /* Seats & Theater Screen fluid wave */
 .page-dashboard #seat-section:not([hidden]) .screen,
@@ -487,28 +573,44 @@
 }
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(1),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(1) { animation-delay: 0.03s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(1) {
+    animation-delay: 0.03s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(2),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(2) { animation-delay: 0.06s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(2) {
+    animation-delay: 0.06s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(3),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(3) { animation-delay: 0.09s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(3) {
+    animation-delay: 0.09s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(4),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(4) { animation-delay: 0.12s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(4) {
+    animation-delay: 0.12s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(5),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(5) { animation-delay: 0.15s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(5) {
+    animation-delay: 0.15s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(6),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(6) { animation-delay: 0.18s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(6) {
+    animation-delay: 0.18s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(7),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(7) { animation-delay: 0.21s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(7) {
+    animation-delay: 0.21s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-row:nth-child(8),
-.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(8) { animation-delay: 0.24s; }
+.page-dashboard #seat-section.booking-section-animate .seat-row:nth-child(8) {
+    animation-delay: 0.24s;
+}
 
 .page-dashboard #seat-section:not([hidden]) .seat-legend,
 .page-dashboard #seat-section.booking-section-animate .seat-legend {
@@ -516,6 +618,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .page-dashboard .dashboard-heading,
     .page-dashboard #film-options,
     .page-dashboard .booking-section:not([hidden]),
