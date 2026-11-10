@@ -201,10 +201,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const bookingList = document.getElementById('booking-list');
     const historyFilters = document.querySelectorAll('.history-filter');
-    if (!bookingList || !historyFilters.length) return;
+    const historyPagination = document.getElementById('history-pagination');
+    const previousPageButton = document.getElementById('history-previous');
+    const nextPageButton = document.getElementById('history-next');
+    const pageStatus = document.getElementById('history-page-status');
+    if (!bookingList || !historyFilters.length || !historyPagination || !previousPageButton || !nextPageButton || !pageStatus) return;
 
     let activeFilter = 'upcoming';
     let hasRenderedBookings = false;
+    let historyPage = 0;
+    let historyExitAnimations = [];
+    const historyPageSize = 4;
 
     function formatDate(date, options) {
         return new Intl.DateTimeFormat('en-US', options).format(date);
@@ -243,21 +250,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }).filter(Number.isFinite).sort((a, b) => a - b);
     }
 
+    const countAnimations = new WeakMap();
+
     function setCount(element, value) {
         const target = Number(value) || 0;
+        const previous = countAnimations.get(element);
+        if (previous && previous.target === target) return;
+        if (previous && previous.frame != null) cancelAnimationFrame(previous.frame);
+
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             element.textContent = target;
+            countAnimations.set(element, { target });
             return;
         }
 
+        const initial = Number(element.textContent) || 0;
         const start = performance.now();
         const duration = 500;
+        const animation = { target, frame: null };
+        countAnimations.set(element, animation);
         function tick(now) {
             const progress = Math.min(1, (now - start) / duration);
-            element.textContent = Math.round(target * progress);
-            if (progress < 1) requestAnimationFrame(tick);
+            element.textContent = Math.round(initial + (target - initial) * progress);
+            animation.frame = progress < 1 ? requestAnimationFrame(tick) : null;
         }
-        requestAnimationFrame(tick);
+        animation.frame = requestAnimationFrame(tick);
     }
 
     function createBookingCard(booking) {
@@ -316,14 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let transitionId = 0;
         const reduceTrackingMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         details.addEventListener('transitionend', transitionEvent => {
-            if (transitionEvent.propertyName !== 'max-height') return;
+            if (transitionEvent.target !== details || transitionEvent.propertyName !== 'max-height') return;
             if (isExpanded) {
                 details.style.maxHeight = 'none';
             } else {
                 tracking.open = false;
                 details.style.removeProperty('max-height');
                 details.style.removeProperty('opacity');
-                details.style.removeProperty('padding-top');
             }
         });
         trackingSummary.addEventListener('click', event => {
@@ -340,40 +356,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isExpanded) {
                 tracking.open = true;
+                details.style.maxHeight = `${details.getBoundingClientRect().height}px`;
+                void details.offsetHeight;
                 details.classList.add('is-expanded');
-                details.style.maxHeight = '0px';
-                details.style.opacity = '0';
-                details.style.paddingTop = '0';
                 window.requestAnimationFrame(() => {
                     if (currentTransition !== transitionId) return;
-                    details.style.maxHeight = `${details.scrollHeight}px`;
+                    details.style.maxHeight = `${detailsContent.getBoundingClientRect().height}px`;
                     details.style.opacity = '1';
-                    details.style.paddingTop = '0.75rem';
-                    });
+                });
             } else {
-                    details.style.maxHeight = `${details.scrollHeight}px`;
-                    void details.offsetHeight;
-                    details.classList.remove('is-expanded');
-                    details.style.maxHeight = '0px';
-                    details.style.opacity = '0';
-                    details.style.paddingTop = '0';
+                const currentHeight = details.getBoundingClientRect().height;
+                details.style.maxHeight = `${currentHeight}px`;
+                void details.offsetHeight;
+                details.classList.remove('is-expanded');
+                if (currentHeight === 0) {
+                    tracking.open = false;
+                    details.style.removeProperty('max-height');
+                    details.style.removeProperty('opacity');
+                    return;
+                }
+                details.style.maxHeight = '0px';
+                details.style.opacity = '0';
             }
         });
         card.append(row, tracking);
         return card;
     }
 
-    function renderBookings() {
+    function renderBookings(arrivalDirection = null) {
         const bookings = readBookings().sort((first, second) => new Date(second.screeningAt) - new Date(first.screeningAt));
         const upcomingBookings = bookings.filter(isUpcoming);
-        const visibleBookings = activeFilter === 'all' ? bookings : upcomingBookings;
+        const filteredBookings = activeFilter === 'all' ? bookings : upcomingBookings;
+        const pageCount = Math.ceil(filteredBookings.length / historyPageSize);
+        historyPage = Math.min(historyPage, Math.max(0, pageCount - 1));
+        const visibleBookings = filteredBookings.slice(historyPage * historyPageSize, (historyPage + 1) * historyPageSize);
         const latestBooking = [...bookings].sort((first, second) => new Date(second.savedAt || 0) - new Date(first.savedAt || 0))[0];
 
-        setCount(document.getElementById('upcoming-count'), upcomingBookings.length);
-        setCount(document.getElementById('booking-count'), bookings.length);
-        document.getElementById('latest-activity').textContent = latestBooking
+        historyPagination.hidden = pageCount <= 1;
+        previousPageButton.disabled = historyPage === 0;
+        nextPageButton.disabled = historyPage >= pageCount - 1;
+        pageStatus.textContent = pageCount ? `Page ${historyPage + 1} of ${pageCount}` : '';
+
+        setCount(document.querySelector('#upcoming-count .wave-word'), upcomingBookings.length);
+        setCount(document.querySelector('#booking-count .wave-word'), bookings.length);
+        const latestActivity = latestBooking
             ? formatDate(new Date(latestBooking.savedAt || latestBooking.screeningAt), { month: 'short', day: 'numeric' })
             : 'No bookings yet';
+        const latestActivityElement = document.getElementById('latest-activity');
+        if (latestActivityElement.textContent !== latestActivity) {
+            const words = latestActivity.split(' ');
+            const wordNodes = words.flatMap((word, index) => {
+                const span = document.createElement('span');
+                span.className = 'wave-word';
+                span.textContent = word;
+                return index ? [document.createTextNode(' '), span] : [span];
+            });
+            latestActivityElement.replaceChildren(...wordNodes);
+        }
         bookingList.replaceChildren();
         const animateBookingCards = !hasRenderedBookings;
         hasRenderedBookings = true;
@@ -397,17 +436,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
         visibleBookings.forEach((booking, index) => {
             const card = createBookingCard(booking);
-            if (animateBookingCards && index < 3) card.classList.add('booking-card-enter');
+            if (arrivalDirection) {
+                card.classList.add(`history-arrive-${arrivalDirection}`);
+            } else if (animateBookingCards && index < 3) {
+                card.classList.add('booking-card-enter');
+            }
             bookingList.append(card);
         });
     }
 
     function setHistoryFilter(filter) {
+        historyExitAnimations.forEach(animation => animation.cancel());
+        historyExitAnimations = [];
         activeFilter = filter;
+        historyPage = 0;
         historyFilters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
-        renderBookings();
+        renderBookings('right');
+        scrollToBookings();
     }
 
+    function scrollToBookings() {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        bookingList.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' });
+    }
+
+    function changeHistoryPage(step) {
+        if (historyExitAnimations.length ||
+            (step < 0 && previousPageButton.disabled) || (step > 0 && nextPageButton.disabled)) return;
+
+        scrollToBookings();
+        const showPage = () => {
+            historyPage += step;
+            renderBookings(step > 0 ? 'right' : 'left');
+            historyExitAnimations = [];
+        };
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            showPage();
+            return;
+        }
+
+        const cards = [...bookingList.querySelectorAll('.account-booking')];
+        if (!cards.length) {
+            showPage();
+            return;
+        }
+
+        historyExitAnimations = cards.map((card, index) => {
+            const currentStyle = getComputedStyle(card);
+            return card.animate([
+                { transform: currentStyle.transform, opacity: currentStyle.opacity },
+                { transform: `translateX(${step > 0 ? '-100%' : '100%'})`, opacity: 0 }
+            ], { duration: 450, delay: index * 60, easing: 'ease-in', fill: 'forwards' });
+        });
+        historyExitAnimations[historyExitAnimations.length - 1].onfinish = showPage;
+    }
+
+    previousPageButton.addEventListener('click', () => changeHistoryPage(-1));
+    nextPageButton.addEventListener('click', () => changeHistoryPage(1));
     historyFilters.forEach(button => button.addEventListener('click', () => setHistoryFilter(button.dataset.filter)));
     const savedBookingId = new URLSearchParams(window.location.search).get('booking');
     if (savedBookingId) {

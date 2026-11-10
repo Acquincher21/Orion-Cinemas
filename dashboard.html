@@ -44,22 +44,22 @@
 
         <section class="account-metrics" aria-label="Booking overview">
             <div class="metric-item">
-                <span class="metric-label">Upcoming screenings</span>
+                <span class="metric-label wave-text"><span class="wave-word">Upcoming</span> <span class="wave-word">screenings</span></span>
                 <img class="metric-icon" src="assets/images/vectors/calendar-icon.svg" alt="" aria-hidden="true">
-                <strong id="upcoming-count">0</strong>
-                <span class="metric-hint">Ready for your next movie night</span>
+                <strong id="upcoming-count"><span class="wave-word">0</span></strong>
+                <span class="metric-hint"><span class="wave-word">Ready</span> <span class="wave-word">for</span> <span class="wave-word">your</span> <span class="wave-word">next</span> <span class="wave-word">movie</span> <span class="wave-word">night</span></span>
             </div>
             <div class="metric-item">
-                <span class="metric-label">Total bookings</span>
+                <span class="metric-label wave-text"><span class="wave-word">Total</span> <span class="wave-word">bookings</span></span>
                 <img class="metric-icon" src="assets/images/vectors/booking-history-icon.svg" alt="" aria-hidden="true">
-                <strong id="booking-count">0</strong>
-                <span class="metric-hint">All screenings you’ve booked</span>
+                <strong id="booking-count"><span class="wave-word">0</span></strong>
+                <span class="metric-hint"><span class="wave-word">All</span> <span class="wave-word">screenings</span> <span class="wave-word">you’ve</span> <span class="wave-word">booked</span></span>
             </div>
             <div class="metric-item">
-                <span class="metric-label">Latest activity</span>
+                <span class="metric-label wave-text"><span class="wave-word">Latest</span> <span class="wave-word">activity</span></span>
                 <img class="metric-icon" src="assets/images/vectors/activity-clock-icon.svg" alt="" aria-hidden="true">
-                <strong id="latest-activity">No bookings yet</strong>
-                <span class="metric-hint">Most recently saved booking</span>
+                <strong id="latest-activity"><span class="wave-word">No</span> <span class="wave-word">bookings</span> <span class="wave-word">yet</span></strong>
+                <span class="metric-hint"><span class="wave-word">Most</span> <span class="wave-word">recently</span> <span class="wave-word">saved</span> <span class="wave-word">booking</span></span>
             </div>
         </section>
 
@@ -84,10 +84,10 @@
             <article class="dashboard-widget showing-widget" id="now-showing" aria-labelledby="showing-heading">
                 <div class="widget-heading">
                     <div>
-                        <p class="account-eyebrow">ON THE BIG SCREEN</p>
-                        <h2 id="showing-heading">Now showing</h2>
+                        <p class="account-eyebrow wave-text"><span class="wave-word">ON</span> <span class="wave-word">THE</span> <span class="wave-word">BIG</span> <span class="wave-word">SCREEN</span></p>
+                        <h2 id="showing-heading" class="wave-text"><span class="wave-word">Now</span> <span class="wave-word">showing</span></h2>
                     </div>
-                    <span class="live-indicator"><span aria-hidden="true"></span>In cinemas</span>
+                    <span class="live-indicator"><span class="live-indicator-dot" aria-hidden="true"></span><span class="wave-text"><span class="wave-word">In</span> <span class="wave-word">cinemas</span></span></span>
                 </div>
                 <div class="film-carousel" id="film-carousel" role="region" aria-roledescription="carousel"
                     aria-label="Now showing films">
@@ -185,6 +185,11 @@
             </div>
             <p class="booking-feedback" id="booking-feedback" role="status" aria-live="polite"></p>
             <div class="booking-list" id="booking-list" aria-live="polite"></div>
+            <nav class="history-pagination" id="history-pagination" aria-label="Booking pages" hidden>
+                <button type="button" class="history-page-button" id="history-previous" aria-controls="booking-list">Previous</button>
+                <span id="history-page-status" aria-live="polite"></span>
+                <button type="button" class="history-page-button" id="history-next" aria-controls="booking-list">Next</button>
+            </nav>
         </section>
     </main>
 

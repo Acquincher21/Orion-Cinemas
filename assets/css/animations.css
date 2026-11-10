@@ -83,6 +83,21 @@
     }
 }
 
+@keyframes cinepulseUpcomingMarquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.page-landing.motion-paused .upcoming-track,
+.page-landing .upcoming-marquee.is-offscreen .upcoming-track {
+    animation-play-state: paused;
+}
+
 /* SVG Animated Badges & Emblems */
 .logo-pulse {
     animation: cinepulseLandingLogoPulse 4s infinite var(--ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
@@ -179,6 +194,25 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
+    .page-landing .upcoming-track {
+        animation: none;
+        transform: none;
+        will-change: auto;
+    }
+
+    .page-landing .upcoming-marquee {
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+    }
+
+    .page-landing .upcoming-grid[aria-hidden="true"] {
+        display: none;
+    }
+
+    .page-landing .upcoming-card {
+        scroll-snap-align: start;
+    }
 
     .page-landing #movies:target,
     .page-landing #experiences:target {
@@ -309,25 +343,13 @@
     transition-delay: 0.15s;
 }
 
-/* Coming Soon Section Staggers */
+/* Coming Soon heading entrance */
 .page-landing .upcoming-showcase .scroll-reveal {
     transition-duration: 1.1s;
 }
 
 .page-landing .upcoming-showcase .upcoming-heading.scroll-reveal {
     transition-delay: 0.05s;
-}
-
-.page-landing .upcoming-grid .upcoming-card:nth-child(1).scroll-reveal {
-    transition-delay: 0.1s;
-}
-
-.page-landing .upcoming-grid .upcoming-card:nth-child(2).scroll-reveal {
-    transition-delay: 0.22s;
-}
-
-.page-landing .upcoming-grid .upcoming-card:nth-child(3).scroll-reveal {
-    transition-delay: 0.34s;
 }
 
 /* Experiences Section Staggers */
@@ -422,7 +444,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-
     .page-account .account-welcome,
     .page-account .metric-item,
     .page-account .booking-chart,

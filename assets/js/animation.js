@@ -132,9 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function syncAnimationState() {
         const shouldPause = isManuallyPaused || isPausedForUpcoming;
         canvas.parentElement.classList.toggle('motion-paused', shouldPause);
-        animationToggle?.setAttribute('aria-pressed', String(shouldPause));
+        document.body.classList.toggle('motion-paused', isManuallyPaused);
+        animationToggle?.setAttribute('aria-pressed', String(isManuallyPaused));
         if (animationToggle) {
-            animationToggle.textContent = shouldPause ? 'Start Animation' : 'Stop Animation';
+            animationToggle.textContent = isManuallyPaused ? 'Start Animation' : 'Stop Animation';
         }
 
         if (shouldPause) {
@@ -160,7 +161,17 @@ document.addEventListener('DOMContentLoaded', () => {
         upcomingObserver.observe(upcomingSection);
     }
 
-    // Stops or restarts the canvas and ticket-button pulse from the hero control.
+    // Pauses the marquee while it is scrolled out of view to save CPU/GPU.
+    const upcomingMarquee = document.querySelector('.upcoming-marquee');
+    if (upcomingMarquee && 'IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                upcomingMarquee.classList.toggle('is-offscreen', !entry.isIntersecting);
+            });
+        }).observe(upcomingMarquee);
+    }
+
+    // Stops or restarts landing-page motion from the hero control.
     animationToggle?.addEventListener('click', () => {
         isManuallyPaused = !isManuallyPaused;
         syncAnimationState();

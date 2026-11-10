@@ -237,23 +237,61 @@
     opacity: 1;
 }
 
-.page-account .metric-item:first-child {
-    border-color: transparent;
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-    color: #071014;
-}
-
-.page-account .metric-item:first-child .metric-label {
-    color: rgba(7, 16, 20, 0.78);
-}
-
-.page-account .metric-item:first-child .metric-icon {
-    filter: brightness(0);
-}
-
 .page-account .metric-label {
     color: var(--account-muted);
     font-size: 0.82rem;
+    justify-self: start;
+}
+
+.page-account .wave-text {
+    display: block;
+    width: fit-content;
+}
+
+.page-account .wave-word {
+    display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .page-account .metric-item {
+        transition: scale 0.25s ease;
+    }
+
+    .page-account .metric-item:hover {
+        scale: 1.03;
+    }
+
+    .page-account .metric-item:hover .wave-word,
+    .page-account .showing-widget:hover .wave-word,
+    .page-account .showing-widget:hover .live-indicator-dot {
+        animation: dashboardWordWave 1.4s ease-in-out var(--wave-delay, 0s) infinite;
+    }
+
+    .page-account .wave-word:nth-child(2) {
+        --wave-delay: 0.08s;
+    }
+
+    .page-account .wave-word:nth-child(3) {
+        --wave-delay: 0.16s;
+    }
+
+    .page-account .wave-word:nth-child(4) {
+        --wave-delay: 0.24s;
+    }
+
+    .page-account .wave-word:nth-child(5) {
+        --wave-delay: 0.32s;
+    }
+
+    .page-account .wave-word:nth-child(6) {
+        --wave-delay: 0.4s;
+    }
+}
+
+@keyframes dashboardWordWave {
+    50% {
+        transform: translateY(-3px) scale(1.03);
+    }
 }
 
 .page-account .metric-item strong {
@@ -263,10 +301,6 @@
 .page-account .metric-hint {
     color: var(--account-muted);
     font-size: 0.72rem;
-}
-
-.page-account .metric-item:first-child .metric-hint {
-    color: rgba(7, 16, 20, 0.78);
 }
 
 .page-account #latest-activity {
@@ -352,7 +386,50 @@
 .page-account .booking-list {
     display: grid;
     gap: 0.8rem;
+    overflow-x: clip;
     padding-top: 1rem;
+    scroll-margin-top: 1rem;
+}
+
+.page-account .history-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    color: var(--account-muted);
+    font-size: 0.82rem;
+}
+
+.page-account .history-pagination[hidden] {
+    display: none;
+}
+
+.page-account .history-page-button {
+    min-height: 2.25rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--account-line);
+    border-radius: var(--radius-sm);
+    background: var(--account-panel);
+    color: var(--account-accent);
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.page-account .history-page-button:not(:disabled):hover {
+    border-color: var(--account-accent);
+    background: rgba(0, 242, 254, 0.07);
+}
+
+.page-account .history-page-button:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 2px;
+}
+
+.page-account .history-page-button:disabled {
+    opacity: 0.45;
+    cursor: default;
 }
 
 .page-account .account-booking {
@@ -360,6 +437,48 @@
     border: 1px solid var(--account-line);
     border-radius: var(--radius-sm);
     background: var(--account-panel);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .page-account .history-arrive-right,
+    .page-account .history-arrive-left {
+        animation: historyCardArrival 1.1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .page-account .history-arrive-right {
+        --history-arrival-offset: 100%;
+    }
+
+    .page-account .history-arrive-left {
+        --history-arrival-offset: -100%;
+    }
+
+    .page-account .history-arrive-right:nth-child(2),
+    .page-account .history-arrive-left:nth-child(2) {
+        animation-delay: 0.18s;
+    }
+
+    .page-account .history-arrive-right:nth-child(3),
+    .page-account .history-arrive-left:nth-child(3) {
+        animation-delay: 0.36s;
+    }
+
+    .page-account .history-arrive-right:nth-child(4),
+    .page-account .history-arrive-left:nth-child(4) {
+        animation-delay: 0.54s;
+    }
+}
+
+@keyframes historyCardArrival {
+    from {
+        opacity: 0;
+        transform: translateX(var(--history-arrival-offset));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .page-account .booking-main-row {
@@ -476,9 +595,8 @@
     display: block;
     max-height: 0;
     overflow: hidden;
-    padding-top: 0;
     opacity: 0;
-    transition: max-height 0.28s ease, padding-top 0.28s ease, opacity 0.2s ease;
+    transition: max-height 0.28s ease, opacity 0.2s ease;
 }
 
 .page-account .booking-track:not([open]) .tracking-details {
@@ -487,7 +605,6 @@
 
 .page-account .tracking-details.is-expanded {
     max-height: 50rem;
-    padding-top: 0.75rem;
     opacity: 1;
 }
 
@@ -496,6 +613,7 @@
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
     min-height: 0;
+    padding-top: 0.75rem;
     overflow: hidden;
 }
 
@@ -507,6 +625,30 @@
 .page-account .tracking-details strong {
     color: var(--text-main);
     font-weight: 600;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .page-account .tracking-details.is-expanded p {
+        animation: trackingDetailReveal 0.45s ease-out backwards;
+    }
+
+    .page-account .tracking-details.is-expanded p:nth-child(2) { animation-delay: 0.06s; }
+    .page-account .tracking-details.is-expanded p:nth-child(3) { animation-delay: 0.12s; }
+    .page-account .tracking-details.is-expanded p:nth-child(4) { animation-delay: 0.18s; }
+    .page-account .tracking-details.is-expanded p:nth-child(5) { animation-delay: 0.24s; }
+    .page-account .tracking-details.is-expanded p:nth-child(6) { animation-delay: 0.3s; }
+}
+
+@keyframes trackingDetailReveal {
+    from {
+        filter: blur(4px);
+        opacity: 0;
+    }
+
+    to {
+        filter: blur(0);
+        opacity: 1;
+    }
 }
 
 .page-account .history-empty {
@@ -747,7 +889,7 @@
     gap: 0.4rem;
 }
 
-.page-account .live-indicator span {
+.page-account .live-indicator-dot {
     width: 0.45rem;
     aspect-ratio: 1;
     border-radius: 50%;

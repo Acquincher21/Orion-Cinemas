@@ -289,136 +289,55 @@
 }
 
 .page-landing .upcoming-card {
+    display: flex;
+    width: 100%;
+    height: clamp(285px, 28vw, 340px);
+    align-items: center;
+    gap: 1.25rem;
     overflow: hidden;
-    border: 1px solid rgba(167, 139, 250, 0.2);
-    border-radius: var(--radius-md);
-    background: rgba(18, 22, 32, 0.88);
-    transition: transform 0.3s var(--ease-smooth), border-color 0.3s ease, box-shadow 0.3s ease;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    transition: transform 0.4s var(--ease-smooth);
 }
 
 .page-landing .upcoming-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(196, 181, 253, 0.65);
-    box-shadow: 0 16px 36px rgba(38, 20, 72, 0.32);
+    transform: translateY(-3px);
 }
 
-.page-landing .upcoming-art {
-    position: relative;
-    display: grid;
-    height: 180px;
-    min-height: 180px;
-    place-items: center;
-    overflow: hidden;
-    isolation: isolate;
+.page-landing .upcoming-card:nth-child(even) {
+    margin-top: 10rem;
 }
 
-.page-landing .upcoming-art::before,
-.page-landing .upcoming-art::after {
-    position: absolute;
-    content: '';
-}
-
-.page-landing .upcoming-art::before {
-    width: 150px;
-    height: 150px;
-    border: 1px solid rgba(255, 255, 255, 0.38);
-    border-radius: 50%;
-    box-shadow: 0 0 0 18px rgba(255, 255, 255, 0.04), 0 0 0 38px rgba(255, 255, 255, 0.035);
-    transform: rotate(-24deg) scaleX(1.65);
-    transition: transform 0.5s var(--ease-smooth);
-}
-
-.page-landing .upcoming-card:hover .upcoming-art::before {
-    transform: rotate(-12deg) scaleX(1.8);
-}
-
-.page-landing .upcoming-art::after {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.18);
-    filter: blur(1px);
-}
-
-.page-landing .upcoming-art-orbit {
-    background: radial-gradient(circle at 50% 45%, rgba(87, 67, 181, 0.72), transparent 34%), linear-gradient(135deg, #12152c, #293469);
-}
-
-.page-landing .upcoming-art-frontier {
-    background: radial-gradient(ellipse at 70% 50%, rgba(255, 107, 107, 0.58), transparent 34%), linear-gradient(130deg, #321d3b, #754459 55%, #d17a68);
-}
-
-.page-landing .upcoming-art-frontier::before {
-    width: 125px;
-    height: 125px;
-    border-radius: 30%;
-    transform: rotate(45deg);
-}
-
-.page-landing .upcoming-art-echoes {
-    background: radial-gradient(circle at 50% 48%, rgba(49, 184, 176, 0.52), transparent 35%), linear-gradient(135deg, #102d38, #195b66 55%, #347b78);
-}
-
-.page-landing .upcoming-art-echoes::before {
-    width: 112px;
-    height: 112px;
-    transform: rotate(40deg) scaleX(1.4);
-}
-
-.page-landing .upcoming-art-number {
-    z-index: 1;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 3rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
+.page-landing .upcoming-poster {
+    flex: 0 0 clamp(190px, 21vw, 250px);
+    display: block;
+    width: clamp(190px, 21vw, 250px);
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 8px;
+    object-fit: cover;
+    transition: border-color 0.3s ease;
 }
 
 .page-landing .upcoming-card-info {
     display: flex;
-    min-height: 220px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.25rem 1.4rem;
-}
-
-.page-landing .upcoming-copy {
     min-width: 0;
-    transition: transform 0.3s var(--ease-smooth);
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
 }
 
-.page-landing .upcoming-card:hover .upcoming-copy {
-    transform: translateX(5px);
-}
-
-.page-landing .upcoming-poster-slot {
-    display: grid;
-    width: 104px;
-    height: 156px;
-    flex: 0 0 104px;
-    place-items: center;
-    border: 1px solid rgba(196, 181, 253, 0.24);
-    border-radius: 6px;
-    background: rgba(0, 0, 0, 0.42);
-    color: var(--text-dim);
-    font-size: 0.7rem;
-    text-align: center;
-}
-
-.page-landing .upcoming-poster-slot img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    object-fit: cover;
+.page-landing .upcoming-card:hover .upcoming-poster {
+    border-color: rgba(255, 255, 255, 0.65);
 }
 
 .page-landing .upcoming-status {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    color: #c4b5fd;
+    color: #e7d6a8;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -429,18 +348,19 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #a78bfa;
+    background: #e7d6a8;
     content: '';
     transition: box-shadow 0.3s ease;
 }
 
 .page-landing .upcoming-card:hover .upcoming-status::before {
-    box-shadow: 0 0 10px rgba(167, 139, 250, 0.9);
+    box-shadow: 0 0 10px rgba(231, 214, 168, 0.8);
 }
 
 .page-landing .upcoming-card-info h3 {
-    margin: 0.45rem 0 0.25rem;
-    font-size: 1.2rem;
+    margin: 0.55rem 0 0.3rem;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    line-height: 1.2;
 }
 
 .page-landing .upcoming-card-info p {
@@ -485,33 +405,29 @@
 
 @media (prefers-reduced-motion: reduce) {
     .page-landing .upcoming-card,
-    .page-landing .upcoming-copy,
-    .page-landing .upcoming-art::before,
+    .page-landing .upcoming-poster,
     .page-landing .upcoming-status::before {
         transition: none;
     }
 
-    .page-landing .upcoming-card:hover,
-    .page-landing .upcoming-card:hover .upcoming-copy {
+    .page-landing .upcoming-card:hover {
         transform: none;
     }
 
-    .page-landing .upcoming-card:hover .upcoming-art::before {
-        transform: rotate(-24deg) scaleX(1.65);
+    .page-landing .upcoming-card:hover .upcoming-poster {
+        transform: none;
     }
 }
 
-@media (max-width: 520px) {
-    .page-landing .upcoming-card-info {
-        min-height: 190px;
-        gap: 0.75rem;
-        padding: 1rem;
+@media (max-width: 700px) {
+    .page-landing .upcoming-card {
+        height: 285px;
+        gap: 1rem;
     }
 
-    .page-landing .upcoming-poster-slot {
-        width: 88px;
-        height: 132px;
-        flex-basis: 88px;
+    .page-landing .upcoming-poster {
+        flex-basis: 190px;
+        width: 190px;
     }
 }
 
