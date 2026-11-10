@@ -1,6 +1,84 @@
 /* Dashboard booking history, now-showing carousel, and chart rendering. */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const sampleAccountEmail = 'juanderful@gmail.com';
+    const account = window.CinePulseAuth.getAccount();
+
+    function createSampleBookings(year) {
+        const monthlyCounts = [5, 3, 0, 1, 0, 0, 0, 1, 4, 2, 0, 0];
+        const movies = [
+            { id: '1', name: 'The Odyssey', cinema: 'Cinema 1', price: 270 },
+            { id: '2', name: 'Pacific Rim', cinema: 'Cinema 2', price: 260 },
+            { id: '3', name: 'Avengers: Doomsday', cinema: 'Cinema 3', price: 280 },
+            { id: '4', name: 'Toy Story 5', cinema: 'Cinema 4', price: 280 },
+            { id: '5', name: 'New Resident Evil', cinema: 'Cinema 1', price: 260 },
+            { id: '6', name: 'Project Hail Mary', cinema: 'Cinema 2', price: 260 }
+        ];
+        const personCounts = Array.from({ length: monthlyCounts.reduce((sum, count) => sum + count, 0) },
+            (_, index) => (index % 4) + 1);
+        for (let index = personCounts.length - 1; index > 0; index--) {
+            const randomIndex = Math.floor(Math.random() * (index + 1));
+            [personCounts[index], personCounts[randomIndex]] = [personCounts[randomIndex], personCounts[index]];
+        }
+        let sequence = 0;
+
+        return monthlyCounts.flatMap((count, monthIndex) => Array.from({ length: count }, (_, index) => {
+            sequence++;
+            const day = Math.floor(((index + 1) * 28) / (count + 1)) + 1;
+            const screeningAt = new Date(year, monthIndex, day, 18 + (index % 3), 30);
+            const movie = movies[(sequence - 1) % movies.length];
+            const timestamp = screeningAt.toISOString();
+            const personCount = personCounts[sequence - 1];
+            const firstSeat = ((sequence - 1) % 20) * 4 + 1;
+            const seats = Array.from({ length: personCount }, (_, seatIndex) => firstSeat + seatIndex);
+
+            return {
+                id: `CP-DEMO-${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(index + 1).padStart(2, '0')}`,
+                movieId: movie.id,
+                movie: movie.name,
+                cinema: movie.cinema,
+                screeningAt: timestamp,
+                date: formatDate(screeningAt, { dateStyle: 'long' }),
+                time: formatDate(screeningAt, { hour: 'numeric', minute: '2-digit' }),
+                seats,
+                ticketPrice: movie.price,
+                total: movie.price * seats.length,
+                savedAt: timestamp,
+                sampleAccount: sampleAccountEmail,
+                sampleVersion: 2
+            };
+        }));
+    }
+
+    if (account && String(account.email).toLowerCase() === sampleAccountEmail) {
+        try {
+            const storedBookings = JSON.parse(localStorage.getItem('cinepulse-bookings') || '[]');
+            if (!Array.isArray(storedBookings)) throw new Error('Booking history must be a list.');
+
+            const bookings = createSampleBookings(new Date().getFullYear());
+            const samplesById = new Map(bookings.map(booking => [booking.id, booking]));
+            let updated = false;
+            const existingIds = new Set();
+            const updatedBookings = storedBookings.map(booking => {
+                if (!booking) return booking;
+                existingIds.add(booking.id);
+                const sample = samplesById.get(booking.id);
+                if (sample && booking.sampleAccount === sampleAccountEmail && booking.sampleVersion !== 2) {
+                    updated = true;
+                    return { ...booking, seats: sample.seats, ticketPrice: sample.ticketPrice, total: sample.total, sampleVersion: 2 };
+                }
+                return booking;
+            });
+            const missingSamples = bookings.filter(booking => !existingIds.has(booking.id));
+            if (updated || missingSamples.length) {
+                localStorage.setItem('cinepulse-bookings', JSON.stringify([...updatedBookings, ...missingSamples]));
+            }
+        } catch {
+            const feedback = document.getElementById('booking-feedback');
+            if (feedback) feedback.textContent = 'Sample bookings could not be saved in this browser. Check its storage settings.';
+        }
+    }
+
     const accountNav = document.querySelector('.account-nav');
     if (accountNav) {
         const navLinks = [...accountNav.querySelectorAll('a[href^="#"]')];
@@ -135,7 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function readBookings() {
         try {
             const bookings = JSON.parse(localStorage.getItem('cinepulse-bookings') || '[]');
-            return Array.isArray(bookings) ? bookings.filter(booking => booking && booking.id && booking.screeningAt) : [];
+            const currentEmail = String(account && account.email || '').toLowerCase();
+            return Array.isArray(bookings)
+                ? bookings.filter(booking => booking && booking.id && booking.screeningAt
+                    && (!booking.sampleAccount || booking.sampleAccount === currentEmail))
+                : [];
         } catch {
             return [];
         }
@@ -179,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBookingCard(booking) {
+        const seatNumbers = getSeatNumbers(Array.isArray(booking.seats) ? booking.seats : []);
+        const screeningDate = new Date(booking.screeningAt);
+        const total = Number(booking.total);
         const card = document.createElement('article');
         card.className = 'account-booking';
         const row = document.createElement('div');
@@ -188,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title.textContent = booking.movie || 'Cinema screening';
         const meta = document.createElement('p');
         meta.className = 'booking-meta';
-        meta.textContent = `${booking.cinema ? `${booking.cinema} · ` : ''}${booking.date || 'Date unavailable'} · ${booking.time || 'Time unavailable'} · ${getSeatNumbers(booking.seats || []).join(', ') || 'No seats listed'}`;
+        meta.textContent = `${booking.cinema ? `${booking.cinema} · ` : ''}${booking.date || 'Date unavailable'} · ${booking.time || 'Time unavailable'}`;
         info.append(title, meta);
 
         const status = document.createElement('span');
@@ -199,7 +284,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const tracking = document.createElement('details');
         tracking.className = 'booking-track';
         const trackingSummary = document.createElement('summary');
-        trackingSummary.textContent = 'Booking tracking';
+        const trackingLabel = document.createElement('span');
+        trackingLabel.className = 'booking-track-label';
+        trackingLabel.textContent = 'Booking tracking';
+        trackingSummary.append(trackingLabel);
         const details = document.createElement('div');
         details.className = 'tracking-details';
         const detailsContent = document.createElement('div');
@@ -208,8 +296,10 @@ document.addEventListener('DOMContentLoaded', () => {
         [
             ['Reference', booking.id],
             ['Cinema', booking.cinema || 'Not listed'],
-            ['Saved', booking.savedAt ? formatDate(new Date(booking.savedAt), { dateStyle: 'medium', timeStyle: 'short' }) : 'On this device'],
-            ['Demo total', `₱${Number(booking.total || 0).toFixed(2)}`]
+            ['Date and time', Number.isNaN(screeningDate.getTime()) ? 'Not available' : formatDate(screeningDate, { dateStyle: 'medium', timeStyle: 'short' })],
+            ['Booked seats', seatNumbers.length ? seatNumbers.join(', ') : 'Not listed'],
+            ['Total persons', seatNumbers.length ? String(seatNumbers.length) : 'Not available'],
+            ['Demo total', booking.total != null && Number.isFinite(total) ? `₱${total.toFixed(2)}` : 'Not available']
         ].forEach(([label, value]) => {
             const item = document.createElement('p');
             const itemLabel = document.createElement('span');
@@ -239,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         trackingSummary.addEventListener('click', event => {
             event.preventDefault();
             isExpanded = !isExpanded;
+            tracking.classList.toggle('is-expanded', isExpanded);
             const currentTransition = ++transitionId;
 
             if (reduceTrackingMotion) {
@@ -329,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('booking-chart');
     if (!canvas) return;
 
+    const account = window.CinePulseAuth.getAccount();
     const context = canvas.getContext('2d');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const tooltip = document.getElementById('chart-tooltip');
@@ -339,7 +431,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let bookings = [];
         try {
             const stored = JSON.parse(localStorage.getItem('cinepulse-bookings') || '[]');
-            if (Array.isArray(stored)) bookings = stored;
+            const currentEmail = String(account && account.email || '').toLowerCase();
+            if (Array.isArray(stored)) {
+                bookings = stored.filter(booking => booking && (!booking.sampleAccount || booking.sampleAccount === currentEmail));
+            }
         } catch {
             bookings = [];
         }

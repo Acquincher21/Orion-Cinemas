@@ -412,14 +412,64 @@
     cursor: pointer;
 }
 
+.page-account .booking-track summary:focus-visible {
+    outline: 2px solid var(--account-accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+.page-account .booking-track-label {
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.page-account .booking-track-label::before,
+.page-account .booking-track-label::after {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 1px;
+    background: currentColor;
+    content: "";
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.page-account .booking-track-label::before {
+    left: 0;
+    transform-origin: left;
+}
+
+.page-account .booking-track-label::after {
+    right: 0;
+    transform-origin: right;
+}
+
+.page-account .booking-track summary:hover .booking-track-label::before,
+.page-account .booking-track summary:hover .booking-track-label::after,
+.page-account .booking-track summary:focus-visible .booking-track-label::before,
+.page-account .booking-track summary:focus-visible .booking-track-label::after {
+    transform: scaleX(1);
+}
+
 .page-account .booking-track summary::after {
     content: "+";
     font-size: 1rem;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
+}
+
+.page-account .booking-track summary:hover::after,
+.page-account .booking-track summary:focus-visible::after {
+    transform: rotate(90deg) scale(1.15);
 }
 
 .page-account .booking-track.is-expanded summary::after {
     transform: rotate(45deg);
+}
+
+.page-account .booking-track.is-expanded summary:hover::after,
+.page-account .booking-track.is-expanded summary:focus-visible::after {
+    transform: rotate(135deg) scale(1.15);
 }
 
 .page-account .tracking-details {
@@ -672,10 +722,22 @@
         transform: none;
     }
 
+    .page-account .booking-track-label::before,
+    .page-account .booking-track-label::after,
     .page-account .booking-track summary::after,
     .page-account .tracking-details,
     .page-account .chart-tooltip {
         transition: none;
+    }
+
+    .page-account .booking-track summary:hover::after,
+    .page-account .booking-track summary:focus-visible::after {
+        transform: none;
+    }
+
+    .page-account .booking-track.is-expanded summary:hover::after,
+    .page-account .booking-track.is-expanded summary:focus-visible::after {
+        transform: rotate(45deg);
     }
 }
 

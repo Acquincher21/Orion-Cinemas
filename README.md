@@ -26,3 +26,5 @@ OrionCinemas is a frontend-only cinema booking experience created for the ITL303
 - `assets/js/dashboard.js`: dashboard booking activity chart
 
 Use the demo account `juanderful@gmail.com` with password `Juan123*`, or register an account stored in this browser. Authentication is frontend-only and is not secure for real accounts. Demo bookings and account data are stored in browser storage. There is no payment processing or live cinema inventory integration. Open `index.html` in a browser to explore the project.
+
+The demo account includes sample booking history with one to four seats per screening. Booking tracking shows the screening date and time, booked seats, person count, and demo total; sample totals are the ticket price multiplied by the number of seats.

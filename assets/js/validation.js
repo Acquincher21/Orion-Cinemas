@@ -174,6 +174,7 @@
 
     window.CinePulseAuth = {
         isAuthenticated: () => Boolean(readSession()),
+        getAccount: readSession,
         logout: clearSession
     };
 
