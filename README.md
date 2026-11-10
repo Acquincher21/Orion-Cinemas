@@ -31,4 +31,6 @@ The demo account includes sample booking history with one to four seats per scre
 
 The Upcoming and All history filters display four bookings per page, with previous and next controls when more pages are available. Cards fade and slide out when changing pages, and the next cards fade and slide in from the right for either filter and Next, or from the left for Previous, in a staggered sequence. Selecting a filter or page scrolls to the booking list; card animations are disabled and scrolling is instant when reduced motion is preferred.
 
+The dashboard has a single page-scroll indicator outside the sidebar, with particles orbiting its moving marker. Selecting a booking filter refreshes the line with a fade-in, and it updates as the filtered content changes. The fade and particles are disabled when reduced motion is preferred.
+
 On the dashboard, booking overview cards scale on hover while each word and count gently bounces in a continuous wave, as do the now-showing heading and status when the widget is hovered. These effects are disabled when reduced motion is preferred.

@@ -111,6 +111,32 @@ document.addEventListener('DOMContentLoaded', () => {
         updateActiveLink();
     }
 
+    const scrollProgress = document.querySelector('.dashboard-scroll-progress');
+    const scrollTrack = document.getElementById('dashboard-scroll-track');
+    let scrollProgressFrame = null;
+
+    function updateScrollProgress() {
+        if (!scrollProgress || scrollProgressFrame !== null) return;
+        scrollProgressFrame = window.requestAnimationFrame(() => {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = maxScroll <= 0 ? 0
+                : maxScroll - window.scrollY <= 1 ? 1
+                    : Math.min(1, Math.max(0, window.scrollY / maxScroll));
+            scrollProgress.style.setProperty('--scroll-progress', progress);
+            scrollProgressFrame = null;
+        });
+    }
+
+    if (scrollProgress) {
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        window.addEventListener('resize', updateScrollProgress);
+        window.addEventListener('load', updateScrollProgress);
+        if ('ResizeObserver' in window) {
+            new ResizeObserver(updateScrollProgress).observe(document.body);
+        }
+        updateScrollProgress();
+    }
+
     const filmCarousel = document.getElementById('film-carousel');
     if (filmCarousel) {
         const films = [...filmCarousel.querySelectorAll('.showing-film')];
@@ -452,6 +478,12 @@ document.addEventListener('DOMContentLoaded', () => {
         historyPage = 0;
         historyFilters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
         renderBookings('right');
+        updateScrollProgress();
+        if (scrollTrack) {
+            scrollTrack.classList.remove('is-refreshing');
+            void scrollTrack.offsetWidth;
+            scrollTrack.classList.add('is-refreshing');
+        }
         scrollToBookings();
     }
 

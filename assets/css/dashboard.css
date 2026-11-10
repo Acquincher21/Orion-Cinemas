@@ -44,6 +44,78 @@
     background: var(--bg-secondary);
 }
 
+.page-account .dashboard-scroll-progress {
+    --scroll-progress: 0;
+    position: fixed;
+    z-index: 10;
+    top: 2rem;
+    bottom: 2rem;
+    left: calc(224px + clamp(0.75rem, 2vw, 1.5rem));
+    display: flex;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.page-account .dashboard-scroll-track {
+    position: relative;
+    width: 2px;
+    border-radius: 2px;
+    background: rgba(0, 242, 254, 0.18);
+}
+
+.page-account .dashboard-scroll-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--account-accent);
+    transform: scaleY(var(--scroll-progress));
+    transform-origin: top;
+}
+
+.page-account .dashboard-scroll-marker {
+    position: absolute;
+    top: calc(var(--scroll-progress) * 100%);
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--account-accent);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.55);
+    transform: translate(-50%, -50%);
+}
+
+.page-account .dashboard-scroll-marker::before,
+.page-account .dashboard-scroll-marker::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #e7feff;
+    box-shadow: 0 -3px 1px rgba(0, 242, 254, 0.5), -1px -5px 2px rgba(0, 242, 254, 0.2);
+    content: "";
+    animation: dashboard-particle-orbit 2.4s linear infinite;
+}
+
+.page-account .dashboard-scroll-marker::after {
+    animation-delay: -1.2s;
+}
+
+@keyframes dashboard-particle-orbit {
+    from { transform: translate(-50%, -50%) rotate(0deg) translateX(7px); }
+    to { transform: translate(-50%, -50%) rotate(360deg) translateX(7px); }
+}
+
+.page-account .dashboard-scroll-track.is-refreshing {
+    animation: dashboard-progress-fade-in 0.45s ease both;
+}
+
+@keyframes dashboard-progress-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .page-account .account-nav {
     display: grid;
     gap: 0.35rem;
@@ -670,6 +742,10 @@
 }
 
 @media (max-width: 720px) {
+    .page-account .dashboard-scroll-progress {
+        left: 0.625rem;
+    }
+
     .page-account .account-sidebar {
         position: static;
         width: 100%;
@@ -754,6 +830,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .page-account .dashboard-scroll-track.is-refreshing {
+        animation: none;
+    }
+
+    .page-account .dashboard-scroll-marker::before,
+    .page-account .dashboard-scroll-marker::after {
+        display: none;
+    }
+
     .page-account *,
     .page-account *::before,
     .page-account *::after {
