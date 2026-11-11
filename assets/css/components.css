@@ -277,6 +277,30 @@
     background-color: #060612;
 }
 
+.page-landing .card-back-odyssey {
+    --card-hover-image: url("../images/graphics/agamemnon.jpg");
+}
+
+.page-landing .card-back-pacific {
+    --card-hover-image: url("../images/graphics/kaiju.png");
+}
+
+.page-landing .card-back-avengers {
+    --card-hover-image: url("../images/graphics/drdoom.jpg");
+}
+
+.page-landing .card-back-toy {
+    --card-hover-image: url("../images/graphics/toy.png");
+}
+
+.page-landing .card-back-resident {
+    --card-hover-image: url("../images/graphics/resident.jpg");
+}
+
+.page-landing .card-back-hailmary {
+    --card-hover-image: url("../images/graphics/rocky.jpg");
+}
+
 /* Keep each portrait poster proportional and slightly inset within its card. */
 .page-landing .poster-art-horizon,
 .page-landing .poster-art-starlight,
@@ -393,13 +417,13 @@
 
 .page-landing .card-back .genre {
     font-size: 0.85rem;
-    color: var(--text-dim);
+    color: #cbd5e1;
     margin-bottom: 1rem;
 }
 
 .page-landing .card-back .synopsis {
     font-size: 0.95rem;
-    color: var(--text-muted);
+    color: #e2e8f0;
     line-height: 1.5;
 }
 

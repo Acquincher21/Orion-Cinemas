@@ -27,6 +27,8 @@ OrionCinemas is a frontend-only cinema booking experience created for the ITL303
 
 Use the demo account `juanderful@gmail.com` with password `Juan123*`, or register an account stored in this browser. Authentication is frontend-only and is not secure for real accounts. Demo bookings and account data are stored in browser storage. There is no payment processing or live cinema inventory integration. Open `index.html` in a browser to explore the project.
 
+Landing-page links to sign-in use a one-second branded transition. Links to registration from the landing and sign-in pages use a distinct two-second transition. The sign-in and registration forms enter with a slow fade and lift. These animations are disabled when reduced motion is preferred, and transitions between pages are skipped when animations are paused on the current page.
+
 The demo account includes sample booking history with one to four seats per screening. Booking tracking shows the screening date and time, booked seats, person count, and demo total; sample totals are the ticket price multiplied by the number of seats. When opened, tracking details reveal with a staggered blur-to-sharp animation, disabled for reduced motion.
 
 The Upcoming and All history filters display four bookings per page, with previous and next controls when more pages are available. Cards fade and slide out when changing pages, and the next cards fade and slide in from the right for either filter and Next, or from the left for Previous, in a staggered sequence. Selecting a filter or page scrolls to the booking list; card animations are disabled and scrolling is instant when reduced motion is preferred.

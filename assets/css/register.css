@@ -120,7 +120,7 @@
     padding: 2.5rem 2.25rem;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 60px rgba(0,229,255,0.07);
-    animation: fadeUp .5s ease both;
+    animation: fadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(28px); }
@@ -313,6 +313,7 @@
   .legal-dialog-content p { color: var(--muted); font-size: .9rem; line-height: 1.6; }
 
   @media (prefers-reduced-motion: reduce) {
+    .card { animation: none; }
     .field-shake, .legal-dialog[open] { animation: none; }
     .field[data-state="valid"] .field-status { animation: none; opacity: 1; transform: translateY(-50%) scale(1); }
     #strength-fill, .toggle-pw img { transition: none; }

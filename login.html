@@ -5,8 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign In — OrionCinemas</title>
 <link rel="stylesheet" href="assets/css/login.css">
+<link rel="stylesheet" href="assets/css/page-transition.css">
 </head>
 <body>
+
+<div class="page-transition" id="page-transition" role="status" aria-live="polite" aria-hidden="true">
+  <div class="page-transition-brand">
+    <img src="assets/images/vectors/orion-logo.svg" alt="" width="68" height="68">
+    <span><span class="page-transition-highlight">Orion</span>Cinemas</span>
+    <span class="page-transition-message">Opening your cinema experience</span>
+  </div>
+</div>
 
 <canvas id="particles"></canvas>
 <dialog class="login-loading" id="loginLoading" aria-labelledby="loginLoadingTitle" aria-describedby="loginLoadingMessage">
@@ -91,5 +100,6 @@
 
 <script src="assets/js/validation.js"></script>
 <script src="assets/js/login.js"></script>
+<script src="assets/js/page-transition.js"></script>
 </body>
 </html>

@@ -11,19 +11,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const previousMovies = document.querySelector('#previous-movies');
     const nextMovies = document.querySelector('#next-movies');
     const moviePageStatus = document.querySelector('#movie-page-status');
+    const movieShowcase = document.querySelector('#movies');
 
-    if (movieCards.length && previousMovies && nextMovies && moviePageStatus) {
+    if (movieCards.length && previousMovies && nextMovies && moviePageStatus && movieShowcase) {
         let currentMoviePage = 1;
         const totalMoviePages = Math.ceil(movieCards.length / 3);
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let showcaseVisible = false;
+        let autoplayTimer = null;
+        let transitioning = false;
 
-        const showMoviePage = async (page, direction) => {
-            if (page < 1 || page > totalMoviePages || previousMovies.disabled && nextMovies.disabled) return;
+        const scheduleAutoplay = () => {
+            clearTimeout(autoplayTimer);
+            autoplayTimer = null;
+            if (reducedMotion.matches || transitioning || !showcaseVisible || document.hidden
+                || movieShowcase.matches(':hover, :focus-within') || totalMoviePages < 2) return;
 
+            autoplayTimer = setTimeout(() => {
+                autoplayTimer = null;
+                const nextPage = currentMoviePage === totalMoviePages ? 1 : currentMoviePage + 1;
+                showMoviePage(nextPage, 1, true);
+            }, 7000);
+        };
+
+        const showMoviePage = async (page, direction, automatic = false) => {
+            if (page < 1 || page > totalMoviePages || transitioning) return;
+
+            transitioning = true;
+            clearTimeout(autoplayTimer);
+            autoplayTimer = null;
             previousMovies.disabled = true;
             nextMovies.disabled = true;
             const currentCards = [...movieCards].filter(card => Number(card.dataset.moviePage) === currentMoviePage);
             const nextCards = [...movieCards].filter(card => Number(card.dataset.moviePage) === page);
-            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const reduceMotion = reducedMotion.matches;
 
             if (!reduceMotion) {
                 const exitAnimations = currentCards.map((card, index) => card.animate(
@@ -45,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const firstMovie = (currentMoviePage - 1) * 3 + 1;
             const lastMovie = Math.min(currentMoviePage * 3, movieCards.length);
+            moviePageStatus.setAttribute('aria-live', automatic ? 'off' : 'polite');
             moviePageStatus.textContent = `Movies ${firstMovie}–${lastMovie} of ${movieCards.length}`;
 
             if (!reduceMotion) {
@@ -61,10 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             previousMovies.disabled = currentMoviePage === 1;
             nextMovies.disabled = currentMoviePage === totalMoviePages;
+            transitioning = false;
+            scheduleAutoplay();
         };
 
         previousMovies.addEventListener('click', () => showMoviePage(currentMoviePage - 1, -1));
         nextMovies.addEventListener('click', () => showMoviePage(currentMoviePage + 1, 1));
+        movieShowcase.addEventListener('mouseenter', scheduleAutoplay);
+        movieShowcase.addEventListener('mouseleave', scheduleAutoplay);
+        movieShowcase.addEventListener('focusin', scheduleAutoplay);
+        movieShowcase.addEventListener('focusout', () => requestAnimationFrame(scheduleAutoplay));
+        document.addEventListener('visibilitychange', scheduleAutoplay);
+        reducedMotion.addEventListener('change', scheduleAutoplay);
+        const movieObserver = new IntersectionObserver(entries => {
+            showcaseVisible = entries[0].isIntersecting;
+            scheduleAutoplay();
+        }, { threshold: 0.1 });
+        movieObserver.observe(movieShowcase);
     }
 
     /* 2. Scroll-Activated Header Styling */

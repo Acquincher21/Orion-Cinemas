@@ -130,29 +130,20 @@
     opacity: 1;
 }
 
-/* 3D CSS Card Transformations */
+/* Movie card image and detail transitions */
 .page-landing .movie-card {
     opacity: 1;
     transform: scale(1);
     transition: opacity 0.24s ease, transform 0.24s ease;
 }
 
-.page-landing .card-3d {
-    perspective: 1200px;
-    background: transparent;
-}
-
 .page-landing .card-inner {
     position: relative;
     width: 100%;
     height: 450px;
-    transition: transform 0.8s ease-in-out;
-    transform-style: preserve-3d;
     border-radius: var(--radius-md);
-}
-
-.page-landing .card-3d:hover .card-inner {
-    transform: rotateY(180deg);
+    overflow: hidden;
+    background: var(--bg-surface);
 }
 
 .page-landing .card-front,
@@ -160,8 +151,6 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
     border-radius: var(--radius-md);
     overflow: hidden;
     border: 1px solid var(--border-subtle);
@@ -172,14 +161,80 @@
 }
 
 .page-landing .card-back {
-    background: linear-gradient(145deg, var(--bg-surface) 0%, var(--bg-secondary) 100%);
-    transform: rotateY(180deg);
+    isolation: isolate;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+}
+
+.page-landing .card-back::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: '';
+    background: linear-gradient(180deg, rgba(6, 8, 15, 0.25), rgba(6, 8, 15, 0.82)), var(--card-hover-image) center / cover no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s ease-out;
+}
+
+.page-landing .card-back > :not(.movie-transition-canvas) {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.page-landing .movie-transition-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back::before {
+    opacity: 1;
+    transition-duration: 1.6s;
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back > :not(.movie-transition-canvas) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back h3 {
+    transition-delay: 0.9s;
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back .genre {
+    transition-delay: 1s;
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back .synopsis {
+    transition-delay: 1.1s;
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back .btn-card-action {
+    transition: opacity 0.3s ease 1.25s, transform 0.3s ease 1.25s, scale 0.25s ease;
+    pointer-events: auto;
+}
+
+.page-landing .card-back .btn-card-action {
+    transition: opacity 0.3s ease, transform 0.3s ease, scale 0.25s ease;
+}
+
+.page-landing .movie-card:is(:hover, :focus-within) .card-back .btn-card-action:is(:hover, :focus-visible) {
+    scale: 1.04;
+}
+
+.page-landing .movie-card:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 4px;
 }
 
 /* 2D Matrix Transformation Effect */
@@ -237,34 +292,17 @@
         transition: none;
     }
 
-    .page-landing .card-3d {
-        perspective: none;
+    .page-landing .card-back::before,
+    .page-landing .card-back > :not(.movie-transition-canvas) {
+        transition: none !important;
     }
 
-    .page-landing .card-inner {
-        height: auto;
-        transform-style: flat;
-        transition: none;
-    }
-
-    .page-landing .card-3d:hover .card-inner {
+    .page-landing .card-back > :not(.movie-transition-canvas) {
         transform: none;
     }
 
-    .page-landing .card-front,
-    .page-landing .card-back {
-        position: relative;
-        height: auto;
-        backface-visibility: visible;
-        -webkit-backface-visibility: visible;
-    }
-
-    .page-landing .card-front {
-        height: 450px;
-    }
-
-    .page-landing .card-back {
-        transform: none;
+    .page-landing .movie-card:is(:hover, :focus-within) .card-back .btn-card-action:is(:hover, :focus-visible) {
+        scale: none;
     }
 
     .page-landing .scroll-reveal {

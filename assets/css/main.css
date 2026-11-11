@@ -144,10 +144,10 @@ body.page-landing {
 }
 
 .page-landing .animation-toggle {
-    position: absolute;
+    position: fixed;
     top: 80px;
     right: clamp(1rem, 3vw, 2.5rem);
-    z-index: 20;
+    z-index: 999;
 }
 
 @media (max-width: 520px) {
@@ -222,7 +222,7 @@ body.page-landing {
     gap: 2.5rem;
 }
 
-/* Upcoming films use teaser cards rather than the now-showing flip cards. */
+/* Upcoming films use teaser cards rather than now-showing cards. */
 .page-landing .upcoming-showcase {
     position: relative;
     overflow: hidden;

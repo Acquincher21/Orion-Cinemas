@@ -17,9 +17,18 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/page-transition.css">
 </head>
 
 <body class="page-landing">
+
+    <div class="page-transition" id="page-transition" role="status" aria-live="polite" aria-hidden="true">
+        <div class="page-transition-brand">
+            <img src="assets/images/vectors/orion-logo.svg" alt="" width="68" height="68">
+            <span><span class="page-transition-highlight">Orion</span>Cinemas</span>
+            <span class="page-transition-message">Opening your cinema experience</span>
+        </div>
+    </div>
 
     <!-- Header & Navigation Bar -->
     <header class="navbar">
@@ -72,15 +81,15 @@
             <canvas id="hero-canvas" class="hero-canvas-bg"></canvas>
         </section>
 
-        <!-- Movie Showcase (Targeted for 3D CSS Transformations) -->
+        <!-- Movie Showcase -->
         <section id="movies" class="movies-showcase">
             <div class="section-header scroll-reveal">
                 <h2>Now Showing</h2>
             </div>
 
             <div class="movie-grid" id="movie-grid">
-                <!-- Movie Card 1 (3D Flip / Tilt Container) -->
-                <article class="movie-card card-3d scroll-reveal" data-movie-page="1">
+                <!-- Movie Card 1 -->
+                <article class="movie-card card-3d scroll-reveal" data-movie-page="1" data-poster="assets/images/graphics/oddysey.jpg" data-hover-image="assets/images/graphics/agamemnon.jpg" tabindex="0">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-horizon" role="img" aria-label="The Odyssey movie poster">
@@ -89,7 +98,7 @@
                                 <span class="badge badge-tag badge-tag-restricted">R-13</span>
                             </div>
                         </div>
-                        <div class="card-back">
+                        <div class="card-back card-back-odyssey">
                             <h3>The Odyssey</h3>
                             <p class="genre">Now showing</p>
                             <p class="synopsis">Select this movie to see available screening dates and showtimes.</p>
@@ -100,7 +109,7 @@
                 </article>
 
                 <!-- Movie Card 2 -->
-                <article class="movie-card card-3d scroll-reveal" data-movie-page="1">
+                <article class="movie-card card-3d scroll-reveal" data-movie-page="1" data-poster="assets/images/graphics/pacificrim.jpg" data-hover-image="assets/images/graphics/kaiju.png" tabindex="0">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-starlight" role="img"
@@ -110,7 +119,7 @@
                                 <span class="badge badge-tag badge-tag-blue">PG</span>
                             </div>
                         </div>
-                        <div class="card-back">
+                        <div class="card-back card-back-pacific">
                             <h3>Pacific Rim</h3>
                             <p class="genre">Now showing</p>
                             <p class="synopsis">Select this movie to see available screening dates and showtimes.</p>
@@ -121,7 +130,7 @@
                 </article>
 
                 <!-- Movie Card 3 -->
-                <article class="movie-card card-3d scroll-reveal" data-movie-page="1">
+                <article class="movie-card card-3d scroll-reveal" data-movie-page="1" data-poster="assets/images/graphics/avengers.jpg" data-hover-image="assets/images/graphics/drdoom.jpg" tabindex="0">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-velocity" role="img"
@@ -131,7 +140,7 @@
                                 <span class="badge badge-tag badge-tag-blue">PG-13</span>
                             </div>
                         </div>
-                        <div class="card-back">
+                        <div class="card-back card-back-avengers">
                             <h3>Avengers: Doomsday</h3>
                             <p class="genre">Now showing</p>
                             <p class="synopsis">Select this movie to see available screening dates and showtimes.</p>
@@ -140,7 +149,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="movie-card card-3d" data-movie-page="2" hidden>
+                <article class="movie-card card-3d" data-movie-page="2" data-poster="assets/images/graphics/toystory.jpg" data-hover-image="assets/images/graphics/toy.png" tabindex="0" hidden>
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-signal" role="img" aria-label="Toy Story 5 movie poster">
@@ -149,7 +158,7 @@
                                 <span class="badge badge-tag badge-tag-blue">G</span>
                             </div>
                         </div>
-                        <div class="card-back">
+                        <div class="card-back card-back-toy">
                             <h3>Toy Story 5</h3>
                             <p class="genre">Now showing</p>
                             <p class="synopsis">Select this movie to see available screening dates and showtimes.</p>
@@ -158,7 +167,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="movie-card card-3d" data-movie-page="2" hidden>
+                <article class="movie-card card-3d" data-movie-page="2" data-poster="assets/images/graphics/residentevil.jpg" data-hover-image="assets/images/graphics/resident.jpg" tabindex="0" hidden>
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-midnight" role="img"
@@ -168,7 +177,7 @@
                                 <span class="badge badge-tag badge-tag-restricted">R-16</span>
                             </div>
                         </div>
-                        <div class="card-back">
+                        <div class="card-back card-back-resident">
                             <h3>New Resident Evil</h3>
                             <p class="genre">Now showing</p>
                             <p class="synopsis">Select this movie to see available screening dates and showtimes.</p>
@@ -177,7 +186,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="movie-card card-3d" data-movie-page="2" hidden>
+                <article class="movie-card card-3d" data-movie-page="2" data-poster="assets/images/graphics/projecthailmary.jpg" data-hover-image="assets/images/graphics/rocky.jpg" tabindex="0" hidden>
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="poster-art poster-art-hailmary" role="img"
@@ -187,7 +196,7 @@
                                 <span class="badge badge-tag badge-tag-blue">PG-13</span>
                             </div>
                         </div>
-                        <div class="card-back">
+                        <div class="card-back card-back-hailmary">
                             <h3>Project Hail Mary</h3>
                             <p class="genre">Now showing</p>
                             <p class="synopsis">Select this movie to see available screening dates and showtimes.</p>
@@ -409,6 +418,8 @@
     <!-- Modular JavaScript Engine Hooks -->
     <script src="assets/js/app.js"></script>
     <script src="assets/js/animation.js"></script>
+    <script src="assets/js/movie-transition.js"></script>
+    <script src="assets/js/page-transition.js"></script>
 </body>
 
 </html>
