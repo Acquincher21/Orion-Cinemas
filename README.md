@@ -1,38 +1,30 @@
 # OrionCinemas
 
-OrionCinemas is a frontend-only cinema booking experience created for the ITL303 Endterm CLE. It demonstrates responsive commercial UI, CSS motion and transforms, SVG emblems, canvas animation, and booking state management.
+OrionCinemas is a frontend-only cinema booking demo for the ITL303 Endterm CLE. It showcases a responsive cinema experience with animated movie cards, browser-based booking interactions, and a member dashboard.
 
-## Pages
+## Run the project
 
-- `index.html`: cinema landing page and now-showing films
-- `login.html`: demo account sign-in
-- `register.html`: browser-stored demo account registration
-- `dashboard.html`: member booking overview, activity chart, and booking history
-- `booking.html`: screening, showtime, seat selection, and local demo booking
+Open `index.html` in a modern web browser. Use the navigation to explore the landing page, sign in, register, book tickets, and view the dashboard.
 
-## Architecture
+For the preloaded demo account, use:
 
-- `assets/css/login.css` and `assets/css/register.css`: page-specific authentication styles
-- `assets/css/main.css`: shared design tokens, reset, and landing-page layout
-- `assets/css/animations.css`: keyframes and motion states
-- `assets/css/components.css`: landing-page buttons, badges, cards, and hero canvas
-- `assets/css/dashboard.css`: dashboard sidebar, metrics, history, and analytics layout
-- `assets/css/booking.css`: ticket booking flow, calendar, seat map, and checkout components
-- `assets/js/validation.js`: demo form validation, sign-in, registration, session, and logout behavior
-- `assets/js/login.js` and `assets/js/register.js`: page-specific interactions
-- `assets/js/app.js`: landing-page filters, navigation, and header interactions
-- `assets/js/booking.js`: booking flow and dashboard booking history
-- `assets/js/animation.js`: landing-page hero particle canvas
-- `assets/js/dashboard.js`: dashboard booking activity chart
+- Email: `juanderful@gmail.com`
+- Password: `Juan123*`
 
-Use the demo account `juanderful@gmail.com` with password `Juan123*`, or register an account stored in this browser. Authentication is frontend-only and is not secure for real accounts. Demo bookings and account data are stored in browser storage. There is no payment processing or live cinema inventory integration. Open `index.html` in a browser to explore the project.
+You can also register a demo account. Account and booking data are stored in the browser. This project does not provide secure authentication, payment processing, or live cinema inventory.
 
-Landing-page links to sign-in use a one-second branded transition. Links to registration from the landing and sign-in pages use a distinct two-second transition. The sign-in and registration forms enter with a slow fade and lift. These animations are disabled when reduced motion is preferred, and transitions between pages are skipped when animations are paused on the current page.
+## Pages and features
 
-The demo account includes sample booking history with one to four seats per screening. Booking tracking shows the screening date and time, booked seats, person count, and demo total; sample totals are the ticket price multiplied by the number of seats. When opened, tracking details reveal with a staggered blur-to-sharp animation, disabled for reduced motion.
+- `index.html`: landing page, movie listings, movie-card poster transitions, and animated hero canvas
+- `login.html`: demo sign-in form
+- `register.html`: account registration, validation, password strength feedback, and terms dialog
+- `booking.html`: film, date, and showtime selection, seat map, and demo checkout
+- `dashboard.html`: booking overview, activity chart, now-showing carousel, and booking history/tracking
 
-The Upcoming and All history filters display four bookings per page, with previous and next controls when more pages are available. Cards fade and slide out when changing pages, and the next cards fade and slide in from the right for either filter and Next, or from the left for Previous, in a staggered sequence. Selecting a filter or page scrolls to the booking list; card animations are disabled and scrolling is instant when reduced motion is preferred.
+The site includes responsive layouts, animated transitions, and reduced-motion support.
 
-The dashboard has a single page-scroll indicator outside the sidebar, with particles orbiting its moving marker. Selecting a booking filter refreshes the line with a fade-in, and it updates as the filtered content changes. The fade and particles are disabled when reduced motion is preferred.
+## Project structure
 
-On the dashboard, booking overview cards scale on hover while each word and count gently bounces in a continuous wave, as do the now-showing heading and status when the widget is hovered. These effects are disabled when reduced motion is preferred.
+- `assets/css/`: shared styles, animations, components, and page-specific styles for login, registration, booking, and the dashboard
+- `assets/js/`: landing-page interactions and canvas animation, authentication and validation, booking, dashboard charts/history, movie-card transitions, and page transitions
+- `assets/images/`: cinema logos, badges, posters, and other graphics
