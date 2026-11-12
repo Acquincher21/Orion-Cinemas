@@ -339,6 +339,20 @@
         animation: dashboardWordWave 1.4s ease-in-out var(--wave-delay, 0s) infinite;
     }
 
+    .page-account .metric-item.upcoming-metric .wave-word {
+        animation:
+            dashboardWordWave 1.4s ease-in-out var(--wave-delay, 0s) infinite,
+            upcomingTextHighlight 5.5s ease-in-out calc(var(--highlight-group-delay, 0s) + var(--highlight-word-delay, 0s)) infinite;
+    }
+
+    .page-account .upcoming-metric #upcoming-count {
+        --highlight-group-delay: 0.4s;
+    }
+
+    .page-account .upcoming-metric .metric-hint {
+        --highlight-group-delay: 0.6s;
+    }
+
     .page-account .wave-word:nth-child(2) {
         --wave-delay: 0.08s;
     }
@@ -358,11 +372,41 @@
     .page-account .wave-word:nth-child(6) {
         --wave-delay: 0.4s;
     }
+
+    .page-account .upcoming-metric .wave-word:nth-child(2) {
+        --highlight-word-delay: 0.2s;
+    }
+
+    .page-account .upcoming-metric .wave-word:nth-child(3) {
+        --highlight-word-delay: 0.4s;
+    }
+
+    .page-account .upcoming-metric .wave-word:nth-child(4) {
+        --highlight-word-delay: 0.6s;
+    }
+
+    .page-account .upcoming-metric .wave-word:nth-child(5) {
+        --highlight-word-delay: 0.8s;
+    }
+
+    .page-account .upcoming-metric .wave-word:nth-child(6) {
+        --highlight-word-delay: 1s;
+    }
 }
 
 @keyframes dashboardWordWave {
     50% {
         transform: translateY(-3px) scale(1.03);
+    }
+}
+
+@keyframes upcomingTextHighlight {
+    0%, 10%, 100% {
+        text-shadow: none;
+    }
+
+    5% {
+        text-shadow: 0 0 0.6rem rgba(0, 242, 254, 0.8);
     }
 }
 
