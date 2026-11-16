@@ -55,6 +55,18 @@
     }
 }
 
+@keyframes cinepulseLandingBadgeSheen {
+    0%,
+    18% {
+        background-position: -120% 0;
+    }
+
+    42%,
+    100% {
+        background-position: 120% 0;
+    }
+}
+
 @keyframes cinepulseLandingFloatHero {
     0% {
         transform: translateY(0px) scale(1);
@@ -95,6 +107,10 @@
 
 .page-landing.motion-paused .upcoming-track,
 .page-landing .upcoming-marquee.is-offscreen .upcoming-track {
+    animation-play-state: paused;
+}
+
+.page-landing.motion-paused .badge {
     animation-play-state: paused;
 }
 
@@ -249,6 +265,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
+    .page-landing .badge {
+        animation: none;
+        background-position: -120% 0;
+    }
 
     .page-landing .upcoming-track {
         animation: none;
