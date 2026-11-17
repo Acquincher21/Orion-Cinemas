@@ -1,8 +1,3 @@
-/* ==========================================================
-   Landing Page Block
-   Handles movie pagination, navbar scroll styling, and
-   smooth scrolling between landing-page sections.
-   ========================================================== */
 // Sets up landing-page interactions after the document is ready.
 document.addEventListener('DOMContentLoaded', () => {
     

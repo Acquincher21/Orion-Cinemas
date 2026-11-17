@@ -1,9 +1,4 @@
 /* Ticket selection and booking submission interactions. */
-
-/* ==========================================================
-   Booking Page
-   Handles film, date, showtime, seat selection, and booking submission.
-   ========================================================== */
 document.addEventListener('DOMContentLoaded', () => {
     const filmOptions = document.getElementById('film-options');
     const filmSection = document.getElementById('film-section');

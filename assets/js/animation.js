@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('motion-paused', isManuallyPaused);
         animationToggle?.setAttribute('aria-pressed', String(isManuallyPaused));
         if (animationToggle) {
-            animationToggle.textContent = isManuallyPaused ? 'Start Animation' : 'Stop Animation';
+            animationToggle.textContent = isManuallyPaused ? 'Start Animation' : 'Pause Animation';
         }
 
         if (shouldPause) {
