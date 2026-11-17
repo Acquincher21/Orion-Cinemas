@@ -141,17 +141,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const revealOnIntersection = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('is-revealed');
                     observer.unobserve(entry.target);
 
-                    // Once the scroll reveal finishes, clean up the helper class so hover animations run unhindered
-                    const cleanUpScrollReveal = (e) => {
-                        if (e.target === entry.target && e.propertyName === 'transform') {
-                            entry.target.classList.remove('scroll-reveal');
-                            entry.target.removeEventListener('transitionend', cleanUpScrollReveal);
-                        }
-                    };
-                    entry.target.addEventListener('transitionend', cleanUpScrollReveal);
+                    const targets = entry.target.matches('.hero-content')
+                        ? entry.target.querySelectorAll('.scroll-reveal')
+                        : [entry.target];
+                    targets.forEach(target => {
+                        target.classList.add('is-revealed');
+
+                        // Once the scroll reveal finishes, clean up the helper class so hover animations run unhindered
+                        const cleanUpScrollReveal = (e) => {
+                            if (e.target === target && e.propertyName === 'transform') {
+                                target.classList.remove('scroll-reveal');
+                                target.removeEventListener('transitionend', cleanUpScrollReveal);
+                            }
+                        };
+                        target.addEventListener('transitionend', cleanUpScrollReveal);
+                    });
                 }
             });
         };
@@ -162,8 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const upcomingRevealElements = [...revealElements].filter(el => el.closest('.upcoming-showcase'));
-        const standardRevealElements = [...revealElements].filter(el => !el.closest('.upcoming-showcase'));
+        const standardRevealElements = [...revealElements].filter(el => !el.closest('.upcoming-showcase, .hero-content'));
         standardRevealElements.forEach(el => revealObserver.observe(el));
+        const heroContent = document.querySelector('.hero-content');
+        if (heroContent) revealObserver.observe(heroContent);
 
         if (upcomingRevealElements.length) {
             const upcomingRevealObserver = new IntersectionObserver(revealOnIntersection, {

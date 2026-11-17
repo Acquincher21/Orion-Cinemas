@@ -348,6 +348,16 @@
     transform: translateY(0);
 }
 
+.page-landing .hero-cta-reveal {
+    display: inline-block;
+}
+
+.page-landing .hero-cta-reveal:focus-within {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
 /* Movie card with scale */
 .page-landing .movie-card.scroll-reveal {
     opacity: 0;
@@ -361,19 +371,20 @@
 
 /* Hero Section Staggers ("Immerse Yourself in Cinema") */
 .page-landing .hero-content .badge-wrapper.scroll-reveal {
-    transition-delay: 0.05s;
+    transition-delay: 0s;
 }
 
-.page-landing .hero-content .hero-title.scroll-reveal {
-    transition-delay: 0.15s;
+.page-landing .hero-content .hero-title-intro.scroll-reveal,
+.page-landing .hero-content .hero-title-cinema.scroll-reveal {
+    transition-delay: 1s;
 }
 
 .page-landing .hero-content .hero-subtitle.scroll-reveal {
-    transition-delay: 0.25s;
+    transition-delay: 2s;
 }
 
-.page-landing .hero-content .hero-cta-group.scroll-reveal {
-    transition-delay: 0.35s;
+.page-landing .hero-content .hero-cta-reveal.scroll-reveal {
+    transition-delay: 3s;
 }
 
 /* Now Showing Section Staggers */

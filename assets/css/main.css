@@ -172,6 +172,10 @@ body.page-landing {
     font-weight: 900;
     line-height: 1.1;
     margin: 1.5rem 0;
+}
+
+.page-landing .hero-title span {
+    display: inline-block;
     background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
     -webkit-background-clip: text;
     background-clip: text;
