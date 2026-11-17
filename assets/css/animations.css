@@ -1,10 +1,3 @@
-/* ==========================================================
-   Landing Page Animation Block
-   Defines the landing page's keyframes, animated SVG badges,
-   3D card transforms, 2D matrix hover effect, and reduced-motion rules.
-   ========================================================== */
-
-/* Keyframe Animations */
 @keyframes cinepulseLandingAnchorArrival {
     from {
         opacity: 0.7;
@@ -328,13 +321,7 @@
     }
 }
 
-/* ==========================================================
-   Landing Page Scroll-Triggered Content Reveal Block
-   Smooth, GPU-accelerated entrance animations on scroll
-   from Hero ("Immerse Yourself in Cinema") to Now Showing,
-   Coming Soon, and Experiences sections.
-   Strictly uses transform and opacity for locked 60fps.
-   ========================================================== */
+
 .page-landing .scroll-reveal {
     opacity: 0;
     transform: translateY(32px);
@@ -358,7 +345,6 @@
     transition: none;
 }
 
-/* Movie card with scale */
 .page-landing .movie-card.scroll-reveal {
     opacity: 0;
     transform: translateY(32px) scale(0.98);
@@ -369,7 +355,6 @@
     transform: translateY(0) scale(1);
 }
 
-/* Hero Section Staggers ("Immerse Yourself in Cinema") */
 .page-landing .hero-content .badge-wrapper.scroll-reveal {
     transition-delay: 0s;
 }
@@ -430,7 +415,6 @@
     transition-delay: 0.34s;
 }
 
-/* Ensure Experiences cards retain their 2D Matrix hover effect */
 .page-landing .card-transform.is-revealed {
     transition: transform 0.4s var(--ease-out-back), opacity 0.4s var(--ease-smooth), border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -444,7 +428,6 @@
     box-shadow: 0 0 32px rgba(0, 242, 254, 0.28);
 }
 
-/* Ensure Upcoming cards retain their lift hover effect */
 .page-landing .upcoming-card:hover,
 .page-landing .upcoming-card.is-revealed:hover {
     transform: translateY(-6px);
@@ -452,10 +435,6 @@
     box-shadow: 0 16px 36px rgba(38, 20, 72, 0.32);
 }
 
-/* ==========================================================
-   Dashboard Page Animation Block
-   Staggers the welcome/metrics, chart, and initial booking cards.
-   ========================================================== */
 @keyframes cinepulseDashboardEntrance {
     from {
         opacity: 0;

@@ -1,5 +1,3 @@
-/* Page-specific interactions for register.html. */
-// Particle background
 (function(){
   const c = document.getElementById('particles');
   const ctx = c.getContext('2d');
@@ -46,7 +44,6 @@
   draw();
 })();
 
-// Toggle password visibility
 function togglePw(id, btn){
   const inp = document.getElementById(id);
   inp.type = inp.type === 'password' ? 'text' : 'password';
@@ -186,7 +183,6 @@ passwordInput.addEventListener('input', function(){
 
 });
 
-// Terms and privacy dialog
 const legalDialog = document.getElementById('legalDialog');
 const legalTitle = document.getElementById('legalDialogTitle');
 const legalContent = document.getElementById('legalDialogContent');

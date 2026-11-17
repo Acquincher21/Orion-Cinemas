@@ -1,5 +1,3 @@
-/* Dashboard booking history, now-showing carousel, and chart rendering. */
-
 document.addEventListener('DOMContentLoaded', () => {
     const sampleAccountEmail = 'juanderful@gmail.com';
     const account = window.CinePulseAuth.getAccount();
@@ -719,4 +717,3 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setTimeout(() => animateChart(months), reduceMotion ? 0 : 620);
     window.addEventListener('resize', () => drawChart(months));
 });
-/* Landing Page Block */

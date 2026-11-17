@@ -1,7 +1,5 @@
-// Sets up landing-page interactions after the document is ready.
 document.addEventListener('DOMContentLoaded', () => {
     
-    /* 1. Movie Pagination */
     const movieCards = document.querySelectorAll('.movie-card');
     const previousMovies = document.querySelector('#previous-movies');
     const nextMovies = document.querySelector('#next-movies');
@@ -97,10 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         movieObserver.observe(movieShowcase);
     }
 
-    /* 2. Scroll-Activated Header Styling */
     const navbar = document.querySelector('.navbar');
 
-    // Adjusts the navbar shadow and border as the page scrolls.
     if (navbar) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 60) {
@@ -113,8 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* 3. Smooth Anchor Link Scrolling */
-    // Smoothly scrolls to the section selected from an in-page navigation link.
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -131,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* 4. Scroll-Triggered Content Reveal Animations */
     const revealElements = document.querySelectorAll('.scroll-reveal');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -149,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     targets.forEach(target => {
                         target.classList.add('is-revealed');
 
-                        // Once the scroll reveal finishes, clean up the helper class so hover animations run unhindered
                         const cleanUpScrollReveal = (e) => {
                             if (e.target === target && e.propertyName === 'transform') {
                                 target.classList.remove('scroll-reveal');

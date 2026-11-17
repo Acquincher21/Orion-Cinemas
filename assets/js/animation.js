@@ -1,9 +1,3 @@
-/* ==========================================================
-   OrionCinemas | Interactive HTML Canvas Particles & Vector Nodes
-   ========================================================== */
-
-/* Landing Page Block */
-// Initializes the hero canvas, particles, and animation controls after the page loads.
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
@@ -17,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPausedForUpcoming = false;
     let animationFrameId = null;
 
-    // Matches the canvas dimensions to the hero section when it loads or resizes.
     function resizeCanvas() {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
@@ -26,26 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Tracks the pointer so nearby particles can brighten interactively.
     window.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         mouse.x = e.clientX - rect.left;
         mouse.y = e.clientY - rect.top;
     });
 
-    // Clears the pointer position after it leaves the browser window.
     window.addEventListener('mouseleave', () => {
         mouse.x = null;
         mouse.y = null;
     });
 
-    // Defines each moving point in the hero's particle network.
     class Particle {
         constructor() {
             this.reset();
         }
 
-        // Randomizes a particle's initial position, size, velocity, and opacity.
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
@@ -56,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.alpha = this.baseAlpha;
         }
 
-        // Moves the particle, reflects it at canvas edges, and responds to the pointer.
         update() {
             this.x += this.vx;
             this.y += this.vy;
@@ -79,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Draws the particle as a cyan point on the hero canvas.
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -88,12 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Seeds the hero background with its initial set of particles.
     for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
     }
 
-    // Connects nearby particles with faint lines to form the network effect.
     function connectNodes() {
         for (let a = 0; a < particles.length; a++) {
             for (let b = a + 1; b < particles.length; b++) {
@@ -114,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Draws one animation frame and schedules the next while motion is active.
     function animate() {
         if (isManuallyPaused || isPausedForUpcoming) return;
 
@@ -161,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
         upcomingObserver.observe(upcomingSection);
     }
 
-    // Pauses the marquee while it is scrolled out of view to save CPU/GPU.
     const upcomingMarquee = document.querySelector('.upcoming-marquee');
     if (upcomingMarquee && 'IntersectionObserver' in window) {
         new IntersectionObserver(entries => {
@@ -171,12 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }).observe(upcomingMarquee);
     }
 
-    // Stops or restarts landing-page motion from the hero control.
     animationToggle?.addEventListener('click', () => {
         isManuallyPaused = !isManuallyPaused;
         syncAnimationState();
     });
 
-    // Starts the hero particle animation when the page first loads.
     animate();
 });

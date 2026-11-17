@@ -1,5 +1,3 @@
-/* Page-specific interactions for login.html. */
-// Particle background
 (function(){
   const c = document.getElementById('particles');
   const ctx = c.getContext('2d');
@@ -46,7 +44,6 @@
   draw();
 })();
 
-// Toggle password
 function togglePw(){
   const inp = document.getElementById('password');
   const btn = inp.parentElement.querySelector('.toggle-pw');

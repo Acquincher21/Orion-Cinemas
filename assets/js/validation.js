@@ -1,5 +1,3 @@
-/* Demo-only form validation and authentication for login.html, register.html, dashboard.html, and booking.html. */
-
 (function () {
     const demoAccount = {
         name: 'OrionCinemas Demo',

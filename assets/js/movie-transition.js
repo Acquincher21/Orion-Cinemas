@@ -1,4 +1,3 @@
-/* Displacement transitions for the landing page movie posters. */
 document.addEventListener('DOMContentLoaded', () => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const vertexSource = `

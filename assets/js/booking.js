@@ -1,4 +1,3 @@
-/* Ticket selection and booking submission interactions. */
 document.addEventListener('DOMContentLoaded', () => {
     const filmOptions = document.getElementById('film-options');
     const filmSection = document.getElementById('film-section');
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         element.classList.add('booking-section-animate');
     }
 
-    /* Booking helpers for date formatting and seat labels. */
     function formatDate(date, options) {
         return new Intl.DateTimeFormat('en-US', options).format(date);
     }
@@ -78,9 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }).filter(Number.isFinite).sort((a, b) => a - b);
     }
 
-    /* ==========================================================
-       Booking Flow
-       ========================================================== */
     if (filmOptions && dateOptions && timeOptions && seatMap && checkoutButton && checkoutStatus) {
         function renderCalendar() {
             const year = displayedMonth.getFullYear();
