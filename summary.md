@@ -1,78 +1,111 @@
-# OrionCinemas Animation Summary
+# OrionCinemas - Animation Types by Page
 
-## How the animation system works
+## index.html (Landing Page)
 
-The site uses three main approaches:
+**Animation Types:**
+- CSS Keyframes (pulsing, fade-in, slide-up)
+- CSS Transitions (hover, focus states)
+- Canvas API with requestAnimationFrame (particle network)
+- Web Animations API (movie pagination)
+- WebGL (poster displacement shader)
+- IntersectionObserver + scroll reveals
 
-- **CSS keyframes** define an animation's stages, such as fading in, pulsing, or shaking. CSS applies them with the `animation` property.
-- **CSS transitions** smoothly interpolate between two states, usually when a user hovers, focuses, opens a panel, or when JavaScript changes a class.
-- **JavaScript-driven animation** responds to events and draws or updates visuals frame by frame. This project uses the Canvas API, the Web Animations API, and WebGL.
+**Classes Used:**
+- `.scroll-reveal` - **Scroll-based reveal (IntersectionObserver)** – Elements marked for detection when entering viewport
+- `.is-revealed` - **CSS Keyframes (Fade-in & Slide-up)** – Applied when scroll-reveal triggers, animates opacity and transform
+- `.hero-pulse` - **CSS Keyframes (Pulsing)** – Continuous pulsing animation on logo using scale and opacity
+- `.badge-glow` - **CSS Keyframes (Glow effect)** – Badge pulses with box-shadow and opacity keyframes
+- `.movie-card` - **CSS Transitions + Keyframes (Hover state)** – Smooth opacity and transform on hover, details reveal with slide-up
+- `.button-hover` - **CSS Transitions (State change)** – CTA button scales and color-shifts on hover using transition
+- `.marquee-scroll` - **CSS Keyframes (Horizontal animation)** – Continuous horizontal scroll using transform translateX keyframes
 
-A useful presentation summary is: **HTML provides the elements and classes, CSS defines their visual motion, and JavaScript decides when to trigger it or draws interactive graphics.**
+---
 
-## Landing page
+## login.html (Sign-In Page)
 
-- **Hero particle network:** The HTML provides the canvas at `index.html` (`#hero-canvas`). `assets/js/animation.js` uses the 2D Canvas API and `requestAnimationFrame` to move 60 particles, draw them, and connect nearby points with lines. The pointer brightens nearby particles. The “Stop Animation” button pauses or resumes this effect; the animation also pauses when the upcoming section is visible.
-- **Scroll reveals and staggered entrances:** Elements such as the hero text, movie cards, and feature cards use the `scroll-reveal` class in `index.html`. `assets/js/app.js` uses `IntersectionObserver` to add `is-revealed` as elements enter the viewport. `assets/css/animations.css` then transitions opacity and vertical position, with delays that make items appear in sequence.
-- **Logo, badge, and call-to-action motion:** `assets/css/animations.css` defines pulsing logo, badge-glow, and button effects. The logo is an SVG image, while CSS supplies its pulse and glow; its markup is in `index.html`.
-- **Coming Soon marquee:** `assets/css/main.css` lays out the upcoming-movie strip; `assets/css/animations.css` animates it horizontally. JavaScript pauses it when it's offscreen to avoid unnecessary animation work.
-- **Movie-card hover effect:** On hover or keyboard focus, the card reveals its movie details with opacity and vertical movement in `assets/css/animations.css`. `assets/js/movie-transition.js` adds a more elaborate WebGL poster transition using a displacement shader; if WebGL or the images aren't available, it falls back to the CSS fade.
-- **Movie pagination:** `assets/js/app.js` uses the Web Animations API to slide the current movie cards out and the next cards in. It also advances the cards automatically when appropriate. The transition is skipped when reduced motion is requested.
+**Animation Types:**
+- CSS Keyframes (fade-in, slide-up)
+- CSS Transitions (input focus, hover states)
+- Canvas API with requestAnimationFrame (particle background)
+- JavaScript-driven progress bar
 
-## Sign-in and registration
+**Classes Used:**
+- `.login-card-animate` - **CSS Keyframes (Fade-in & Slide-up)** – Form card entrance with opacity and transform animation
+- `.badge-pulse` - **CSS Keyframes (Pulsing)** – Security badge pulses using scale and opacity keyframes
+- `.input-wrapper-focus` - **CSS Transitions (State change)** – Input wrapper scales on focus with smooth transition
+- `.loading-progress` - **CSS Transitions (Width animation)** – Progress bar width animates smoothly as JavaScript updates value
+- `.form-container` - **CSS Keyframes (Fade-in & Slide-up)** – Container fades and slides up on page load
+- `.particle-canvas` - **Canvas API + requestAnimationFrame (Frame-by-frame)** – Particle background animated 60fps using canvas drawing
 
-- **Ambient particle backgrounds:** `login.html` and `register.html` provide canvases. `assets/js/login.js` and `assets/js/register.js` move particles with `requestAnimationFrame`. Their “Pause animations” buttons let the user stop or restart them.
-- **Form-card entrance and login badge pulse:** `assets/css/login.css` animates the login card upward as it fades in and pulses the security badge. `assets/css/register.css` gives the registration card a similar fade-and-rise entrance.
-- **Focus and hover feedback:** For example, the login input wrapper scales slightly when focused in `assets/css/login.css`. These are CSS transitions, not continuously running animations.
-- **Validation feedback:** On registration, `assets/js/register.js` adds a class to shake invalid fields. `assets/css/register.css` defines the shake keyframes and a checkmark entrance for valid fields. The password strength bar changes width and color as the user types.
-- **Terms dialog:** `assets/css/register.css` fades and lifts the dialog into view when it opens.
-- **Sign-in loading progress:** `assets/js/validation.js` updates the loading percentage and progress-bar width; `assets/css/login.css` transitions the bar smoothly.
+---
 
-## Booking page
+## register.html (Registration Page)
 
-- **Step entrances:** Selecting a film, date, time, or seats triggers JavaScript to add `booking-section-animate` in `assets/js/booking.js`. `assets/css/animations.css` defines the section, calendar, and summary entrance animations.
-- **Staggered choices and seat rows:** CSS delays each showtime and seat row slightly, creating a wave-like entrance instead of having all items appear at once. The relevant rules are in `assets/css/animations.css`.
-- **Calendar changes:** `assets/js/booking.js` triggers a class when the calendar month changes; CSS fades and scales the new month into view.
-- **Interactive seat hover:** Seat buttons include hover and selected states in `assets/css/booking.css`. Other controls also use short transitions so feedback feels smooth.
+**Animation Types:**
+- CSS Keyframes (fade-in, slide-up, shake, checkmark)
+- CSS Transitions (input focus, hover states)
+- Canvas API with requestAnimationFrame (particle background)
+- Form validation feedback animations
 
-## Dashboard
+**Classes Used:**
+- `.register-card-animate` - **CSS Keyframes (Fade-in & Slide-up)** – Form card entrance with opacity and transform animation
+- `.form-input` - **CSS Transitions (State change)** – Input fields transition on focus (outline, shadow, background)
+- `.input-invalid` - **CSS Keyframes (Shake effect)** – Invalid fields shake using alternating transform translateX keyframes
+- `.input-valid` - **CSS Keyframes (Checkmark entrance)** – Valid fields show animated checkmark with scale and fade-in keyframes
+- `.password-strength-bar` - **CSS Transitions (Width & Color change)** – Bar width and background-color transition smoothly as strength updates
+- `.terms-dialog-open` - **CSS Keyframes (Fade & Lift)** – Dialog fades in and lifts up using opacity and transform keyframes
+- `.particle-canvas` - **Canvas API + requestAnimationFrame (Frame-by-frame)** – Particle background animated 60fps using canvas drawing
 
-- **Dashboard entrance:** The welcome area, metric cards, chart, and initial booking cards fade and rise in with staggered delays. These rules are in `assets/css/animations.css`.
-- **Animated chart:** `dashboard.html` provides the chart canvas. `assets/js/dashboard.js` draws its bars with the Canvas API; `requestAnimationFrame` grows the bars into view in sequence. Pointer movement displays a month tooltip.
-- **Scroll progress indicator:** The HTML indicator is in `dashboard.html`. `assets/js/dashboard.js` calculates the scroll percentage; `assets/css/dashboard.css` uses that value to move the marker and fill the track. CSS also animates small particles orbiting the marker.
-- **Metric word wave:** The dashboard's word spans appear in `dashboard.html`. On hover, `assets/css/dashboard.css` lifts each word slightly, with small delays for a wave effect.
-- **Booking history pagination and details:** `assets/js/dashboard.js` slides old booking cards away and renders the next page. CSS animates the new cards in with a staggered slide. Expanding “Booking tracking” smoothly opens its details, which fade in with a blur-to-sharp effect; the styling is in `assets/css/dashboard.css`.
-- **Now-showing carousel:** `assets/js/dashboard.js` changes the active film and updates the progress bar. `assets/css/dashboard.css` fades and slides between films, animates the bar, and adds a light sweep. The carousel pauses automatic changes while hovered or focused.
+---
 
-## Page transitions and accessibility
+## booking.html (Booking Page)
 
-The landing and sign-in pages include a branded overlay in `index.html` and `login.html`. `assets/js/page-transition.js` activates it when navigating to sign-in or registration; `assets/css/page-transition.css` fades and lifts the branding. Registration links use a different color treatment and light sweep.
+**Animation Types:**
+- CSS Keyframes (fade-in, slide-up, staggered entrances)
+- CSS Transitions (hover, selected states)
+- JavaScript-triggered animations
 
-Several CSS animations and transitions honor `prefers-reduced-motion`, for example in `assets/css/animations.css` and `assets/css/page-transition.css`. The site also provides manual pause controls for the particle animations.
+**Classes Used:**
+- `.booking-section-animate` - **CSS Keyframes (Fade-in & Slide-up)** – Section entrance with staggered delay using opacity and transform
+- `.calendar-animate` - **CSS Keyframes (Fade & Scale transition)** – Calendar month change fades and scales smoothly using transform
+- `.showtime-row` - **CSS Keyframes (Staggered slide-up)** – Each showtime row slides up with animation-delay for sequential entrance
+- `.seat-row` - **CSS Keyframes (Staggered slide-up)** – Each seat row slides up with increasing animation-delay for wave effect
+- `.seat-button` - **CSS Transitions (State change)** – Seat button transitions on hover (scale, border-color, background) and when selected
+- `.booking-summary` - **CSS Keyframes (Fade-in & Slide-up)** – Summary section entrance with staggered animation
+- `.month-transition` - **CSS Keyframes (Fade & Scale)** – Calendar month change uses transform scale and opacity keyframes
 
-## Short answer for your professor
+---
 
-> “My project combines CSS keyframe animations, CSS transitions, JavaScript-triggered animations, and canvas graphics. CSS handles effects like entrances, hover states, and staggered reveals. JavaScript uses observers and events to decide when to trigger those effects, and `requestAnimationFrame` to draw the particle backgrounds and dashboard chart. I also used WebGL for the movie-poster displacement transition and included reduced-motion support for many effects.”
+## dashboard.html (Dashboard Page)
 
-## Demonstration of Concepts in the Project
+**Animation Types:**
+- CSS Keyframes (fade-in, slide-up, wave effect, bar growth)
+- CSS Transitions (hover, state changes)
+- Canvas API with requestAnimationFrame (chart bars, particles)
+- JavaScript-driven animations (pagination, carousel)
 
-The project demonstrates animation concepts through real interactions across its pages:
+**Classes Used:**
+- `.dashboard-entrance` - **CSS Keyframes (Fade-in & Slide-up)** – Welcome area and cards fade and slide up with staggered delays
+- `.metric-card` - **CSS Keyframes (Staggered fade-in & Slide-up)** – Each metric card enters with animation-delay for sequential appearance
+- `.chart-container` - **Canvas API + requestAnimationFrame (Frame-by-frame drawing)** – Bar chart bars grow into view frame-by-frame using canvas
+- `.metric-word` - **CSS Keyframes (Wave effect on hover)** – Individual words lift with staggered animation-delay on parent hover for wave motion
+- `.booking-card` - **CSS Keyframes (Staggered fade-in & Slide-up)** – Booking history cards enter with animation-delay for sequential appearance
+- `.booking-card-slide` - **CSS Keyframes (Slide out & in)** – Old cards slide out left while new cards slide in from right using transform
+- `.booking-tracking-expand` - **CSS Transitions + Keyframes (Expand & blur-to-sharp)** – Details expand smoothly and content fades from blur to sharp using filter transition
+- `.carousel-active` - **CSS Transitions (State change)** – Active film state transition opacity and transform
+- `.carousel-fade-slide` - **CSS Keyframes (Fade & Slide transition)** – Film carousel transitions between items using fade and slide transform
+- `.scroll-progress-marker` - **CSS Transitions (Position update)** – Progress marker position updates smoothly as JavaScript changes value using transition
+- `.particle-orbit` - **CSS Keyframes (Orbiting animation)** – Small particles orbit around marker using rotating transform keyframes
 
-- **Keyframes and transitions:** Keyframes create multi-stage effects such as the registration form's invalid-field shake and the dashboard's chart-bar entrance. Transitions provide smooth feedback for simpler state changes, such as focused inputs, selected seats, and opening the terms dialog.
-- **Event-driven animation:** User actions and page state trigger motion. For example, selecting booking details animates the relevant section, focusing or hovering over a movie card reveals its details, and changing dashboard carousel items updates the film and progress bar.
-- **Scroll-based and staggered choreography:** `IntersectionObserver` reveals content as it enters the viewport. Delays on movie cards, feature cards, dashboard metrics, and booking choices create a sequenced entrance rather than showing everything at once.
-- **Canvas and frame-by-frame rendering:** The landing and sign-in pages animate particle backgrounds, while the dashboard draws its chart bars. These visuals are updated with `requestAnimationFrame`, and pointer movement adds interactive feedback such as brighter nearby particles and chart tooltips.
-- **Web Animations API and WebGL:** Movie pagination slides cards between pages using the Web Animations API. The movie-card poster transition uses a WebGL displacement effect and falls back to a CSS fade if WebGL or the required images are unavailable.
-- **Interaction, accessibility, and performance:** Animation responds to keyboard focus as well as pointer hover, manual controls pause particle effects, offscreen effects can pause, and reduced-motion preferences are respected for several transitions.
+---
 
-Together, these examples show how the project uses animation not only for decoration, but also to communicate navigation, input feedback, changing content, and interactive state.
+## Page Transitions
 
-## Concepts Demonstrated on Each Page
+**Animation Types:**
+- CSS Keyframes (branded overlay fade-lift)
+- CSS Transitions with reduced-motion support
 
-- **`index.html` — Visual hierarchy and scroll-based storytelling:** The animated hero establishes the cinema brand, while scroll reveals and staggered cards guide visitors through the page. The particle canvas and movie-card effects make the landing content interactive.
-- **`login.html` — Focus, feedback, and perceived progress:** Focus and hover transitions make the sign-in form feel responsive. The loading bar communicates progress, while the animated security badge and particle background reinforce the page's visual identity.
-- **`register.html` — Form validation and immediate feedback:** Password-strength feedback, valid-field checkmarks, and invalid-field shakes show how animation can communicate form state. The terms dialog demonstrates a transition between interface states.
-- **`booking.html` — Step-by-step interaction and state changes:** Selecting a film, date, time, and seats drives the booking flow. Animated section entrances, calendar changes, and selected-seat states help users see how each choice updates the interface.
-- **`dashboard.html` — Data visualization and interactive feedback:** The animated Canvas chart introduces data visually, while tooltips, booking pagination, expandable tracking details, and the film carousel respond to user interaction.
-
-Across all five pages, CSS motion, JavaScript-triggered state changes, and responsive feedback work together to make the interface easier to follow and more engaging.
+**Classes Used:**
+- `.page-transition-overlay` - **CSS Keyframes (Fade & Lift)** – Branded overlay fades in and lifts up using opacity and transform keyframes
+- `.page-transition-active` - **CSS Keyframes (Fade & Lift trigger)** – Applied when navigating, triggers overlay entrance animation
+- `.prefers-reduced-motion` - **CSS Keyframes (Reduced timing)** – Media query respects user motion preferences, disables or slows animations
